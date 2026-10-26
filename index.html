@@ -16,9 +16,9 @@
 <meta property="og:url" content="https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/">
 <meta name="twitter:card" content="summary_large_image">
 <link href="https://fonts.cdnfonts.com/css/google-sans" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261021j">
-<script src="assets/iconify-icon.min.js?v=20261021j"></script>
-<script src="assets/qrcode.min.js?v=20261021j"></script>
+<link rel="stylesheet" href="styles.css?v=20261021l">
+<script src="assets/iconify-icon.min.js?v=20261021l"></script>
+<script src="assets/qrcode.min.js?v=20261021l"></script>
 </head>
 <body>
 <header class="topbar">
@@ -112,8 +112,10 @@
       <input id="fListings" value="https://canablue.com/author/pamepam/">
       <label class="lbl">Booking / agenda URL (optional — adds a Schedule button)</label>
       <input id="fBooking" placeholder="https://calendly.com/…">
-      <label class="lbl">Community links ("Community Expert:" line — fixed for all agents)</label>
-      <p class="hint">Palma Real Villas (Cocotal) · Los Corales, Cortecito</p>
+      <label class="lbl">Community Expert buttons</label>
+      <p class="hint">One button per community. Uncheck to hide it, edit its name or link, or add another community.</p>
+      <div id="communityList"></div>
+      <button id="btnAddCommunity" class="btn small dashed" type="button">+ Add community</button>
     </section>
 
     <section class="card" id="sec-links">
@@ -193,7 +195,7 @@
         <label><input type="checkbox" id="vSocial" checked> Show social icons (IG / WhatsApp / LinkedIn)</label>
         <label><input type="checkbox" id="vListings" checked> Show "View My Listings" button</label>
         <label><input type="checkbox" id="vBooking" checked> Show "Schedule" button (uses the booking URL)</label>
-        <label><input type="checkbox" id="vCommunity" checked> Show community links ("Community Expert:" + 2 buttons)</label>
+        <label><input type="checkbox" id="vCommunity" checked> Show the "Community Expert:" line</label>
         <label><input type="checkbox" id="vQr"> Show contact QR code (vCard)</label>
         <label><input type="checkbox" id="vCerts" checked> Show certifications</label>
         <label><input type="checkbox" id="vLegal" checked> Show legal notice</label>
@@ -243,6 +245,6 @@
   </section>
 </main>
 
-<script src="app.js?v=20261021j"></script>
+<script src="app.js?v=20261021l"></script>
 </body>
 </html>

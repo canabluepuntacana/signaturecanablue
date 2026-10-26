@@ -2,11 +2,16 @@
 const $ = id => document.getElementById(id);
 // Canablue community page (editable per agent, like listings or booking).
 const COMMUNITY_DEFAULT = 'https://canablue.com/community/cocotal/';
-// Community Expert block in the Main template: one pill per Canablue community page.
+// Community Expert block: one pill per community page. The editor can rename,
+// relink, disable or add more (each row has its own checkbox).
 const COMMUNITY_LINKS = [
   { label: 'Palma Real Villas (Cocotal)', url: 'https://canablue.com/community/cocotal/' },
   { label: 'Los Corales, Cortecito', url: 'https://canablue.com/community/el-cortecito/' }
 ];
+const defaultCommunities = () => COMMUNITY_LINKS.map(x => ({ label: x.label, url: x.url, on: true }));
+// Agents saved before this existed fall back to the two default communities.
+const communitiesOf = a => Array.isArray(a && a.communities) ? a.communities : defaultCommunities();
+const activeCommunities = a => communitiesOf(a).filter(c => c && c.on !== false && String(c.url || '').trim());
 const state = {
   tpl: 'principal',
   color: '#174176',
@@ -18,6 +23,7 @@ const state = {
   listings: 'https://canablue.com/author/pamepam/',
   booking: '',
   community: COMMUNITY_DEFAULT,
+  communities: defaultCommunities(),
   linkedin: 'https://do.linkedin.com/in/pamela-nunez-0280814a',
   instagram: 'https://www.instagram.com/pamela_canablue.rd',
   whatsapp: 'https://wa.me/18096080943',
@@ -312,19 +318,22 @@ async function buildHTML() {
     return pills.join('&nbsp;');
   };
   const viewBtn = actionPills();
-  // "Community Expert:" + one smaller pill per community page. The inline variant keeps
-  // the label and the pills on one centred line; the stacked one puts the pills under
-  // the label for narrow columns (phone, Dark Sidebar).
+  // "Community Expert:" + one smaller pill per active community. The inline variant
+  // keeps the label and the pills on one centred line; the stacked one puts the pills
+  // under the label for narrow columns (phone, Dark Sidebar).
+  const commList = s.vis.community ? activeCommunities(s) : [];
   const communityExpertHtml = (opt, stacked) => {
-    if (!s.vis.community) return '';
+    if (!commList.length) return '';
     const o = opt || {};
-    const links = COMMUNITY_LINKS.map(x => communityPill(x.label, x.url, c, o)).join('&nbsp;');
+    // Joined with a normal space: with three or more pills the row can wrap instead
+    // of pushing past the 600 px signature.
+    const links = commList.map(x => communityPill(esc(x.label || 'Community'), normUrl(x.url), c, o)).join(' ');
     const label = `<span style="font-family:Arial,Helvetica,sans-serif;font-size:${o.fs || 12}px;font-weight:bold;color:#5b6b84;white-space:nowrap;">Community Expert:</span>`;
     if (stacked) return `<div>${label}</div><div style="padding-top:6px;">${links}</div>`;
     return `${label}&nbsp;${links}`;
   };
   // Full-width row used by the seven compact templates.
-  const communityLine = (opt, stacked, span) => s.vis.community
+  const communityLine = (opt, stacked, span) => commList.length
     ? `<tr><td${span ? ` colspan="${span}"` : ''} align="center" style="padding-top:12px;">${communityExpertHtml(opt, stacked)}</td></tr>` : '';
 
   const certs = certsRow(s.certs, s.certLinks, s.customCerts, s.vis, s.certsAlign);
@@ -504,7 +513,7 @@ function skFlags() {
     qr: !!v.qr,
     listings: !!v.listings && !!String(state.listings || '').trim(),
     booking: !!v.booking && !!String(state.booking || '').trim(),
-    community: !!v.community,
+    community: !!v.community && activeCommunities(state).length > 0,
     align: ['left', 'center', 'right'].includes(state.certsAlign) ? state.certsAlign : 'center'
   };
 }
@@ -512,7 +521,14 @@ function skelFor(tpl, f) {
   const name = dark => skBar(58, dark && 'wh') + skBar(34, dark ? 'whs' : 'sm') + (f.zona ? skBar(72, dark ? 'whs' : 'sm') : '');
   const contacts = () => [84, 62, 72, 55].map(w => `<span class="crow"><i class="cico"></i>${skBar(w)}</span>`).join('');
   const photo = px => f.photo ? skPhoto(px) : '';
-  const comm = () => f.community ? `<span class="skrow tight" style="justify-content:center;padding-top:1.4cqw"><i class="bar sm" style="width:${q(96)}"></i>${skPill(150, 'ghost')}${skPill(126, 'ghost')}</span>` : '';
+  // One ghost pill per active community, as wide as its label really is.
+  const comm = () => {
+    if (!f.community) return '';
+    const list = activeCommunities(state).slice(0, 4);
+    if (!list.length) return '';
+    const pills = list.map(c => skPill(Math.max(58, Math.min(178, String(c.label || '').length * 5.4 + 20)), 'ghost')).join('');
+    return `<span class="skrow tight" style="justify-content:center;padding-top:1.4cqw"><i class="bar sm" style="width:${q(96)}"></i>${pills}</span>`;
+  };
   const pills = (style = '') => `<span class="skrow tight"${style ? ` style="${style}"` : ''}>${f.listings ? skPill(136) : ''}${f.booking ? skPill(122) : ''}</span>`;
   const social = () => f.socials ? `<span class="dots">${'<i></i>'.repeat(f.socials)}</span>` : '';
   const certs = () => f.certs ? `<span class="certs" style="justify-content:${f.align}">${'<i></i>'.repeat(f.certs)}</span>` : '';
@@ -624,7 +640,10 @@ function renderSkels(force) {
   const grid = $('tplGrid');
   if (!grid) return;
   const f = skFlags();
-  const key = JSON.stringify([state.tpl, f]);
+  // The community pills are drawn from the agent's own list, so their labels are part
+  // of the cache key: renaming or adding one must repaint the thumbnails too.
+  const comms = activeCommunities(state).map(c => [c.label, c.url]);
+  const key = JSON.stringify([state.tpl, f, comms]);
   if (!force && key === skKey) return;
   skKey = key;
   grid.innerHTML = TPLS.map(([tpl, label]) => {
@@ -812,6 +831,38 @@ function addLinkRow(icon = 'facebook', url = '') {
   urlInput.oninput = sync; del.onclick = () => { d.remove(); sync(); };
   $('extraLinks').appendChild(d);
 }
+// One row per "Community Expert" button: checkbox (show / hide), label, link, remove.
+function addCommunityRow(c) {
+  const item = c || {};
+  const d = document.createElement('div'); d.className = 'xlink xlink-comm';
+  const on = document.createElement('input');
+  on.type = 'checkbox'; on.checked = item.on !== false; on.title = 'Show this button';
+  const label = document.createElement('input');
+  label.className = 'comm-label'; label.placeholder = 'Community name'; label.value = item.label || '';
+  const url = document.createElement('input');
+  url.className = 'comm-url'; url.placeholder = 'https://…'; url.value = item.url || '';
+  const del = document.createElement('button');
+  del.type = 'button'; del.textContent = '✕'; del.title = 'Remove this community';
+  const sync = () => { state.communities = readCommunityRows(); markDirty(); };
+  on.onchange = sync; label.oninput = sync; url.oninput = sync;
+  del.onclick = () => { d.remove(); sync(); };
+  [on, label, url, del].forEach(el => d.appendChild(el));
+  $('communityList').appendChild(d);
+}
+function readCommunityRows() {
+  return [...document.querySelectorAll('#communityList .xlink-comm')].map(r => ({
+    on: r.querySelector('input[type=checkbox]').checked,
+    label: r.querySelector('.comm-label').value,
+    url: r.querySelector('.comm-url').value
+  }));
+}
+// Paint the rows from the agent (legacy agents fall back to the two defaults).
+function renderCommunityRows() {
+  const box = $('communityList');
+  if (!box) return;
+  box.querySelectorAll('.xlink-comm').forEach(n => n.remove());
+  communitiesOf(state).forEach(c => addCommunityRow(c));
+}
 function addCertRow(img = '', link = '') {
   const d = document.createElement('div'); d.className = 'xlink';
   d.innerHTML = `<input placeholder="Logo image URL (PNG)" value="${img || ''}"><input placeholder="Click-through link (optional)" value="${link || ''}"><button>✕</button>`;
@@ -834,7 +885,7 @@ function blankAgent() {
   return {
     key: '', color: '#174176', name: '', role: '', zona: '', zonaLabel: 'Specializing in', tel: '', email: '',
     web: 'canablue.com', dir: DIR_DEFAULT, dirUrl: MAPS_DEFAULT,
-    listings: '', booking: '', community: COMMUNITY_DEFAULT, linkedin: '', instagram: '', whatsapp: '',
+    listings: '', booking: '', community: COMMUNITY_DEFAULT, communities: defaultCommunities(), linkedin: '', instagram: '', whatsapp: '',
     foto: '', logo: LOGO_DEFAULT,
     extra: [], tpl: 'principal',
     vis: { foto: true, zona: true, social: true, listings: true, booking: true, community: true, qr: false, certs: true, legal: true },
@@ -851,6 +902,16 @@ const getCustoms = () => { try { return JSON.parse(localStorage.getItem(LS_CUSTO
 const setCustoms = c => localStorage.setItem(LS_CUSTOM, JSON.stringify(c));
 const isCustom = key => getCustoms().some(x => x.key === key);
 const slug = s => (s || 'agent').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'agent';
+// Google Sheet column `communities`: "Label|https://…; Label|https://…" — every entry
+// shows up as one "Community Expert" pill.
+function parseCommunities(v) {
+  if (v == null || String(v).trim() === '') return undefined;
+  return String(v).split(';').map(s => s.trim()).filter(Boolean).map(s => {
+    const i = s.lastIndexOf('|');
+    if (i < 0) return { on: true, label: s, url: '' };
+    return { on: true, label: s.slice(0, i).trim(), url: s.slice(i + 1).trim() };
+  });
+}
 const SHEET_TAB = 'Agentes';
 const LS_SHEET = 'canablue.sheet.id.v1';
 function setDbStatus(msg, cls) {
@@ -878,6 +939,8 @@ async function loadSheetAgents(id) {
       listings: o.listings || '', linkedin: o.linkedin || '',
       booking: o.booking || '',
       community: o.community || '',
+      // Optional `communities` column: "Label|url; Label|url" (all shown by default).
+      communities: parseCommunities(o.communities),
       instagram: o.instagram || '', whatsapp: o.whatsapp || '',
       foto: o.foto || '', logo: o.logo || '',
       vis: o.qr == null ? undefined : { qr: B(o.qr) },
@@ -925,6 +988,7 @@ function collectAgent(key) {
     zona: $('fZona').value.replace(/\s+$/, ''), zonaLabel: $('fZonaLabel').value, tel: $('fTel').value, email: $('fEmail').value, web: $('fWeb').value,
     dir: $('fDir').value, dirUrl: $('fDirUrl').value, listings: $('fListings').value,
     booking: $('fBooking').value, community: state.community,
+    communities: readCommunityRows(),
     linkedin: $('fLinkedin').value, instagram: $('fInstagram').value, whatsapp: $('fWhatsapp').value,
     foto: $('fFoto').value, logo: $('fLogo').value,
     extra: [...document.querySelectorAll('#extraLinks .xlink-net')].map(r => ({ icon: r._icon || 'facebook', url: r.querySelector('input').value })).filter(e => e.url),
@@ -960,6 +1024,8 @@ function applyAgent(a) {
   for (const k in linkIds) { const el = $(linkIds[k]); if (el) el.value = (a.certLinks && a.certLinks[k]) || ''; }
   document.querySelectorAll('#extraLinks .xlink-net').forEach(n => n.remove());
   (a.extra || []).forEach(x => addLinkRow(x.icon, x.url));
+  state.communities = communitiesOf(a);
+  renderCommunityRows();
   setIconStyle(a.iconStyle || 'solid');
   setCertsAlign(a.certsAlign || 'center');
   if (a.tpl) state.tpl = a.tpl;
@@ -1180,6 +1246,7 @@ $('fFotoFile').addEventListener('change', e => {
   const fr = new FileReader(); fr.onload = () => { $('fFoto').value = fr.result; markDirty(); toast('Photo loaded (for the final email use a public https link).'); }; fr.readAsDataURL(f);
 });
 $('btnAddLink').onclick = () => { addLinkRow(); setDirty(true); };
+$('btnAddCommunity').onclick = () => { addCommunityRow({ on: true, label: '', url: '' }); setDirty(true); };
 $('btnAddCert').onclick = () => { addCertRow(); setDirty(true); };
 $('btnCopyRich').onclick = copyRich; $('btnCopyHtml').onclick = copyHtml; $('btnDownload').onclick = download;
 $('btnVcf').onclick = downloadVcf;
@@ -1219,6 +1286,8 @@ $('fSheetId').addEventListener('change', e => { try { localStorage.setItem(LS_SH
 try { const sid = localStorage.getItem(LS_SHEET); if (sid) $('fSheetId').value = sid; } catch {}
 loadAgents().then(() => {
   restoreAutosave();
+  // A brand-new session has no autosave: paint the default community rows once.
+  if (!document.querySelector('#communityList .xlink-comm')) renderCommunityRows();
   render();
   setDirty(false);
   pushUndo(JSON.stringify(collectAgent('draft')));

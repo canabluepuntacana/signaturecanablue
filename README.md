@@ -79,10 +79,13 @@ deletes them.
   the wording, translate it or leave it empty to show just the area.
 - **Schedule a Call** — pill button, appears only when the `booking` URL is set. Toggle in **Display**.
 - **Community Expert** — every template prints a **Community Expert:** label in bold
-  followed by one small outline pill per community page: `Palma Real Villas (Cocotal)` →
-  `https://canablue.com/community/cocotal/` and `Los Corales, Cortecito` →
-  `https://canablue.com/community/el-cortecito/` (`COMMUNITY_LINKS` in `app.js`, fixed for
-  all agents). Toggle **Show community links** in **Display**.
+  followed by one small outline pill per community page. The pills are editable per
+  agent in **Contact → Community Expert buttons**: each row has a checkbox (show / hide
+  that pill), a name, a link and a remove button, and **+ Add community** adds another
+  one. Defaults: `Palma Real Villas (Cocotal)` → `https://canablue.com/community/cocotal/`
+  and `Los Corales, Cortecito` → `https://canablue.com/community/el-cortecito/`
+  (`COMMUNITY_LINKS` in `app.js`). Agents saved before this have the two defaults.
+  Toggle **Show the "Community Expert:" line** in **Display** to hide the whole block.
 - In the **Main** template the bottom area has two variants: on desktop the actions sit
   in the centre of the logo row (logo on the left, social icons on the right); on a
   phone they drop to their own centred line under the logo. The signature carries a

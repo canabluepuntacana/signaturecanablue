@@ -1650,14 +1650,14 @@
     "tel": "+1 (849) 564-5974",
     "email": "media@canablue.com",
     "web": "canablue.com",
-    "dir": "Local E-02, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
-    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/place/Canablue+Real+Estate/data=!4m2!3m1!1s0x0:0x14220523874e3b46?sa=X&ved=1t:2428&ictx=111",
     "listings": "",
     "communities": [],
     "linkedin": "",
     "instagram": "",
     "whatsapp": "",
-    "foto": "assets/agents/manuel-cabrera.png?v=074e20a8046f",
+    "foto": "https://res.cloudinary.com/ybkuwivn/image/upload/v1793037804/WhatsApp_Image_2026-10-26_at_2.03.06_PM.jpg",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
     "legal": "The information in this email is confidential and intended solely for its recipient.",
@@ -1677,9 +1677,9 @@
     "certsAlign": "center",
     "certs": {
       "crs": false,
-      "aei": true,
+      "aei": false,
       "realtor": false,
-      "sr23": false,
+      "sr23": true,
       "sr24": true,
       "lux": false
     },
@@ -1687,8 +1687,8 @@
       "pdfPage": 46,
       "portraitXref": 678,
       "listingsVerified": false,
-      "expertise": "PDF",
-      "instagram": "not in PDF"
+      "expertise": "user-provided signature",
+      "instagram": "not provided"
     }
   },
   {

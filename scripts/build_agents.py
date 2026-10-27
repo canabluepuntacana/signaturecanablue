@@ -25,6 +25,8 @@ PORTRAIT_PATH = "assets/agents/"
 ADDRESS_SALES = "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana"
 ADDRESS_ADMIN = "Local E-02, Plaza San Juan Shopping Center, Bávaro, Punta Cana"
 MAPS = "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana"
+MAPS_P104 = "https://www.google.com/maps/place/Canablue+Real+Estate/data=!4m2!3m1!1s0x0:0x14220523874e3b46?sa=X&ved=1t:2428&ictx=111"
+MANUEL_PHOTO = "https://res.cloudinary.com/ybkuwivn/image/upload/v1793037804/WhatsApp_Image_2026-10-26_at_2.03.06_PM.jpg"
 LOGO = "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png"
 LEGAL_NOTICE = "The information in this email is confidential and intended solely for its recipient."
 
@@ -180,18 +182,22 @@ def main():
         certs = {"crs": False, "aei": True, "realtor": False,
                  "sr23": False, "sr24": True, "lux": page in SECOND_PAGES}
         certs.update(PDF_CERT_OVERRIDES.get(key, {}))
+        if key == "manuel-cabrera":
+            # Manuel supplied current contact details, portrait and two Best of DR logos.
+            phone, email = "+1 (849) 564-5974", "media@canablue.com"
+            certs.update(aei=False, sr23=True, sr24=True)
         agents.append({
             "key": key, "name": name, "role": role, "zona": zona,
             **({"inactive": True} if key in INACTIVE_KEYS else {}),
             "tel": phone, "email": email, "web": "canablue.com",
-            "dir": ADDRESS_SALES if is_sales or key in {"pelusa-miau", "mayelin-avila"} else ADDRESS_ADMIN,
-            "dirUrl": MAPS,
+            "dir": ADDRESS_SALES if is_sales or key in {"pelusa-miau", "mayelin-avila", "manuel-cabrera"} else ADDRESS_ADMIN,
+            "dirUrl": MAPS_P104 if key == "manuel-cabrera" else MAPS,
             "listings": f"https://canablue.com/author/{author}/" if author else "",
             "communities": communities,
             "linkedin": LINKEDIN.get(key, ""),
             "instagram": f"https://www.instagram.com/{handle}/" if handle and key not in UNAVAILABLE_INSTAGRAM else "",
             "whatsapp": "https://wa.me/18492552500" if key == "candy-vander-horst" else "",
-            "foto": PORTRAIT_PATH + filename + "?v=" + hashlib.sha256((OUT / filename).read_bytes()).hexdigest()[:12],
+            "foto": MANUEL_PHOTO if key == "manuel-cabrera" else PORTRAIT_PATH + filename + "?v=" + hashlib.sha256((OUT / filename).read_bytes()).hexdigest()[:12],
             "photoPosition": "center center",
             "logo": LOGO,
             "legal": LEGAL_NOTICE,
@@ -203,8 +209,8 @@ def main():
             "iconStyle": "solid", "certsAlign": "center", "certs": certs,
             "source": {"pdfPage": page, "portraitXref": xref,
                        "listingsVerified": bool(author),
-                       "expertise": "user update" if key in {"alejandro-angulo", "dayana-richiez", "leiny-poueriet", "magdalena-pietrusinska", "karina-manzanillo"} else "PDF",
-                       "instagram": "unavailable" if key in UNAVAILABLE_INSTAGRAM else "PDF handle" if handle else "not in PDF"},
+                       "expertise": "user-provided signature" if key == "manuel-cabrera" else "user update" if key in {"alejandro-angulo", "dayana-richiez", "leiny-poueriet", "magdalena-pietrusinska", "karina-manzanillo"} else "PDF",
+                       "instagram": "not provided" if key == "manuel-cabrera" else "unavailable" if key in UNAVAILABLE_INSTAGRAM else "PDF handle" if handle else "not in PDF"},
         })
     directory = directory_contacts()
     for email, name, role in DIRECTORY_ONLY:

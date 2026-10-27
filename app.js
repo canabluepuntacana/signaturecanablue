@@ -38,7 +38,6 @@ const state = {
   tpl: 'principal',
   color: '#174176',
   nombre: 'Pamela Núñez', cargo: 'Broker Owner', zona: 'Punta Cana · Cap Cana',
-  zonaLabel: 'Specializing in',
   tel: '+1 (809) 975-3900', email: 'pamela@canablue.com', web: 'canablue.com',
   dir: 'Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana',
   dirUrl: 'https://www.google.com/maps/place/Canablue+Real+Estate/data=!4m2!3m1!1s0x0:0x14220523874e3b46?sa=X&ved=1t:2428&ictx=111',
@@ -58,7 +57,7 @@ const state = {
   certsAlign: 'center',
   extra: [],
   iconStyle: 'solid',
-  vis: { foto: true, zona: true, social: true, listings: true, booking: true, community: true, qr: true, certs: true, legal: true },
+  vis: { foto: true, social: true, listings: true, booking: true, community: true, qr: true, certs: true, legal: true },
   legal: 'The information in this email is confidential and intended solely for its recipient.'
 };
 const DEFAULT_LEGAL = 'The information in this email is confidential and intended solely for its recipient.';
@@ -246,16 +245,6 @@ function communityPill(label, url, c, opt) {
   return url ? `<a href="${url}" target="_blank" style="${style}">${label}</a>`
     : `<span style="${style}border-style:dashed;" title="Community page pending">${label}</span>`;
 }
-// Plain clean text, no pill background or border. Line breaks typed in the editor
-// (Enter inside "Area of expertise") print as real breaks.
-function zonaText(zona, sz, label) {
-  const o = sz || {};
-  const pre = label === undefined ? 'Specializing in' : String(label).trim();
-  const body = String(zona).replace(/\r?\n/g, '<br>');
-  // The intro always gets its own line; the area starts on the next one.
-  const head = pre ? pre + '<br>' : '';
-  return `<div style="max-width:${o.mw || 190}px;margin-top:${o.mt || 5}px;font-family:Arial,Helvetica,sans-serif;font-size:${o.fs || 11.5}px;color:#5b6b84;line-height:${o.lh || 16}px;">${head}${body}</div>`;
-}
 // Logos only, no heading label
 const CERT_DEFS = [
   ['crs', 'CRS'], ['aei', 'AEI'], ['realtor', 'REALTOR'],
@@ -282,15 +271,11 @@ function certsRow(certs, links, customs, vis, align, h) {
 async function buildHTML() {
   const raw = state, c = cleanHex(raw.color);
   const photoPosition = raw.photoPosition === 'center top' ? 'center top' : 'center center';
-  // The area field is a textarea: keep its line breaks (printed as <br> in the signature)
-  // and drop the blank lines around the text.
-  const zonaClean = String(raw.zona || '').replace(/\r\n?/g, '\n').replace(/^\s+|\s+$/g, '');
   // Shallow copy used by every template below: plain-text fields are HTML-escaped
   // and URL fields normalized, so the interpolation further down is always safe.
   const s = {
     ...raw,
-    nombre: esc(raw.nombre), cargo: esc(raw.cargo), zona: esc(zonaClean),
-    zonaLabel: esc(raw.zonaLabel === undefined ? 'Specializing in' : raw.zonaLabel),
+    nombre: esc(raw.nombre), cargo: esc(raw.cargo),
     tel: esc(raw.tel), email: esc(raw.email), web: esc(raw.web),
     dir: esc(raw.dir), legal: esc(raw.legal),
     dirUrl: normUrl(raw.dirUrl), listings: normUrl(raw.listings), booking: normUrl(raw.booking),
@@ -333,9 +318,8 @@ async function buildHTML() {
   };
   const socials = socialsHtml();
 
-  const legalHtml = (sz) => s.vis.legal
-    ? `<tr><td style="padding-top:12px;font-size:${(sz && sz.fs) || 10}px;line-height:${(sz && sz.lh) || 14}px;color:#8a94a8;text-align:center;font-family:Arial,Helvetica,sans-serif;max-width:560px;">${s.legal}</td></tr>` : '';
-  const legal = legalHtml();
+  const legalHtml = (sz, span) => s.vis.legal && s.legal
+    ? `<tr><td${span ? ` colspan="${span}"` : ''} align="center" style="padding:16px 14px 0;font-size:${(sz && sz.fs) || 10}px;line-height:${(sz && sz.lh) || 14}px;color:#8a94a8;text-align:center;font-family:Arial,Helvetica,sans-serif;">${s.legal}</td></tr>` : '';
   // Action pills (listings + optional booking). The community links live on their own
   // "Community Expert:" line in every template, so they are no longer a pill here.
   const actionPills = (opt) => {
@@ -365,16 +349,10 @@ async function buildHTML() {
 
   const certs = certsRow(s.certs, s.certLinks, s.customCerts, s.vis, s.certsAlign);
   const qr = (s.vis.qr && raw) ? qrRow(vcardText(raw), cal) : '';
-  const zonaHtml = (sz) => (s.vis.zona && s.zona) ? zonaText(s.zona, sz, s.zonaLabel) : '';
-  // Broker and Banner print the area inside the role line, so a manual break becomes " · ".
-  const zonaFlat = String(s.zona || '').replace(/\r?\n/g, ' · ');
-  const zona = zonaHtml();
-
   // The Main template runs one notch larger: its 600 px row has room to breathe.
   const MAIN_SZ = {
     photo: 118, photoCell: 132,
     name: 18.5, nameLh: 24, role: 13,
-    zona: { fs: 12, lh: 16.5, mw: 200, mt: 6 },
     contact: { ic: 17, fs: 12.5, lh: 18 },
     logo: 140,
     pill: { fs: 12, pad: '7px 14px', rad: 17, gs: 13 },
@@ -391,53 +369,52 @@ async function buildHTML() {
     return `<table cellpadding="0" cellspacing="0" border="0" width="600" style="font-family:Arial,Helvetica,sans-serif;max-width:600px;"><tbody>
 <tr><td width="200" valign="middle" style="text-align:center;padding-right:10px;">${fotoCell(110)}
 <div style="font-size:16px;font-weight:bold;color:#111;margin-top:10px;line-height:20px;">${s.nombre}</div>
-<div style="font-size:12px;color:#555;">${s.cargo}</div>${zona}</td>
+<div style="font-size:12px;color:#555;">${s.cargo}</div></td>
 <td width="1" style="background-color:${c};width:1px;font-size:0;">&nbsp;</td><td width="20"></td>
 <td valign="top"><table cellpadding="0" cellspacing="0" border="0">${rows}</table></td></tr>
 <tr><td colspan="4"><table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top:14px;border-top:1px solid ${c};"><tbody><tr>
 <td valign="middle" align="${cal}" style="padding-top:12px;">${s.vis.certs ? certImgs(s.certs, s.certLinks, s.customCerts, 26).join(' ') : ''}</td>
 <td align="right" valign="middle" style="padding-top:12px;"><img src="${logoUrl}" width="130" style="width:130px;max-width:130px;display:inline-block;" alt="Canablue"><div style="padding-top:8px;">${viewBtn}</div><div style="padding-top:8px;">${socials}</div></td>
-</tr></tbody></table></td></tr>${communityLine(COMM_SZ, false, 4)}${qr}${legal}</tbody></table>`;
+</tr></tbody></table></td></tr>${communityLine(COMM_SZ, false, 4)}${qr}${legalHtml(null, 4)}</tbody></table>`;
   }
   if (s.tpl === 'moderna') {
     return `<table cellpadding="0" cellspacing="0" border="0" width="600" style="font-family:Arial,Helvetica,sans-serif;max-width:600px;"><tbody>
 <tr><td style="background-color:${c};border-radius:10px 10px 0 0;padding:18px 22px;"><table cellpadding="0" cellspacing="0" border="0" width="100%"><tbody><tr>
-<td valign="middle"><div style="color:#ffffff;font-size:19px;font-weight:bold;line-height:24px;">${s.nombre}</div><div style="color:#d7e1f2;font-size:12.5px;">${s.cargo}${s.vis.zona && s.zona ? ' · ' + zonaFlat : ''}</div></td>
+<td valign="middle" align="center" style="text-align:center;"><div style="color:#ffffff;font-size:19px;font-weight:bold;line-height:24px;">${s.nombre}</div><div style="color:#d7e1f2;font-size:12.5px;line-height:17px;">${s.cargo}</div></td>
 <td width="90" align="right" valign="middle">${s.vis.foto ? `<img src="${s.foto}" width="76" height="76" style="width:76px;height:76px;border-radius:50%;border:3px solid #ffffff;display:inline-block;" alt="">` : ''}</td>
 </tr></tbody></table></td></tr>
 <tr><td style="border:1px solid #e3e8f0;border-top:0;border-radius:0 0 10px 10px;padding:16px 22px;"><table cellpadding="0" cellspacing="0" border="0" width="100%"><tbody><tr>
 <td valign="top" width="55%"><table cellpadding="0" cellspacing="0" border="0">${rows}</table></td>
 <td valign="top" align="right"><img src="${logoUrl}" width="125" style="width:125px;display:inline-block;" alt="Canablue"><div style="margin-top:10px;">${viewBtn}</div><div style="margin-top:10px;">${socials}</div></td>
-</tr></tbody></table>${communityLine(COMM_SZ)}${certs}${qr}${legal}</td></tr></tbody></table>`;
+</tr></tbody></table><table cellpadding="0" cellspacing="0" border="0" width="100%">${communityLine(COMM_SZ)}${certs}${qr}</table></td></tr>${legalHtml()}</tbody></table>`;
   }
   if (s.tpl === 'banner') {
     const sqPhoto = s.vis.foto ? `<img src="${s.foto}" width="84" height="84" style="width:84px;height:84px;border-radius:50%;object-fit:cover;object-position:${photoPosition};display:block;border:3px solid #ffffff;" alt="${s.nombre}">` : '';
     return `<table cellpadding="0" cellspacing="0" border="0" width="600" style="font-family:Arial,Helvetica,sans-serif;max-width:600px;"><tbody>
 <tr><td style="background-color:${c};border-radius:10px 10px 0 0;padding:20px 22px;"><table cellpadding="0" cellspacing="0" border="0" width="100%"><tbody><tr>
 <td width="100" valign="middle">${sqPhoto}</td>
-<td valign="middle"><div style="color:#ffffff;font-size:21px;font-weight:bold;line-height:25px;">${s.nombre}</div><div style="color:#d7e1f2;font-size:12.5px;margin-top:3px;">${s.cargo}${s.vis.zona && s.zona ? ' · ' + zonaFlat : ''}</div></td>
+<td valign="middle" align="center" style="text-align:center;"><div style="color:#ffffff;font-size:21px;font-weight:bold;line-height:25px;">${s.nombre}</div><div style="color:#d7e1f2;font-size:12.5px;line-height:17px;margin-top:3px;">${s.cargo}</div></td>
 </tr></tbody></table></td></tr>
 <tr><td style="border:1px solid #e3e8f0;border-top:0;padding:18px 22px 6px;"><table cellpadding="0" cellspacing="0" border="0" width="100%"><tbody><tr>
 <td valign="top" width="56%"><table cellpadding="0" cellspacing="0" border="0">${rows}</table></td>
 <td valign="middle" align="center"><div>${viewBtn}</div><div style="margin-top:12px;">${socials}</div><div style="margin-top:12px;"><img src="${logoUrl}" width="115" style="width:115px;display:inline-block;" alt="Canablue"></div></td>
 </tr></tbody></table></td></tr>
-<tr><td style="border:1px solid #e3e8f0;border-top:0;border-radius:0 0 10px 10px;padding:0 22px 18px;"><div style="border-top:1px solid ${c};font-size:0;line-height:0;">&nbsp;</div><table cellpadding="0" cellspacing="0" border="0" width="100%">${communityLine(COMM_SZ)}${certs}${qr}${legal}</table></td></tr>
-</tbody></table>`;
+<tr><td style="border:1px solid #e3e8f0;border-top:0;border-radius:0 0 10px 10px;padding:0 22px 18px;"><div style="border-top:1px solid ${c};font-size:0;line-height:0;">&nbsp;</div><table cellpadding="0" cellspacing="0" border="0" width="100%">${communityLine(COMM_SZ)}${certs}${qr}</table></td></tr>
+${legalHtml()}</tbody></table>`;
   }
   if (s.tpl === 'sidebar') {
     const sidePhoto = s.vis.foto ? `<img src="${s.foto}" width="88" height="88" style="width:88px;height:88px;border-radius:50%;object-fit:cover;object-position:${photoPosition};display:inline-block;border:3px solid #ffffff;" alt="${s.nombre}">` : '';
-    const sideZona = (s.vis.zona && s.zona) ? `<div style="margin-top:6px;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#d7e1f2;line-height:15px;">${String(s.zonaLabel || '').trim() ? String(s.zonaLabel).trim() + '<br>' : ''}${String(s.zona).replace(/\r?\n/g, '<br>')}</div>` : '';
     return `<table cellpadding="0" cellspacing="0" border="0" width="600" style="font-family:Arial,Helvetica,sans-serif;max-width:600px;"><tbody><tr>
 <td width="190" valign="top" align="center" style="background-color:${c};border-radius:10px 0 0 10px;padding:24px 16px;">${sidePhoto}
 <div style="color:#ffffff;font-size:16px;font-weight:bold;margin-top:12px;line-height:20px;">${s.nombre}</div>
-<div style="color:#d7e1f2;font-size:12px;margin-top:2px;">${s.cargo}</div>${sideZona}
+<div style="color:#d7e1f2;font-size:12px;margin-top:2px;">${s.cargo}</div>
 <div style="margin-top:14px;">${socials}</div></td>
 <td valign="top" style="border:1px solid #e3e8f0;border-left:0;border-radius:0 10px 10px 0;padding:20px 22px;">
 <table cellpadding="0" cellspacing="0" border="0">${rows}</table>
 <div style="margin-top:12px;">${viewBtn}</div>
 <div style="margin-top:14px;"><img src="${logoUrl}" width="120" style="width:120px;display:inline-block;" alt="Canablue"></div>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">${communityLine(COMM_SZ_STACK, true)}${certs}${qr}${legal}</table></td>
-</tr></tbody></table>`;
+<table cellpadding="0" cellspacing="0" border="0" width="100%">${communityLine(COMM_SZ_STACK, true)}${certs}${qr}</table></td>
+</tr>${legalHtml(null, 2)}</tbody></table>`;
   }
   if (s.tpl === 'photo-left') {
     return `<table cellpadding="0" cellspacing="0" border="0" width="600" style="font-family:Arial,Helvetica,sans-serif;max-width:600px;"><tbody><tr>
@@ -445,30 +422,30 @@ async function buildHTML() {
 <div style="margin-top:12px;"><img src="${logoUrl}" width="110" style="width:110px;display:inline-block;" alt="Canablue"></div>
 <div style="margin-top:10px;">${socials}</div></td>
 <td width="24"></td>
-<td valign="top"><div style="font-size:17px;font-weight:700;color:#111;line-height:22px;">${s.nombre}</div><div style="font-size:12px;color:#111;">${s.cargo}</div>${zona}
+<td valign="top"><div style="text-align:center;"><div style="font-size:17px;font-weight:700;color:#111;line-height:22px;">${s.nombre}</div><div style="font-size:12px;color:#111;line-height:17px;">${s.cargo}</div></div>
 <div style="border-top:1px solid ${c};font-size:0;line-height:0;margin:10px 0;">&nbsp;</div>
 <table cellpadding="0" cellspacing="0" border="0">${rows}</table>
 <div style="margin-top:10px;">${viewBtn}</div></td>
 </tr>
-<tr><td colspan="3"><table cellpadding="0" cellspacing="0" border="0" width="100%">${communityLine(COMM_SZ)}${certs}${qr}${legal}</table></td></tr>
-</tbody></table>`;
+<tr><td colspan="3"><table cellpadding="0" cellspacing="0" border="0" width="100%">${communityLine(COMM_SZ)}${certs}${qr}</table></td></tr>
+${legalHtml(null, 3)}</tbody></table>`;
   }
   if (s.tpl === 'photo-top') {
     return `<table cellpadding="0" cellspacing="0" border="0" width="600" style="font-family:Arial,Helvetica,sans-serif;max-width:600px;"><tbody>
 <tr><td align="center">${fotoCell(120)}</td></tr>
-<tr><td align="center" style="padding-top:10px;"><div style="font-size:19px;font-weight:bold;color:#111;line-height:24px;">${s.nombre}</div><div style="font-size:12.5px;color:#555;margin-top:2px;">${s.cargo}</div>${zona}</td></tr>
+<tr><td align="center" style="padding-top:10px;"><div style="font-size:19px;font-weight:bold;color:#111;line-height:24px;">${s.nombre}</div><div style="font-size:12.5px;color:#555;margin-top:2px;">${s.cargo}</div></td></tr>
 <tr><td style="padding:12px 0;"><div style="border-top:1px solid ${c};font-size:0;line-height:0;">&nbsp;</div></td></tr>
 <tr><td><table cellpadding="0" cellspacing="0" border="0" width="100%"><tbody><tr>
 <td valign="top"><table cellpadding="0" cellspacing="0" border="0">${rows}</table><div style="margin-top:10px;">${viewBtn}</div></td>
 <td valign="top" align="right"><img src="${logoUrl}" width="130" style="width:130px;display:inline-block;" alt="Canablue"><div style="margin-top:10px;">${socials}</div></td>
 </tr></tbody></table></td></tr>
-<tr><td><table cellpadding="0" cellspacing="0" border="0" width="100%">${communityLine(COMM_SZ)}${certs}${qr}${legal}</table></td></tr>
+<tr><td><table cellpadding="0" cellspacing="0" border="0" width="100%">${communityLine(COMM_SZ)}${certs}${qr}</table></td></tr>
 <tr><td style="padding-top:12px;"><div style="border-top:1px solid ${c};font-size:0;line-height:0;">&nbsp;</div></td></tr>
-</tbody></table>`;
+${legalHtml()}</tbody></table>`;
   }
   if (s.tpl === 'photo-right') {
     return `<table cellpadding="0" cellspacing="0" border="0" width="600" style="font-family:Arial,Helvetica,sans-serif;max-width:600px;"><tbody><tr>
-<td valign="top"><div style="font-size:17px;font-weight:700;color:#111;line-height:22px;">${s.nombre}</div><div style="font-size:12px;color:#111;">${s.cargo}</div>${zona}
+<td valign="top"><div style="text-align:center;"><div style="font-size:17px;font-weight:700;color:#111;line-height:22px;">${s.nombre}</div><div style="font-size:12px;color:#111;line-height:17px;">${s.cargo}</div></div>
 <div style="border-top:1px solid ${c};font-size:0;line-height:0;margin:10px 0;">&nbsp;</div>
 <table cellpadding="0" cellspacing="0" border="0">${rows}</table>
 <div style="margin-top:10px;">${viewBtn}</div></td>
@@ -477,8 +454,8 @@ async function buildHTML() {
 <div style="margin-top:12px;"><img src="${logoUrl}" width="120" style="width:120px;display:inline-block;" alt="Canablue"></div>
 <div style="margin-top:10px;">${socials}</div></td>
 </tr>
-<tr><td colspan="3"><table cellpadding="0" cellspacing="0" border="0" width="100%">${communityLine(COMM_SZ)}${certs}${qr}${legal}</table></td></tr>
-</tbody></table>`;
+<tr><td colspan="3"><table cellpadding="0" cellspacing="0" border="0" width="100%">${communityLine(COMM_SZ)}${certs}${qr}</table></td></tr>
+${legalHtml(null, 3)}</tbody></table>`;
   }
   // Main template.
   // The bottom row ships in two variants: on desktop the buttons sit in the
@@ -489,7 +466,7 @@ async function buildHTML() {
   return `<style>@media only screen and (max-width:480px){.cb-desk{display:none !important}.cb-mob{display:table-row !important}.cb-name{white-space:normal !important}}</style><table cellpadding="0" cellspacing="0" border="0" width="600" style="font-family:Arial,Helvetica,sans-serif;max-width:600px;"><tbody>
 <tr><td><table cellpadding="0" cellspacing="0" border="0"><tbody><tr>
 ${s.vis.foto && s.foto ? `<td width="${MAIN_SZ.photoCell}" valign="middle">${fotoCell(MAIN_SZ.photo)}</td>` : ''}
-<td valign="middle"><div class="cb-name" style="font-size:${MAIN_SZ.name}px;font-weight:700;color:#111;line-height:${MAIN_SZ.nameLh}px;white-space:nowrap;">${s.nombre}</div><div style="font-size:${MAIN_SZ.role}px;color:#111;">${s.cargo}</div>${zonaHtml(MAIN_SZ.zona)}</td>
+<td valign="middle" align="center" style="text-align:center;"><div class="cb-name" style="font-size:${MAIN_SZ.name}px;font-weight:700;color:#111;line-height:${MAIN_SZ.nameLh}px;white-space:nowrap;">${s.nombre}</div><div style="font-size:${MAIN_SZ.role}px;line-height:17px;color:#111;max-width:220px;margin:0 auto;white-space:normal;text-align:center;">${s.cargo}</div></td>
 <td width="20"></td><td width="1" style="border-left:1px solid ${c};font-size:0;">&nbsp;</td><td width="20"></td>
 <td valign="middle"><table cellpadding="0" cellspacing="0" border="0">${contactRows(MAIN_SZ.contact)}</table></td>
 </tr></tbody></table></td></tr>
@@ -533,7 +510,6 @@ function skFlags() {
     + (state.customCerts || []).filter(x => x && x.img).length;
   return {
     photo: !!v.foto && !!String(state.foto || '').trim(),
-    zona: !!v.zona && !!String(state.zona || '').trim(),
     socials: v.social ? Math.min(socials, 6) : 0,
     certs: v.certs ? Math.min(certs, 8) : 0,
     legal: !!v.legal,
@@ -545,7 +521,7 @@ function skFlags() {
   };
 }
 function skelFor(tpl, f) {
-  const name = dark => skBar(58, dark && 'wh') + skBar(34, dark ? 'whs' : 'sm') + (f.zona ? skBar(72, dark ? 'whs' : 'sm') : '');
+  const name = dark => skBar(58, dark && 'wh') + skBar(34, dark ? 'whs' : 'sm');
   const contacts = () => [84, 62, 72, 55].map(w => `<span class="crow"><i class="cico"></i>${skBar(w)}</span>`).join('');
   const photo = px => f.photo ? skPhoto(px) : '';
   // One ghost pill per active community, as wide as its label really is.
@@ -712,22 +688,9 @@ function updateStats(html) {
 let isDirty = false;
 function setDirty(on) { isDirty = !!on; const d = $('dirtyChip'); if (d) d.hidden = !on; }
 function markDirty() { setDirty(true); render(); }
-// "Area of expertise" is a textarea: grow it so every line the agent types stays visible.
-function growZona() {
-  const t = $('fZona');
-  if (!t || t.tagName !== 'TEXTAREA') return;
-  // The card can be hidden behind the rail: scrollHeight is 0 there, so wait until
-  // the section is visible (the rail handler calls this again).
-  if (!t.offsetParent) return;
-  t.style.height = 'auto';
-  t.style.height = (t.scrollHeight + 2) + 'px';
-}
 function syncStateFromInputs() {
   state.color = $('fColor').value || '#174176'; $('fColorHex').value = state.color.toUpperCase();
   state.nombre = $('fNombre').value; state.cargo = $('fCargo').value;
-  // The area is a textarea: keep the line breaks, drop the blank line at the end.
-  state.zona = $('fZona').value.replace(/\s+$/, '');
-  state.zonaLabel = $('fZonaLabel').value;
   state.tel = $('fTel').value; state.email = $('fEmail').value; state.web = $('fWeb').value; state.dir = $('fDir').value; state.dirUrl = $('fDirUrl').value;
   state.listings = $('fListings').value; state.linkedin = $('fLinkedin').value;
   state.booking = $('fBooking').value;
@@ -736,7 +699,7 @@ function syncStateFromInputs() {
   state.certs = { crs: $('cCRS').checked, aei: $('cAEI').checked, realtor: $('cRealtor').checked, sr23: $('cSR23').checked, sr24: $('cSR24').checked, lux: $('cLux').checked };
   state.certLinks = { crs: $('fLinkCRS').value, aei: $('fLinkAEI').value, realtor: $('fLinkRealtor').value, sr23: $('fLinkSR23').value, sr24: $('fLinkSR24').value, lux: $('fLinkLux').value };
   state.customCerts = [...document.querySelectorAll('#customCerts .xlink')].map(r => { const i = r.querySelectorAll('input'); return { img: i[0].value, link: i[1].value }; }).filter(x => x.img || x.link);
-  state.vis = { foto: $('vFoto').checked, zona: $('vZona').checked, social: $('vSocial').checked, listings: $('vListings').checked, booking: $('vBooking').checked, community: $('vCommunity').checked, qr: $('vQr').checked, certs: $('vCerts').checked, legal: $('vLegal').checked };
+  state.vis = { foto: $('vFoto').checked, social: $('vSocial').checked, listings: $('vListings').checked, booking: $('vBooking').checked, community: $('vCommunity').checked, qr: $('vQr').checked, certs: $('vCerts').checked, legal: $('vLegal').checked };
   state.legal = $('fLegal').value;
   document.querySelectorAll('#tplGrid .tpl').forEach(b => b.classList.toggle('active', b.dataset.tpl === state.tpl));
 }
@@ -769,7 +732,7 @@ function flashCopied(btn) {
 
 async function copyRich() {
   const html = await render();
-  const text = `${state.nombre} · ${state.cargo}\n${state.zona}\n${state.tel} · ${state.email} · ${state.web}\nLinkedIn: ${state.linkedin}${state.listings ? '\nView My Listings: ' + state.listings : ''}`;
+  const text = `${state.nombre} · ${state.cargo}\n${state.tel} · ${state.email} · ${state.web}\nLinkedIn: ${state.linkedin}${state.listings ? '\nView My Listings: ' + state.listings : ''}`;
   try {
     const item = new ClipboardItem({ 'text/html': new Blob([html], { type: 'text/html' }), 'text/plain': new Blob([text], { type: 'text/plain' }) });
     await navigator.clipboard.write([item]);
@@ -916,12 +879,12 @@ let selectedAgentKey = 'pamela';
 const LOGO_DEFAULT = 'https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png';
 function blankAgent() {
   return {
-    key: '', color: '#174176', name: '', role: '', zona: '', zonaLabel: 'Specializing in', tel: '', email: '',
+    key: '', color: '#174176', name: '', role: '', zona: '', tel: '', email: '',
     web: 'canablue.com', dir: DIR_DEFAULT, dirUrl: MAPS_DEFAULT,
     listings: '', booking: '', community: COMMUNITY_DEFAULT, communities: defaultCommunities(), linkedin: '', instagram: '', whatsapp: '',
     foto: '', photoPosition: 'center center', logo: LOGO_DEFAULT,
     extra: [], tpl: 'principal',
-    vis: { foto: true, zona: true, social: true, listings: true, booking: true, community: true, qr: true, certs: true, legal: true },
+    vis: { foto: true, social: true, listings: true, booking: true, community: true, qr: true, certs: true, legal: true },
     iconStyle: 'solid', certsAlign: 'center',
     certLinks: { crs: '', aei: '', realtor: '', sr23: '', sr24: '', lux: '' },
     customCerts: [],
@@ -965,8 +928,6 @@ async function loadSheetAgents(id) {
     return {
       key: String(o.key || '').trim() || slug(o.name),
       color: o.color || '', name: o.name || '', role: o.role || '', zona: o.zona || '',
-      // Optional: "Specializing in" (or any intro) before the area. Omitted = default.
-      zonaLabel: o.zonaLabel || o.zonalabel || undefined,
       tel: o.tel || '', email: o.email || '', web: o.web || 'canablue.com',
       dir: o.dir || DIR_DEFAULT, dirUrl: o.dirUrl || MAPS_DEFAULT,
       listings: o.listings || '', linkedin: o.linkedin || '',
@@ -1019,6 +980,22 @@ async function loadAgents() {
       localStorage.setItem('canablue.qr.enabled.v1', '1');
     }
   } catch {}
+  // Bring older browser-saved signatures in line with the team-wide notice
+  // and the two corrected job titles. Later manual edits remain editable.
+  try {
+    if (!localStorage.getItem('canablue.team-update.v1')) {
+      const refresh = c => {
+        const role = c.key === 'martha-mendoza' && c.role === 'Commercial Assistant' ? 'Commercial Coordinator'
+          : c.key === 'leslie-ann-cedeno' && c.role === 'Marketing' ? 'Lead Generation & Digital Channels Specialist' : c.role;
+        return { ...c, role, legal: c.legal === undefined ? DEFAULT_LEGAL : c.legal,
+          vis: { ...(c.vis || {}), legal: true } };
+      };
+      setCustoms(getCustoms().map(refresh));
+      const draft = JSON.parse(localStorage.getItem(LS_FORM) || 'null');
+      if (draft) localStorage.setItem(LS_FORM, JSON.stringify(refresh(draft)));
+      localStorage.setItem('canablue.team-update.v1', '1');
+    }
+  } catch {}
   getCustoms().forEach(c => {
     const i = AGENTS.findIndex(a => a.key === c.key);
     if (i >= 0) {
@@ -1035,7 +1012,7 @@ async function loadAgents() {
 function collectAgent(key) {
   return {
     key, color: $('fColor').value, name: $('fNombre').value, role: $('fCargo').value,
-    zona: $('fZona').value.replace(/\s+$/, ''), zonaLabel: $('fZonaLabel').value, tel: $('fTel').value, email: $('fEmail').value, web: $('fWeb').value,
+    zona: state.zona || '', tel: $('fTel').value, email: $('fEmail').value, web: $('fWeb').value,
     dir: $('fDir').value, dirUrl: $('fDirUrl').value, listings: $('fListings').value,
     booking: $('fBooking').value, community: state.community,
     communities: readCommunityRows(),
@@ -1043,7 +1020,7 @@ function collectAgent(key) {
     foto: $('fFoto').value, photoPosition: state.photoPosition || 'center center', logo: $('fLogo').value,
     extra: [...document.querySelectorAll('#extraLinks .xlink-net')].map(r => ({ icon: r._icon || 'facebook', url: r.querySelector('input').value })).filter(e => e.url),
     tpl: state.tpl,
-    vis: { foto: $('vFoto').checked, zona: $('vZona').checked, social: $('vSocial').checked, listings: $('vListings').checked, booking: $('vBooking').checked, community: $('vCommunity').checked, qr: $('vQr').checked, certs: $('vCerts').checked, legal: $('vLegal').checked },
+    vis: { foto: $('vFoto').checked, social: $('vSocial').checked, listings: $('vListings').checked, booking: $('vBooking').checked, community: $('vCommunity').checked, qr: $('vQr').checked, certs: $('vCerts').checked, legal: $('vLegal').checked },
     iconStyle: state.iconStyle,
     certsAlign: state.certsAlign,
     certLinks: { crs: $('fLinkCRS').value, aei: $('fLinkAEI').value, realtor: $('fLinkRealtor').value, sr23: $('fLinkSR23').value, sr24: $('fLinkSR24').value, lux: $('fLinkLux').value },
@@ -1054,10 +1031,7 @@ function collectAgent(key) {
 function applyAgent(a) {
   if (a.color && /^#[0-9a-f]{6}$/i.test(a.color)) $('fColor').value = a.color;
   $('fNombre').value = a.name || ''; $('fCargo').value = a.role || '';
-  $('fZona').value = a.zona || '';
-  growZona();
-  // Legacy agents have no zonaLabel: default to the original wording.
-  $('fZonaLabel').value = a.zonaLabel === undefined ? 'Specializing in' : a.zonaLabel;
+  state.zona = a.zona || '';
   $('fTel').value = a.tel || '';
   $('fEmail').value = a.email || ''; $('fWeb').value = a.web || 'canablue.com';
   $('fDir').value = a.dir || DIR_DEFAULT; $('fDirUrl').value = a.dirUrl || MAPS_DEFAULT;
@@ -1065,6 +1039,7 @@ function applyAgent(a) {
   $('fBooking').value = a.booking || '';
   $('fInstagram').value = a.instagram || ''; $('fWhatsapp').value = a.whatsapp || '';
   $('fFoto').value = a.foto || ''; state.photoPosition = a.photoPosition || 'center center'; if (a.logo) $('fLogo').value = a.logo;
+  $('fLegal').value = a.legal === undefined ? DEFAULT_LEGAL : a.legal;
   const ct = a.certs || {};
   $('cCRS').checked = !!ct.crs; $('cAEI').checked = !!ct.aei; $('cRealtor').checked = !!ct.realtor;
   if (ct.sr23 !== undefined) $('cSR23').checked = !!ct.sr23;
@@ -1080,7 +1055,7 @@ function applyAgent(a) {
   setCertsAlign(a.certsAlign || 'center');
   if (a.tpl) state.tpl = a.tpl;
   if (a.vis) {
-    const v = a.vis, box = { foto: 'vFoto', zona: 'vZona', social: 'vSocial', listings: 'vListings', booking: 'vBooking', community: 'vCommunity', qr: 'vQr', certs: 'vCerts', legal: 'vLegal' };
+    const v = a.vis, box = { foto: 'vFoto', social: 'vSocial', listings: 'vListings', booking: 'vBooking', community: 'vCommunity', qr: 'vQr', certs: 'vCerts', legal: 'vLegal' };
     for (const k in box) { const el = $(box[k]); if (el && v[k] !== undefined) el.checked = !!v[k]; }
   }
   if (!a.vis || a.vis.qr === undefined) $('vQr').checked = true;
@@ -1311,7 +1286,6 @@ function showSection(id) {
   document.querySelectorAll('.rail button').forEach(x => x.classList.toggle('on', x.dataset.sec === id));
   document.querySelectorAll('.editor .card').forEach(c => c.classList.toggle('show', c.id === id));
   document.querySelector('.editor').scrollTop = 0;
-  growZona();
 }
 document.querySelectorAll('.rail button').forEach(b => b.onclick = () => showSection(b.dataset.sec));
 // Delegated: the thumbnails are rebuilt whenever a toggle changes, so per-button
@@ -1323,9 +1297,7 @@ $('tplGrid').addEventListener('click', e => {
   markDirty();
 });
 document.querySelectorAll('.swatches button').forEach(b => b.onclick = () => { $('fColor').value = b.dataset.c; markDirty(); });
-['fColor','fColorHex','fNombre','fCargo','fZona','fZonaLabel','fTel','fEmail','fWeb','fDir','fDirUrl','fListings','fBooking','fLinkedin','fInstagram','fWhatsapp','fFoto','fLogo','fLinkCRS','fLinkAEI','fLinkRealtor','fLinkSR23','fLinkSR24','fLinkLux','fLegal','cCRS','cAEI','cRealtor','cSR23','cSR24','cLux','vFoto','vZona','vSocial','vListings','vBooking','vCommunity','vQr','vCerts','vLegal'].forEach(id => $(id).addEventListener('input', markDirty));
-$('fZona').addEventListener('input', growZona);
-growZona();
+['fColor','fColorHex','fNombre','fCargo','fTel','fEmail','fWeb','fDir','fDirUrl','fListings','fBooking','fLinkedin','fInstagram','fWhatsapp','fFoto','fLogo','fLinkCRS','fLinkAEI','fLinkRealtor','fLinkSR23','fLinkSR24','fLinkLux','fLegal','cCRS','cAEI','cRealtor','cSR23','cSR24','cLux','vFoto','vSocial','vListings','vBooking','vCommunity','vQr','vCerts','vLegal'].forEach(id => $(id).addEventListener('input', markDirty));
 $('fColorHex').addEventListener('change', e => { if (/^#[0-9a-f]{6}$/i.test(e.target.value)) $('fColor').value = e.target.value; markDirty(); });
 $('fFotoFile').addEventListener('change', e => {
   const f = e.target.files[0]; if (!f) return;

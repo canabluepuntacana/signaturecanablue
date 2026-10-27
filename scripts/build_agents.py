@@ -26,6 +26,7 @@ ADDRESS_SALES = "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana
 ADDRESS_ADMIN = "Local E-02, Plaza San Juan Shopping Center, Bávaro, Punta Cana"
 MAPS = "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana"
 LOGO = "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png"
+LEGAL_NOTICE = "The information in this email is confidential and intended solely for its recipient."
 
 COMMUNITIES = {
     # These three zones have no dedicated page in Canablue's community catalog.
@@ -188,11 +189,12 @@ def main():
             "foto": PORTRAIT_PATH + filename + "?v=" + hashlib.sha256((OUT / filename).read_bytes()).hexdigest()[:12],
             "photoPosition": "center center",
             "logo": LOGO,
+            "legal": LEGAL_NOTICE,
             "tpl": "principal",
             "vis": {"foto": True, "zona": bool(zona), "social": True,
                     "listings": bool(author), "booking": False,
                     "community": bool(communities), "qr": True,
-                    "certs": any(certs.values()), "legal": False},
+                    "certs": any(certs.values()), "legal": True},
             "iconStyle": "solid", "certsAlign": "center", "certs": certs,
             "source": {"pdfPage": page, "portraitXref": xref,
                        "listingsVerified": bool(author),
@@ -209,10 +211,10 @@ def main():
             "dir": ADDRESS_SALES, "dirUrl": MAPS,
             "listings": "", "communities": [], "linkedin": "", "instagram": "",
             "whatsapp": "",
-            "foto": "", "logo": LOGO, "tpl": "principal",
+            "foto": "", "logo": LOGO, "legal": LEGAL_NOTICE, "tpl": "principal",
             "vis": {"foto": False, "zona": False, "social": True,
                     "listings": False, "booking": False, "community": False,
-                    "qr": True, "certs": False, "legal": False},
+                    "qr": True, "certs": False, "legal": True},
             "iconStyle": "solid", "certsAlign": "center",
             "certs": {k: False for k in ("crs", "aei", "realtor", "sr23", "sr24", "lux")},
             "source": {"directoryRow": contact["row"], "portrait": "not in PDF",

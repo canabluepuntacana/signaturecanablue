@@ -7,6 +7,7 @@
 <meta name="description" content="Build a professional Canablue email signature and copy it straight into Gmail or Outlook.">
 <meta name="theme-color" content="#174176">
 <link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="icon" type="image/svg+xml" sizes="any" href="assets/favicon-circle.svg">
 <link rel="apple-touch-icon" href="assets/favicon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Canablue">
@@ -100,11 +101,6 @@
         <div><label class="lbl">Name</label><input id="fNombre" value="Pamela Núñez"></div>
         <div><label class="lbl">Title</label><input id="fCargo" value="Broker Owner"></div>
       </div>
-      <label class="lbl">Area of expertise</label>
-      <textarea id="fZona" rows="2" spellcheck="false">Punta Cana · Cap Cana</textarea>
-      <p class="hint">Press Enter to start a second line; it prints as a line break in the signature.</p>
-      <label class="lbl">Text before the area ("Specializing in" — leave empty to hide it)</label>
-      <input id="fZonaLabel" value="Specializing in" placeholder="Specializing in">
       <div class="grid2">
         <div><label class="lbl">Phone</label><input id="fTel" value="+1 (809) 975-3900"></div>
         <div><label class="lbl">Email</label><input id="fEmail" value="pamela@canablue.com"></div>
@@ -198,7 +194,6 @@
       <h3><iconify-icon icon="mdi:eye"></iconify-icon> Visibility</h3>
       <div class="checks col">
         <label><input type="checkbox" id="vFoto" checked> Show photo</label>
-        <label><input type="checkbox" id="vZona" checked> Show area of expertise</label>
         <label><input type="checkbox" id="vSocial" checked> Show social icons (IG / WhatsApp / LinkedIn)</label>
         <label><input type="checkbox" id="vListings" checked> Show "View My Listings" button</label>
         <label><input type="checkbox" id="vBooking" checked> Show "Schedule" button (uses the booking URL)</label>
@@ -252,6 +247,6 @@
   </section>
 </main>
 
-<script src="app.js?v=20261027b"></script>
+<script src="app.js?v=20261027c"></script>
 </body>
 </html>

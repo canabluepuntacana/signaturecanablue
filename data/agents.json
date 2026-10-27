@@ -33,6 +33,7 @@
     "foto": "assets/agents/candy-vander-horst.jpg?v=00817dff8c29",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -43,7 +44,7 @@
       "community": true,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -81,6 +82,7 @@
     "foto": "assets/agents/christophe-poteloin.jpg?v=beb6e19515fa",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -91,7 +93,7 @@
       "community": false,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -129,6 +131,7 @@
     "foto": "assets/agents/cristina-socias.jpg?v=724f05dfdb2f",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -139,7 +142,7 @@
       "community": false,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -188,6 +191,7 @@
     "foto": "assets/agents/miguel-martinez.jpg?v=1e523402bd67",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -198,7 +202,7 @@
       "community": true,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -252,6 +256,7 @@
     "foto": "assets/agents/alejandro-angulo.jpg?v=e989194c64e8",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -262,7 +267,7 @@
       "community": true,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -300,6 +305,7 @@
     "foto": "assets/agents/pamela-gomez.jpg?v=8de96ab83ada",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -310,7 +316,7 @@
       "community": false,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -388,6 +394,7 @@
     "foto": "assets/agents/jose-luis-martin.jpg?v=ddabb37901d0",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -398,7 +405,7 @@
       "community": false,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -436,6 +443,7 @@
     "foto": "assets/agents/dahiana-senclaire.jpg?v=1058f2559fd7",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -446,7 +454,7 @@
       "community": false,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -484,6 +492,7 @@
     "foto": "assets/agents/martha-mendoza.png?v=4a23737743f9",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -494,7 +503,7 @@
       "community": false,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -532,6 +541,7 @@
     "foto": "assets/agents/maria-montilla.jpg?v=cbdce04dbd6d",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -542,7 +552,7 @@
       "community": false,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -580,6 +590,7 @@
     "foto": "assets/agents/diomari-ramirez.jpg?v=8a449a616d8f",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -590,7 +601,7 @@
       "community": false,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -628,6 +639,7 @@
     "foto": "assets/agents/maderlandys-sarmiento.jpg?v=ae5ab237a563",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -638,7 +650,7 @@
       "community": false,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -676,6 +688,7 @@
     "foto": "assets/agents/jimena-montana.jpg?v=042aa92ba9db",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -686,7 +699,7 @@
       "community": false,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -724,6 +737,7 @@
     "foto": "assets/agents/nathaly-martinez.jpg?v=09c37c6aa760",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -734,7 +748,7 @@
       "community": false,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -788,6 +802,7 @@
     "foto": "assets/agents/teresa-sullivan.jpg?v=c1e61fc5f07c",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -798,7 +813,7 @@
       "community": true,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -847,6 +862,7 @@
     "foto": "assets/agents/luis-sangiovanni.jpg?v=517b3a44ecc8",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -857,7 +873,7 @@
       "community": true,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -906,6 +922,7 @@
     "foto": "assets/agents/constantino-cury.jpg?v=fdaa126e3a1b",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -916,7 +933,7 @@
       "community": true,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -965,6 +982,7 @@
     "foto": "assets/agents/fior-ubiera.jpg?v=eaaeee18d2b1",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -975,7 +993,7 @@
       "community": true,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1013,6 +1031,7 @@
     "foto": "assets/agents/pelusa-miau.png?v=4274a34ac885",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -1023,7 +1042,7 @@
       "community": false,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1061,6 +1080,7 @@
     "foto": "assets/agents/annie-fernandez.jpg?v=e849695a1f99",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -1071,7 +1091,7 @@
       "community": false,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1109,6 +1129,7 @@
     "foto": "assets/agents/leslie-ann-cedeno.jpg?v=b05ab95190bc",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -1119,7 +1140,7 @@
       "community": false,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1173,6 +1194,7 @@
     "foto": "assets/agents/joshua-manuel-rosenthal.jpg?v=ac964dfd88a4",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -1183,7 +1205,7 @@
       "community": true,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1242,6 +1264,7 @@
     "foto": "assets/agents/dayana-richiez.jpg?v=93124eaf8647",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -1252,7 +1275,7 @@
       "community": true,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1296,6 +1319,7 @@
     "foto": "assets/agents/barbara-boruch.jpg?v=1cad66fe4c70",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -1306,7 +1330,7 @@
       "community": true,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1355,6 +1379,7 @@
     "foto": "assets/agents/wendy-duluc.jpg?v=1faa7130e1ec",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -1365,7 +1390,7 @@
       "community": true,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1419,6 +1444,7 @@
     "foto": "assets/agents/leiny-poueriet.jpg?v=480e15086e49",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -1429,7 +1455,7 @@
       "community": true,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1467,6 +1493,7 @@
     "foto": "assets/agents/mayelin-avila.jpg?v=ccf13812ffa2",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -1477,7 +1504,7 @@
       "community": false,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1531,6 +1558,7 @@
     "foto": "assets/agents/magdalena-pietrusinska.jpg?v=74fdb8055e15",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -1541,7 +1569,7 @@
       "community": true,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1579,6 +1607,7 @@
     "foto": "assets/agents/arslan-tahir.jpg?v=0de4ddcf17a1",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -1589,7 +1618,7 @@
       "community": false,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1627,6 +1656,7 @@
     "foto": "assets/agents/manuel-cabrera.png?v=074e20a8046f",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -1637,7 +1667,7 @@
       "community": false,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1691,6 +1721,7 @@
     "foto": "assets/agents/karina-manzanillo.png?v=4e44e14250ac",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -1701,7 +1732,7 @@
       "community": true,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1739,6 +1770,7 @@
     "foto": "assets/agents/luis-joel-lara-nova.png?v=0fa2be02d06d",
     "photoPosition": "center center",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": true,
@@ -1749,7 +1781,7 @@
       "community": false,
       "qr": true,
       "certs": true,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1786,6 +1818,7 @@
     "whatsapp": "",
     "foto": "",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": false,
@@ -1796,7 +1829,7 @@
       "community": false,
       "qr": true,
       "certs": false,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1831,6 +1864,7 @@
     "whatsapp": "",
     "foto": "",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": false,
@@ -1841,7 +1875,7 @@
       "community": false,
       "qr": true,
       "certs": false,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1876,6 +1910,7 @@
     "whatsapp": "",
     "foto": "",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": false,
@@ -1886,7 +1921,7 @@
       "community": false,
       "qr": true,
       "certs": false,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1921,6 +1956,7 @@
     "whatsapp": "",
     "foto": "",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": false,
@@ -1931,7 +1967,7 @@
       "community": false,
       "qr": true,
       "certs": false,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -1966,6 +2002,7 @@
     "whatsapp": "",
     "foto": "",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": false,
@@ -1976,7 +2013,7 @@
       "community": false,
       "qr": true,
       "certs": false,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",
@@ -2011,6 +2048,7 @@
     "whatsapp": "",
     "foto": "",
     "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "legal": "The information in this email is confidential and intended solely for its recipient.",
     "tpl": "principal",
     "vis": {
       "foto": false,
@@ -2021,7 +2059,7 @@
       "community": false,
       "qr": true,
       "certs": false,
-      "legal": false
+      "legal": true
     },
     "iconStyle": "solid",
     "certsAlign": "center",

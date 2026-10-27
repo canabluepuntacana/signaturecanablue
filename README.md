@@ -10,6 +10,7 @@ Signature creator for Canablue agents. Table-based, email-safe HTML output.
 - Dieciséis botones **View My Listings** apuntan a páginas de autor comprobadas en Canablue. El enlace facilitado para Carla (`/author/carlacanablue-com/`) devuelve una página inexistente; por eso su botón queda oculto hasta que haya uno válido.
 - El módulo **Firmas** es el primero en la barra lateral: busca por nombre, correo, cargo o zona y muestra las 39 firmas en una lista con **Ver firma** y **Editar**. En **Contact** hay un selector nativo de agentes. Los cambios manuales se guardan en este navegador o se exportan a JSON.
 - **Community Expert** usa las zonas indicadas en el PDF, más las actualizaciones concretas facilitadas para Alejandro, Dayana, Leiny, Magdalena y Karina. Cada comunidad con página propia tiene su enlace; Ciudad La Palma, Dominicus y Bávaro enlazan al catálogo general de comunidades porque Canablue no publica una página específica para esas zonas. Pamela conserva su configuración anterior de dos comunidades.
+- El cargo debajo de cada nombre procede de las firmas del PDF. Las zonas se muestran únicamente en **Community Expert**; ya no se repiten como especialidad junto al cargo. Los registros que solo están en Excel conservan el cargo disponible en el directorio.
 - Los logos AEI, Best of DR 2023/2024, REALTOR, CRS y Luxury Homes Expert se asignan por persona según las páginas del PDF. Se verificaron 16 cuentas personales de Instagram y se omitieron tres perfiles del PDF que hoy aparecen como no disponibles (Miguel, Karina y Joel). LinkedIn aparece cuando se pudo vincular el perfil público con Canablue.
 - El QR de contacto está activado por defecto para las 39 firmas y para perfiles nuevos. `data/pamela_original.json` conserva el registro anterior de Pamela; al generar el catálogo solo se activa su QR, como pidió el usuario.
 - Antes de usar las firmas en correo, publique `assets/agents/` junto con la web. Las rutas de retratos en el JSON son relativas y el HTML copiado usa el dominio donde se abre la aplicación (GitHub Pages o Vercel). En localhost usa la URL pública de GitHub Pages para que la firma copiada no apunte al equipo local.
@@ -77,8 +78,7 @@ deletes them.
    Leave `booking` empty to hide the "Schedule a Call" button. The `community` column is
    kept for backwards compatibility but no longer drives the signature: the
    "Community Expert:" links are configured per agent in the JSON or the optional `communities` column.
-   `zonaLabel` is optional: it is the text printed before the `zona` (default
-   "Specializing in"; leave it empty to print only the area).
+   `zona` remains optional metadata for search and older exports; it is not printed in the signature.
 2. Share → General access → **Anyone with the link** (Viewer).
 3. Copy the spreadsheet ID from its URL (`/d/ID/edit`) and paste it in the
    creator's **Google Sheet ID** field → **Reload**. The ID is remembered.
@@ -88,12 +88,6 @@ deletes them.
 ## Optional signature pieces
 
 - **View My Listings** — pill button, uses the `listings` URL. Toggle in **Display**.
-- **Area of expertise** — the **Area of expertise** field is a text area: press **Enter**
-  to start a second line and it prints as a real line break in Main, Broker, Dark
-  Sidebar and Photo Left/Top/Right (Compact and Banner print the area inline after the
-  role, so there a break becomes ` · `). The **Text before the area** field
-  (default "Specializing in") prints on its own line, with the area underneath; change
-  the wording, translate it or leave it empty to show just the area.
 - **Schedule a Call** — pill button, appears only when the `booking` URL is set. Toggle in **Display**.
 - **Community Expert** — when an agent has communities, every template prints
   a **Community Expert:** label followed by one small outline pill per area. Areas without a dedicated page link to the Canablue community catalog. The pills are editable per

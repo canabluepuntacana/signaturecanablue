@@ -1,7 +1,9 @@
 /* Canablue Signature Creator — table-based HTML, 100% email-client compatible */
 const $ = id => document.getElementById(id);
 const PORTRAIT_PATH = 'assets/agents/';
-const FALLBACK_SITE = 'https://canabluepuntacana.github.io/signaturecanablue/';
+const PORTRAIT_PUBLIC_SITE = 'https://signaturecanablue.vercel.app/';
+const PORTRAIT_SQUARE = 'c_fill,g_auto,w_240,h_240';
+const PORTRAIT_FETCH = `https://res.cloudinary.com/ybkuwivn/image/fetch/${PORTRAIT_SQUARE}/`;
 const PORTRAIT_BASES = [
   'https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/',
   'https://canabluepuntacana.github.io/signaturecanablue/assets/agents/'
@@ -18,9 +20,15 @@ const samePortrait = (left, right) => {
 };
 function signaturePhotoUrl(value) {
   const path = portraitPath(value);
-  if (!path) return normUrl(value);
-  const site = ['localhost', '127.0.0.1'].includes(location.hostname) ? FALLBACK_SITE : location.href;
-  return new URL(path, site).href;
+  if (path) return PORTRAIT_FETCH + new URL(path, PORTRAIT_PUBLIC_SITE).href;
+  const url = normUrl(value);
+  if (!url || url.startsWith('data:')) return url;
+  // Email clients can ignore object-fit; send square source pixels instead.
+  const ownCloudinary = 'https://res.cloudinary.com/ybkuwivn/image/upload/';
+  if (url.startsWith(ownCloudinary)) {
+    return url.replace(ownCloudinary, ownCloudinary + PORTRAIT_SQUARE + '/');
+  }
+  return PORTRAIT_FETCH + url;
 }
 // Canablue community page (editable per agent, like listings or booking).
 const COMMUNITY_DEFAULT = 'https://canablue.com/community/cocotal/';

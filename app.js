@@ -11,7 +11,7 @@ const COMMUNITY_LINKS = [
 const defaultCommunities = () => COMMUNITY_LINKS.map(x => ({ label: x.label, url: x.url, on: true }));
 // Agents saved before this existed fall back to the two default communities.
 const communitiesOf = a => Array.isArray(a && a.communities) ? a.communities : defaultCommunities();
-const activeCommunities = a => communitiesOf(a).filter(c => c && c.on !== false && String(c.url || '').trim());
+const activeCommunities = a => communitiesOf(a).filter(c => c && c.on !== false && String(c.label || '').trim());
 const state = {
   tpl: 'principal',
   color: '#174176',
@@ -28,6 +28,7 @@ const state = {
   instagram: 'https://www.instagram.com/pamela_canablue.rd',
   whatsapp: 'https://wa.me/18096080943',
   foto: 'https://res.cloudinary.com/ybkuwivn/image/upload/v1792087360/Firmas_de_correo_Electronico_pamela.png',
+  photoPosition: 'center center',
   logo: 'https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png',
   certs: { crs: true, aei: true, realtor: true, sr23: true, sr24: true, lux: false },
   certLinks: { crs: '', aei: '', realtor: '', sr23: '', sr24: '', lux: '' },
@@ -35,7 +36,7 @@ const state = {
   certsAlign: 'center',
   extra: [],
   iconStyle: 'solid',
-  vis: { foto: true, zona: true, social: true, listings: true, booking: true, community: true, qr: false, certs: true, legal: true },
+  vis: { foto: true, zona: true, social: true, listings: true, booking: true, community: true, qr: true, certs: true, legal: true },
   legal: 'The information in this email is confidential and intended solely for its recipient.'
 };
 const DEFAULT_LEGAL = 'The information in this email is confidential and intended solely for its recipient.';
@@ -219,7 +220,9 @@ function scheduleBtn(url, c, opt) { return pillBtn(url, 'Schedule a Call', white
 function communityPill(label, url, c, opt) {
   const o = opt || {};
   const fs = o.pfs || 10.5, pad = o.pad || '5px 11px', rad = o.rad || 15;
-  return `<a href="${url}" target="_blank" style="display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:${fs}px;font-weight:bold;text-decoration:none;border-radius:${rad}px;padding:${pad};white-space:nowrap;background-color:#ffffff;color:${c};border:1px solid ${c};">${label}</a>`;
+  const style = `display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:${fs}px;font-weight:bold;text-decoration:none;border-radius:${rad}px;padding:${pad};white-space:nowrap;background-color:#ffffff;color:${c};border:1px solid ${c};`;
+  return url ? `<a href="${url}" target="_blank" style="${style}">${label}</a>`
+    : `<span style="${style}border-style:dashed;" title="Community page pending">${label}</span>`;
 }
 // Plain clean text, no pill background or border. Line breaks typed in the editor
 // (Enter inside "Area of expertise") print as real breaks.
@@ -256,6 +259,7 @@ function certsRow(certs, links, customs, vis, align, h) {
 
 async function buildHTML() {
   const raw = state, c = cleanHex(raw.color);
+  const photoPosition = raw.photoPosition === 'center top' ? 'center top' : 'center center';
   // The area field is a textarea: keep its line breaks (printed as <br> in the signature)
   // and drop the blank lines around the text.
   const zonaClean = String(raw.zona || '').replace(/\r\n?/g, '\n').replace(/^\s+|\s+$/g, '');
@@ -278,15 +282,16 @@ async function buildHTML() {
   const logoUrl = await toDataURL(s.logo);
   const telHref = 'tel:' + String(raw.tel || '').replace(/[^+\d]/g, '');
   const webHref = normUrl(raw.web) || '#';
-  const fotoCell = (size) => s.vis.foto
-    ? `<div style="text-align:center;"><img src="${s.foto}" width="${size}" height="${size}" style="width:${size}px;height:${size}px;border-radius:50%;object-fit:cover;display:inline-block;border:3px solid ${c}22;" alt="${s.nombre}"></div>` : '';
+  const fotoCell = (size) => s.vis.foto && s.foto
+    ? `<div style="text-align:center;"><img src="${s.foto}" width="${size}" height="${size}" style="width:${size}px;height:${size}px;border-radius:50%;object-fit:cover;object-position:${photoPosition};display:inline-block;border:3px solid ${c}22;" alt="${s.nombre}"></div>` : '';
 
   // Contact rows: phone / email / web / address only (no listings row, no LinkedIn text row)
-  const contactRows = (sz) =>
-    contactRow(lineIcon('phone', c), `<a href="${telHref}" style="color:#222;text-decoration:none;">${s.tel}</a>`, 'Phone', sz) +
-    contactRow(lineIcon('new-post', c), `<a href="mailto:${s.email}" style="color:#222;text-decoration:none;">${s.email}</a>`, 'Email', sz) +
-    contactRow(lineIcon('domain', c), `<a href="${webHref}" style="color:#222;text-decoration:none;">${s.web}</a>`, 'Website', sz) +
-    contactRow(lineIcon('marker', c), s.dirUrl ? `<a href="${s.dirUrl}" target="_blank" style="color:#222;text-decoration:none;">${s.dir}</a>` : `<span>${s.dir}</span>`, 'Address', sz);
+  const contactRows = (sz) => [
+    s.tel && contactRow(lineIcon('phone', c), `<a href="${telHref}" style="color:#222;text-decoration:none;">${s.tel}</a>`, 'Phone', sz),
+    s.email && contactRow(lineIcon('new-post', c), `<a href="mailto:${s.email}" style="color:#222;text-decoration:none;">${s.email}</a>`, 'Email', sz),
+    s.web && contactRow(lineIcon('domain', c), `<a href="${webHref}" style="color:#222;text-decoration:none;">${s.web}</a>`, 'Website', sz),
+    s.dir && contactRow(lineIcon('marker', c), s.dirUrl ? `<a href="${s.dirUrl}" target="_blank" style="color:#222;text-decoration:none;">${s.dir}</a>` : `<span>${s.dir}</span>`, 'Address', sz)
+  ].filter(Boolean).join('');
   const rows = contactRows();
 
   // Social circles only: Instagram (outline glyph) / WhatsApp (flat) / LinkedIn.
@@ -384,7 +389,7 @@ async function buildHTML() {
 </tr></tbody></table>${communityLine(COMM_SZ)}${certs}${qr}${legal}</td></tr></tbody></table>`;
   }
   if (s.tpl === 'banner') {
-    const sqPhoto = s.vis.foto ? `<img src="${s.foto}" width="84" height="84" style="width:84px;height:84px;border-radius:50%;object-fit:cover;display:block;border:3px solid #ffffff;" alt="${s.nombre}">` : '';
+    const sqPhoto = s.vis.foto ? `<img src="${s.foto}" width="84" height="84" style="width:84px;height:84px;border-radius:50%;object-fit:cover;object-position:${photoPosition};display:block;border:3px solid #ffffff;" alt="${s.nombre}">` : '';
     return `<table cellpadding="0" cellspacing="0" border="0" width="600" style="font-family:Arial,Helvetica,sans-serif;max-width:600px;"><tbody>
 <tr><td style="background-color:${c};border-radius:10px 10px 0 0;padding:20px 22px;"><table cellpadding="0" cellspacing="0" border="0" width="100%"><tbody><tr>
 <td width="100" valign="middle">${sqPhoto}</td>
@@ -398,7 +403,7 @@ async function buildHTML() {
 </tbody></table>`;
   }
   if (s.tpl === 'sidebar') {
-    const sidePhoto = s.vis.foto ? `<img src="${s.foto}" width="88" height="88" style="width:88px;height:88px;border-radius:50%;object-fit:cover;display:inline-block;border:3px solid #ffffff;" alt="${s.nombre}">` : '';
+    const sidePhoto = s.vis.foto ? `<img src="${s.foto}" width="88" height="88" style="width:88px;height:88px;border-radius:50%;object-fit:cover;object-position:${photoPosition};display:inline-block;border:3px solid #ffffff;" alt="${s.nombre}">` : '';
     const sideZona = (s.vis.zona && s.zona) ? `<div style="margin-top:6px;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#d7e1f2;line-height:15px;">${String(s.zonaLabel || '').trim() ? String(s.zonaLabel).trim() + '<br>' : ''}${String(s.zona).replace(/\r?\n/g, '<br>')}</div>` : '';
     return `<table cellpadding="0" cellspacing="0" border="0" width="600" style="font-family:Arial,Helvetica,sans-serif;max-width:600px;"><tbody><tr>
 <td width="190" valign="top" align="center" style="background-color:${c};border-radius:10px 0 0 10px;padding:24px 16px;">${sidePhoto}
@@ -461,7 +466,7 @@ async function buildHTML() {
   // the mobile rows are hidden inline, so they never show up twice.
   return `<style>@media only screen and (max-width:480px){.cb-desk{display:none !important}.cb-mob{display:table-row !important}.cb-name{white-space:normal !important}}</style><table cellpadding="0" cellspacing="0" border="0" width="600" style="font-family:Arial,Helvetica,sans-serif;max-width:600px;"><tbody>
 <tr><td><table cellpadding="0" cellspacing="0" border="0"><tbody><tr>
-<td width="${MAIN_SZ.photoCell}" valign="middle">${fotoCell(MAIN_SZ.photo)}</td>
+${s.vis.foto && s.foto ? `<td width="${MAIN_SZ.photoCell}" valign="middle">${fotoCell(MAIN_SZ.photo)}</td>` : ''}
 <td valign="middle"><div class="cb-name" style="font-size:${MAIN_SZ.name}px;font-weight:700;color:#111;line-height:${MAIN_SZ.nameLh}px;white-space:nowrap;">${s.nombre}</div><div style="font-size:${MAIN_SZ.role}px;color:#111;">${s.cargo}</div>${zonaHtml(MAIN_SZ.zona)}</td>
 <td width="20"></td><td width="1" style="border-left:1px solid ${c};font-size:0;">&nbsp;</td><td width="20"></td>
 <td valign="middle"><table cellpadding="0" cellspacing="0" border="0">${contactRows(MAIN_SZ.contact)}</table></td>
@@ -660,6 +665,14 @@ async function render() {
   // The preview must not run the signature's own media query (the browser window
   // is not a phone): the app simulates the mobile layout with its own CSS.
   $('sigPreview').innerHTML = html.replace(/<style[\s\S]*?<\/style>/gi, '');
+  // The copied signature uses public image URLs. Before publication, preview the
+  // extracted portraits from this checkout so every agent can be checked locally.
+  if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+    const photoBase = 'https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/';
+    $('sigPreview').querySelectorAll('img').forEach(img => {
+      if (img.src.startsWith(photoBase)) img.src = 'assets/agents/' + img.src.slice(photoBase.length);
+    });
+  }
   fitPreview();
   $('codeText').textContent = html;
   updateStats(html);
@@ -873,12 +886,10 @@ function addCertRow(img = '', link = '') {
 
 const MAPS_DEFAULT = 'https://www.google.com/maps/place/Canablue+Real+Estate/data=!4m2!3m1!1s0x0:0x14220523874e3b46?sa=X&ved=1t:2428&ictx=111';
 const DIR_DEFAULT = 'Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana';
-const BUILTIN_AGENTS = [
-  { key: 'pamela', name: 'Pamela Núñez', role: 'Broker Owner', zona: 'Punta Cana · Cap Cana', tel: '+1 (809) 975-3900', email: 'pamela@canablue.com', web: 'canablue.com', dir: DIR_DEFAULT, dirUrl: MAPS_DEFAULT, instagram: 'https://www.instagram.com/pamela_canablue.rd', whatsapp: 'https://wa.me/18096080943', foto: 'https://res.cloudinary.com/ybkuwivn/image/upload/v1792087360/Firmas_de_correo_Electronico_pamela.png', listings: 'https://canablue.com/author/pamepam/', linkedin: 'https://do.linkedin.com/in/pamela-nunez-0280814a', certs: { crs: true, aei: true, realtor: true, sr23: true, sr24: true, lux: false } },
-  { key: 'candy', name: 'Candy Vander Horst', role: 'Sales | Rentals', zona: 'Bávaro · Punta Cana', tel: '+1 (849) 255-2500', email: 'candy@canablue.com', web: 'canablue.com', dir: DIR_DEFAULT, dirUrl: MAPS_DEFAULT, instagram: 'https://www.instagram.com/candy_canablue.rd', whatsapp: 'https://wa.me/18492552500', foto: 'https://res.cloudinary.com/ybkuwivn/image/upload/v1792072332/Screenshot_2026-10-15_095141.png', listings: 'https://canablue.com/agents/candy-vander-horst', linkedin: 'https://linkedin.com/in/candy-vander-horst', certs: { crs: false, aei: false, realtor: false, sr23: false, sr24: true, lux: false } }
-];
+const BUILTIN_AGENTS = []; // Agent records live in data/agents.json.
 let AGENTS = BUILTIN_AGENTS.slice();
 let JSON_AGENTS = [];
+let selectedAgentKey = 'pamela';
 // A brand-new, empty agent: what "New agent" loads before you type anything.
 const LOGO_DEFAULT = 'https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png';
 function blankAgent() {
@@ -886,9 +897,9 @@ function blankAgent() {
     key: '', color: '#174176', name: '', role: '', zona: '', zonaLabel: 'Specializing in', tel: '', email: '',
     web: 'canablue.com', dir: DIR_DEFAULT, dirUrl: MAPS_DEFAULT,
     listings: '', booking: '', community: COMMUNITY_DEFAULT, communities: defaultCommunities(), linkedin: '', instagram: '', whatsapp: '',
-    foto: '', logo: LOGO_DEFAULT,
+    foto: '', photoPosition: 'center center', logo: LOGO_DEFAULT,
     extra: [], tpl: 'principal',
-    vis: { foto: true, zona: true, social: true, listings: true, booking: true, community: true, qr: false, certs: true, legal: true },
+    vis: { foto: true, zona: true, social: true, listings: true, booking: true, community: true, qr: true, certs: true, legal: true },
     iconStyle: 'solid', certsAlign: 'center',
     certLinks: { crs: '', aei: '', realtor: '', sr23: '', sr24: '', lux: '' },
     customCerts: [],
@@ -897,7 +908,7 @@ function blankAgent() {
 }
 // ---- Static-page persistence: data/agents.json (shared source of truth, via fetch)
 // + localStorage (per-browser autosave + custom agents). ----
-const LS_FORM = 'canablue.form.v3', LS_CUSTOM = 'canablue.agents.custom.v1';
+const LS_FORM = 'canablue.form.v4', LS_CUSTOM = 'canablue.agents.custom.v1';
 const getCustoms = () => { try { return JSON.parse(localStorage.getItem(LS_CUSTOM) || '[]'); } catch { return []; } };
 const setCustoms = c => localStorage.setItem(LS_CUSTOM, JSON.stringify(c));
 const isCustom = key => getCustoms().some(x => x.key === key);
@@ -943,7 +954,7 @@ async function loadSheetAgents(id) {
       communities: parseCommunities(o.communities),
       instagram: o.instagram || '', whatsapp: o.whatsapp || '',
       foto: o.foto || '', logo: o.logo || '',
-      vis: o.qr == null ? undefined : { qr: B(o.qr) },
+      vis: { qr: o.qr == null ? true : B(o.qr) },
       tpl: ['principal', 'broker', 'moderna', 'banner', 'sidebar', 'photo-left', 'photo-top', 'photo-right'].includes(String(o.tpl || '').toLowerCase()) ? String(o.tpl).toLowerCase() : undefined,
       certs: { crs: B(o.crs), aei: B(o.aei), realtor: B(o.realtor), sr23: B(o.sr23), sr24: B(o.sr24), lux: o.lux == null ? false : B(o.lux) },
       iconStyle: ['solid', 'rounded', 'outline', 'frame', 'line', 'soft'].includes(String(o.iconstyle || '').toLowerCase()) ? String(o.iconstyle).toLowerCase() : 'solid',
@@ -977,10 +988,22 @@ async function loadAgents() {
       setDbStatus(`Local file — ${AGENTS.length} agent(s). Paste a Sheet ID for live data.`, '');
     } catch { setDbStatus('Built-in data (offline or file://).', ''); }
   }
+  // Existing browser-saved records inherited QR=false from the earlier default.
+  // Enable it once, then leave later manual choices alone.
+  try {
+    if (!localStorage.getItem('canablue.qr.enabled.v1')) {
+      const customs = getCustoms().map(c => ({ ...c, vis: { ...(c.vis || {}), qr: true } }));
+      setCustoms(customs);
+      localStorage.setItem('canablue.qr.enabled.v1', '1');
+    }
+  } catch {}
   getCustoms().forEach(c => {
     const i = AGENTS.findIndex(a => a.key === c.key);
-    if (i >= 0) AGENTS[i] = c; else AGENTS.push(c);
+    if (i >= 0) AGENTS[i] = { ...AGENTS[i], ...c, photoPosition: c.photoPosition || AGENTS[i].photoPosition };
+    else AGENTS.push(c);
   });
+  renderAgentList();
+  renderDirectory();
 }
 function collectAgent(key) {
   return {
@@ -990,7 +1013,7 @@ function collectAgent(key) {
     booking: $('fBooking').value, community: state.community,
     communities: readCommunityRows(),
     linkedin: $('fLinkedin').value, instagram: $('fInstagram').value, whatsapp: $('fWhatsapp').value,
-    foto: $('fFoto').value, logo: $('fLogo').value,
+    foto: $('fFoto').value, photoPosition: state.photoPosition || 'center center', logo: $('fLogo').value,
     extra: [...document.querySelectorAll('#extraLinks .xlink-net')].map(r => ({ icon: r._icon || 'facebook', url: r.querySelector('input').value })).filter(e => e.url),
     tpl: state.tpl,
     vis: { foto: $('vFoto').checked, zona: $('vZona').checked, social: $('vSocial').checked, listings: $('vListings').checked, booking: $('vBooking').checked, community: $('vCommunity').checked, qr: $('vQr').checked, certs: $('vCerts').checked, legal: $('vLegal').checked },
@@ -1014,7 +1037,7 @@ function applyAgent(a) {
   $('fListings').value = a.listings || ''; $('fLinkedin').value = a.linkedin || '';
   $('fBooking').value = a.booking || '';
   $('fInstagram').value = a.instagram || ''; $('fWhatsapp').value = a.whatsapp || '';
-  $('fFoto').value = a.foto || ''; if (a.logo) $('fLogo').value = a.logo;
+  $('fFoto').value = a.foto || ''; state.photoPosition = a.photoPosition || 'center center'; if (a.logo) $('fLogo').value = a.logo;
   const ct = a.certs || {};
   $('cCRS').checked = !!ct.crs; $('cAEI').checked = !!ct.aei; $('cRealtor').checked = !!ct.realtor;
   if (ct.sr23 !== undefined) $('cSR23').checked = !!ct.sr23;
@@ -1033,20 +1056,27 @@ function applyAgent(a) {
     const v = a.vis, box = { foto: 'vFoto', zona: 'vZona', social: 'vSocial', listings: 'vListings', booking: 'vBooking', community: 'vCommunity', qr: 'vQr', certs: 'vCerts', legal: 'vLegal' };
     for (const k in box) { const el = $(box[k]); if (el && v[k] !== undefined) el.checked = !!v[k]; }
   }
+  if (!a.vis || a.vis.qr === undefined) $('vQr').checked = true;
   document.querySelectorAll('#customCerts .xlink').forEach(n => n.remove());
   (a.customCerts || []).forEach(x => addCertRow(x.img, x.link));
-  $('agentSearch').value = a.name || '';
+  selectedAgentKey = a.key || '';
+  $('agentSelect').value = selectedAgentKey;
+  renderDirectory();
 }
 function saveCurrentAgent() {
-  const a = collectAgent(slug($('fNombre').value));
+  const current = AGENTS.find(x => x.key === selectedAgentKey);
+  const key = current && foldAgent(current.name) === foldAgent($('fNombre').value)
+    ? current.key : slug($('fNombre').value);
+  const a = collectAgent(key);
   if (!a.name) { toast('Enter the agent name first.'); return false; }
   const cs = getCustoms(); const i = cs.findIndex(x => x.key === a.key);
   if (i >= 0) cs[i] = a; else cs.push(a);
   setCustoms(cs);
   const j = AGENTS.findIndex(x => x.key === a.key);
   if (j >= 0) AGENTS[j] = a; else AGENTS.push(a);
-  $('agentSearch').value = a.name;
-  renderAgentList('');
+  selectedAgentKey = a.key;
+  renderAgentList();
+  renderDirectory();
   setDirty(false);
   render();
   toast('Agent saved in this browser.');
@@ -1070,8 +1100,8 @@ function deleteCustomAgent(key) {
   AGENTS = AGENTS.filter(x => x.key !== key);
   const b = base.find(x => x.key === key);
   if (b) AGENTS.push(b);
-  renderAgentList($('agentSearch').value);
-  render();
+  const next = AGENTS.find(x => x.key === key) || AGENTS.find(x => x.key === 'pamela') || AGENTS[0];
+  if (next) fillAgent(next); else { selectedAgentKey = ''; renderAgentList(); renderDirectory(); render(); }
   toast('Saved agent deleted.');
 }
 function exportAgentsJSON() {
@@ -1113,7 +1143,7 @@ let saveT = null;
 function autosave() {
   clearTimeout(saveT);
   saveT = setTimeout(() => {
-    const snap = collectAgent('draft');
+    const snap = collectAgent(selectedAgentKey || 'draft');
     try { localStorage.setItem(LS_FORM, JSON.stringify(snap)); } catch {}
     pushUndo(JSON.stringify(snap));
   }, 600);
@@ -1123,39 +1153,61 @@ function restoreAutosave() {
     const d = JSON.parse(localStorage.getItem(LS_FORM) || 'null');
     if (!d) return;
     applyAgent(d);
+    const match = AGENTS.find(a => a.key === d.key)
+      || AGENTS.find(a => a.email && a.email.toLowerCase() === String(d.email || '').toLowerCase());
+    if (match) {
+      selectedAgentKey = match.key;
+      state.photoPosition = d.photoPosition || match.photoPosition || 'center center';
+      $('agentSelect').value = match.key;
+      renderDirectory();
+    }
   } catch {}
 }
 function fillAgent(a) {
+  if (!a) return;
   applyAgent(a);
   setDirty(false);
   render();
 }
-let agentHi = -1;
-function openAgentList(input) {
-  renderAgentList(input.value);
-  $('agentList').classList.remove('hidden');
-  $('agentSearch').setAttribute('aria-expanded', 'true');
-  placeFixed($('agentList'), input, 220);
+const foldAgent = v => String(v || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+const sortedAgents = () => AGENTS.slice().sort((a, b) => String(a.name || '').localeCompare(String(b.name || ''), 'es'));
+function renderAgentList() {
+  const select = $('agentSelect');
+  if (!select) return;
+  select.replaceChildren(new Option('Select an agent', ''));
+  sortedAgents().forEach(a => select.add(new Option(a.name + (isCustom(a.key) ? ' · saved' : ''), a.key)));
+  select.value = selectedAgentKey;
 }
-function closeAgentList() {
-  $('agentList').classList.add('hidden');
-  $('agentSearch').setAttribute('aria-expanded', 'false');
-  agentHi = -1;
+function directoryPhoto(a) {
+  const url = String(a.foto || '');
+  const base = 'https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/';
+  return url.startsWith(base) ? 'assets/agents/' + url.slice(base.length) : url;
 }
-function renderAgentList(filter = '') {
-  const list = $('agentList'); const q = String(filter || '').trim().toLowerCase();
-  const hits = AGENTS.filter(a => String(a.name || '').toLowerCase().includes(q) || String(a.role || '').toLowerCase().includes(q));
-  list.innerHTML = hits.length ? hits.map((a, i) => {
-    const ini = String(a.name || '?').split(' ').map(w => w[0]).slice(0, 2).join('');
-    const custom = isCustom(a.key);
-    return `<div class="agent-item${i === agentHi ? ' hi' : ''}" role="option" aria-selected="${i === agentHi}" data-key="${esc(a.key)}"><span class="avatar">${esc(ini)}</span><span style="flex:1"><b>${esc(a.name)}</b><small>${esc(a.role)}${custom ? ' · saved' : ''}</small></span>${custom ? '<span class="agent-del" title="Delete saved agent">✕</span>' : ''}</div>`;
-  }).join('') : '<div class="agent-none">No agents found</div>';
-  list.querySelectorAll('.agent-item').forEach(el => el.onmousedown = e => {
-    e.preventDefault();
-    if (e.target.closest('.agent-del')) { deleteCustomAgent(el.dataset.key); return; }
-    fillAgent(AGENTS.find(x => x.key === el.dataset.key));
-    closeAgentList();
-  });
+function renderDirectory() {
+  const list = $('directoryList');
+  if (!list) return;
+  const q = foldAgent(($('directorySearch') && $('directorySearch').value || '').trim());
+  const hits = sortedAgents().filter(a => [a.name, a.role, a.email, a.zona].some(v => foldAgent(v).includes(q)));
+  $('directoryCount').textContent = `${hits.length} de ${AGENTS.length}`;
+  list.innerHTML = hits.length ? hits.map(a => {
+    const initials = String(a.name || '?').split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+    const src = directoryPhoto(a);
+    const photoPosition = a.photoPosition === 'center top' ? 'center top' : 'center center';
+    const photo = src ? `<img class="directory-photo" src="${esc(src)}" alt="" style="object-position:${photoPosition}">` : `<span class="directory-photo directory-initials">${esc(initials)}</span>`;
+    const certs = CERT_DEFS.filter(([k]) => a.certs && a.certs[k]).map(([k, name]) => `<img src="${CERT_IMG[k]}" alt="${name}" title="${name}">`).join('');
+    const details = [a.tel, a.email, a.zona].filter(Boolean).map(esc).join(' · ');
+    return `<article class="directory-entry${a.key === selectedAgentKey ? ' selected' : ''}" data-key="${esc(a.key)}">
+      <div class="directory-person">${photo}<div class="directory-identity"><strong>${esc(a.name)}</strong><small>${esc(a.role || 'Cargo por confirmar')}${isCustom(a.key) ? ' · guardado' : ''}</small></div></div>
+      <p class="directory-details">${details || 'Datos pendientes de confirmar'}</p>
+      ${certs ? `<div class="directory-certs" aria-label="Certificaciones">${certs}</div>` : ''}
+      <div class="directory-actions"><button class="btn small primary" type="button" data-action="view">Ver firma</button><button class="btn small" type="button" data-action="edit">Editar</button>${isCustom(a.key) ? '<button class="btn small" type="button" data-action="delete" title="Eliminar cambios guardados">✕</button>' : ''}</div>
+    </article>`;
+  }).join('') : '<div class="directory-empty">No se encontraron agentes.</div>';
+  list.querySelectorAll('img.directory-photo').forEach(img => { img.onerror = () => {
+    const a = AGENTS.find(x => x.key === img.closest('.directory-entry').dataset.key);
+    const ini = String(a && a.name || '?').split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+    const avatar = document.createElement('span'); avatar.className = 'directory-photo directory-initials'; avatar.textContent = ini; img.replaceWith(avatar);
+  }; });
 }
 
 // ---- Preview width: desktop (fluid) or mobile (a 390 x 844 phone viewport).
@@ -1223,11 +1275,13 @@ try { setViewport(localStorage.getItem(LS_VIEW) === 'mobile' ? 'mobile' : 'deskt
 
 document.querySelectorAll('#certsAlignSeg button').forEach(b => b.onclick = () => { setCertsAlign(b.dataset.a); markDirty(); });
 document.querySelectorAll('#iconStyleSeg button').forEach(b => b.onclick = () => { setIconStyle(b.dataset.s); markDirty(); });
-document.querySelectorAll('.rail button').forEach(b => b.onclick = () => {
-  document.querySelectorAll('.rail button').forEach(x => x.classList.toggle('on', x === b));
-  document.querySelectorAll('.editor .card').forEach(c => c.classList.toggle('show', c.id === b.dataset.sec));
+function showSection(id) {
+  document.querySelectorAll('.rail button').forEach(x => x.classList.toggle('on', x.dataset.sec === id));
+  document.querySelectorAll('.editor .card').forEach(c => c.classList.toggle('show', c.id === id));
+  document.querySelector('.editor').scrollTop = 0;
   growZona();
-});
+}
+document.querySelectorAll('.rail button').forEach(b => b.onclick = () => showSection(b.dataset.sec));
 // Delegated: the thumbnails are rebuilt whenever a toggle changes, so per-button
 // handlers would be lost on every rebuild.
 $('tplGrid').addEventListener('click', e => {
@@ -1251,26 +1305,17 @@ $('btnAddCert').onclick = () => { addCertRow(); setDirty(true); };
 $('btnCopyRich').onclick = copyRich; $('btnCopyHtml').onclick = copyHtml; $('btnDownload').onclick = download;
 $('btnVcf').onclick = downloadVcf;
 $('btnUndo').onclick = undoStep;
-$('agentSearch').addEventListener('focus', e => openAgentList(e.target));
-$('agentSearch').addEventListener('input', e => { agentHi = -1; openAgentList(e.target); });
-$('agentSearch').addEventListener('blur', () => setTimeout(() => closeAgentList(), 150));
-$('agentSearch').addEventListener('keydown', e => {
-  const items = [...$('agentList').querySelectorAll('.agent-item')];
-  if (e.key === 'Escape') { closeAgentList(); return; }
-  if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && items.length) {
-    e.preventDefault();
-    if ($('agentList').classList.contains('hidden')) openAgentList(e.target);
-    const max = items.length - 1;
-    agentHi = e.key === 'ArrowDown' ? Math.min(agentHi + 1, max) : Math.max(agentHi - 1, 0);
-    items.forEach((it, i) => { it.classList.toggle('hi', i === agentHi); it.setAttribute('aria-selected', String(i === agentHi)); });
-    items[agentHi].scrollIntoView({ block: 'nearest' });
-    return;
-  }
-  if (e.key === 'Enter') {
-    e.preventDefault();
-    const pick = items[agentHi] || items[0];
-    if (pick) { fillAgent(AGENTS.find(x => x.key === pick.dataset.key)); closeAgentList(); }
-  }
+$('agentSelect').addEventListener('change', e => fillAgent(AGENTS.find(x => x.key === e.target.value)));
+$('directorySearch').addEventListener('input', renderDirectory);
+$('directoryList').addEventListener('click', e => {
+  const action = e.target.closest('button[data-action]');
+  if (!action) return;
+  const card = action.closest('.directory-entry');
+  if (!card) return;
+  const a = AGENTS.find(x => x.key === card.dataset.key);
+  if (action.dataset.action === 'delete') { deleteCustomAgent(card.dataset.key); return; }
+  fillAgent(a);
+  if (action.dataset.action === 'edit') { showSection('sec-agent'); $('fNombre').focus(); }
 });
 $('toggleCode').onchange = e => $('codeBox').classList.toggle('hidden', !e.target.checked);
 $('btnSaveAgent').onclick = saveCurrentAgent;
@@ -1281,11 +1326,14 @@ $('btnNewAgent').onclick = () => {
   toast('New agent ready — fill in the details and click Save agent.');
 };
 $('btnExportAgents').onclick = exportAgentsJSON;
-$('btnReloadDb').onclick = () => loadAgents().then(() => { renderAgentList($('agentSearch').value); render(); });
+$('btnReloadDb').onclick = () => loadAgents().then(() => { render(); });
 $('fSheetId').addEventListener('change', e => { try { localStorage.setItem(LS_SHEET, e.target.value.trim()); } catch {} });
 try { const sid = localStorage.getItem(LS_SHEET); if (sid) $('fSheetId').value = sid; } catch {}
 loadAgents().then(() => {
-  restoreAutosave();
+  let hasDraft = false;
+  try { hasDraft = !!localStorage.getItem(LS_FORM); } catch {}
+  if (hasDraft) restoreAutosave();
+  else if (AGENTS.length) applyAgent(AGENTS.find(a => a.email === 'pamela@canablue.com') || AGENTS[0]);
   // A brand-new session has no autosave: paint the default community rows once.
   if (!document.querySelector('#communityList .xlink-comm')) renderCommunityRows();
   render();

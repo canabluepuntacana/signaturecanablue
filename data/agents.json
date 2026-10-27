@@ -1,5 +1,336 @@
 [
   {
+    "key": "candy-vander-horst",
+    "name": "Candy Vander Horst",
+    "role": "Sales | Rentals",
+    "zona": "Ciudad La Palma · Punta Cana Village · Downtown",
+    "tel": "+1 (849) 255-2500",
+    "email": "candy@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "https://canablue.com/author/candy/",
+    "communities": [
+      {
+        "label": "Ciudad La Palma",
+        "url": "https://canablue.com/communities/",
+        "on": true
+      },
+      {
+        "label": "Punta Cana / Punta Cana Village",
+        "url": "https://canablue.com/community/punta-cana/",
+        "on": true
+      },
+      {
+        "label": "Downtown Punta Cana",
+        "url": "https://canablue.com/community/downtown-punta-cana/",
+        "on": true
+      }
+    ],
+    "linkedin": "https://do.linkedin.com/in/candyvanderhorst",
+    "instagram": "https://www.instagram.com/candy_canablue.rd/",
+    "whatsapp": "https://wa.me/18492552500",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/candy-vander-horst.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": true,
+      "social": true,
+      "listings": true,
+      "booking": false,
+      "community": true,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": true
+    },
+    "source": {
+      "pdfPage": 1,
+      "portraitXref": 1679,
+      "listingsVerified": true,
+      "expertise": "PDF",
+      "instagram": "PDF handle"
+    }
+  },
+  {
+    "key": "christophe-poteloin",
+    "name": "Christophe Poteloin",
+    "role": "Resales Manager",
+    "zona": "",
+    "tel": "+33-6-58-24-79-83",
+    "email": "christophe@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "https://canablue.com/author/christophe/",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "https://www.instagram.com/christophe_canablue.rd/",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/christophe-poteloin.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": false,
+      "social": true,
+      "listings": true,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 3,
+      "portraitXref": 1751,
+      "listingsVerified": true,
+      "expertise": "PDF",
+      "instagram": "PDF handle"
+    }
+  },
+  {
+    "key": "cristina-socias",
+    "name": "Cristina Socias",
+    "role": "Sales | Rentals",
+    "zona": "",
+    "tel": "+1 (809) 399-1545",
+    "email": "cristina@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "https://canablue.com/author/cristina/",
+    "communities": [],
+    "linkedin": "https://do.linkedin.com/in/cristina-e-socias-fomina-0b1a7238",
+    "instagram": "https://www.instagram.com/cristina_canablue.rd/",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/cristina-socias.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": false,
+      "social": true,
+      "listings": true,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 4,
+      "portraitXref": 1796,
+      "listingsVerified": true,
+      "expertise": "PDF",
+      "instagram": "PDF handle"
+    }
+  },
+  {
+    "key": "miguel-martinez",
+    "name": "Miguel Martínez",
+    "role": "Sales | Rentals",
+    "zona": "Los Corales · Cap Cana",
+    "tel": "+1 (809) 702-4570",
+    "email": "miguel@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "https://canablue.com/author/miguelcanablue-com/",
+    "communities": [
+      {
+        "label": "Los Corales, El Cortecito",
+        "url": "https://canablue.com/community/el-cortecito/",
+        "on": true
+      },
+      {
+        "label": "Cap Cana",
+        "url": "https://canablue.com/community/cap-cana/",
+        "on": true
+      }
+    ],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/miguel-martinez.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": true,
+      "social": true,
+      "listings": true,
+      "booking": false,
+      "community": true,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": true,
+      "sr24": false,
+      "lux": true
+    },
+    "source": {
+      "pdfPage": 5,
+      "portraitXref": 1829,
+      "listingsVerified": true,
+      "expertise": "PDF",
+      "instagram": "unavailable"
+    }
+  },
+  {
+    "key": "alejandro-angulo",
+    "name": "Alejandro Angulo",
+    "role": "Sales | Rentals",
+    "zona": "Cap Cana · White Sands · Los Corales",
+    "tel": "+1 (809) 219-5170",
+    "email": "alejandro@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "https://canablue.com/author/alejandro/",
+    "communities": [
+      {
+        "label": "Cap Cana",
+        "url": "https://canablue.com/community/cap-cana/",
+        "on": true
+      },
+      {
+        "label": "White Sands",
+        "url": "https://canablue.com/community/white-sands-3/",
+        "on": true
+      },
+      {
+        "label": "Los Corales, El Cortecito",
+        "url": "https://canablue.com/community/el-cortecito/",
+        "on": true
+      }
+    ],
+    "linkedin": "",
+    "instagram": "https://www.instagram.com/alejandro_canablue.rd/",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/alejandro-angulo.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": true,
+      "social": true,
+      "listings": true,
+      "booking": false,
+      "community": true,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": true
+    },
+    "source": {
+      "pdfPage": 7,
+      "portraitXref": 1893,
+      "listingsVerified": true,
+      "expertise": "user update",
+      "instagram": "PDF handle"
+    }
+  },
+  {
+    "key": "pamela-gomez",
+    "name": "Pamela Gómez",
+    "role": "Sales | Rentals",
+    "zona": "",
+    "tel": "+1 (809) 677-3377",
+    "email": "pgomez@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "https://www.instagram.com/pami_canablue.rd/",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/pamela-gomez.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 9,
+      "portraitXref": 1966,
+      "listingsVerified": false,
+      "expertise": "PDF",
+      "instagram": "PDF handle"
+    }
+  },
+  {
     "key": "pamela",
     "name": "Pamela Núñez",
     "role": "Broker Owner",
@@ -17,32 +348,1695 @@
     "whatsapp": "https://wa.me/18096080943",
     "foto": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792087360/Firmas_de_correo_Electronico_pamela.png",
     "tpl": "principal",
-    "vis": { "foto": true, "zona": true, "social": true, "listings": true, "booking": true, "community": true, "qr": false, "certs": true, "legal": true },
+    "vis": {
+      "foto": true,
+      "zona": true,
+      "social": true,
+      "listings": true,
+      "booking": true,
+      "community": true,
+      "qr": true,
+      "certs": true,
+      "legal": true
+    },
     "iconStyle": "solid",
     "certsAlign": "center",
-    "certs": { "crs": true, "aei": true, "realtor": true, "sr23": true, "sr24": true, "lux": false }
+    "certs": {
+      "crs": true,
+      "aei": true,
+      "realtor": true,
+      "sr23": true,
+      "sr24": true,
+      "lux": false
+    }
   },
   {
-    "key": "candy",
-    "name": "Candy Vander Horst",
-    "role": "Sales | Rentals",
-    "zona": "Bávaro · Punta Cana",
-    "tel": "+1 (849) 255-2500",
-    "email": "candy@canablue.com",
+    "key": "jose-luis-martin",
+    "name": "José Luis Martín",
+    "role": "Operations Manager",
+    "zona": "",
+    "tel": "+1 (829) 521-6365",
+    "email": "operaciones@canablue.com",
     "web": "canablue.com",
-    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
-    "dirUrl": "https://www.google.com/maps/place/Canablue+Real+Estate/data=!4m2!3m1!1s0x0:0x14220523874e3b46?sa=X&ved=1t:2428&ictx=111",
-    "listings": "https://canablue.com/agents/candy-vander-horst",
-    "booking": "",
-    "community": "https://canablue.com/community/cocotal/",
-    "linkedin": "https://linkedin.com/in/candy-vander-horst",
-    "instagram": "https://www.instagram.com/candy_canablue.rd",
-    "whatsapp": "https://wa.me/18492552500",
-    "foto": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792072332/Screenshot_2026-10-15_095141.png",
+    "dir": "Local E-02, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/jose-luis-martin.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
     "tpl": "principal",
-    "vis": { "foto": true, "zona": true, "social": true, "listings": true, "booking": true, "community": true, "qr": false, "certs": true, "legal": true },
+    "vis": {
+      "foto": true,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
     "iconStyle": "solid",
     "certsAlign": "center",
-    "certs": { "crs": false, "aei": false, "realtor": false, "sr23": false, "sr24": true, "lux": false }
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 12,
+      "portraitXref": 2054,
+      "listingsVerified": false,
+      "expertise": "PDF",
+      "instagram": "not in PDF"
+    }
+  },
+  {
+    "key": "dahiana-senclaire",
+    "name": "Dahiana Senclaire",
+    "role": "Commercial Assistant",
+    "zona": "",
+    "tel": "+1 (809) 975-3900",
+    "email": "info@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local E-02, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/dahiana-senclaire.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 13,
+      "portraitXref": 2078,
+      "listingsVerified": false,
+      "expertise": "PDF",
+      "instagram": "not in PDF"
+    }
+  },
+  {
+    "key": "martha-mendoza",
+    "name": "Martha Mendoza",
+    "role": "Commercial Assistant",
+    "zona": "",
+    "tel": "+1 (809) 975-3900",
+    "email": "info@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local E-02, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/martha-mendoza.png",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 14,
+      "portraitXref": 2102,
+      "listingsVerified": false,
+      "expertise": "PDF",
+      "instagram": "not in PDF"
+    }
+  },
+  {
+    "key": "maria-montilla",
+    "name": "María Montilla",
+    "role": "Operations & Client Support",
+    "zona": "",
+    "tel": "+1 (809) 903-5974",
+    "email": "admin@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local E-02, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/maria-montilla.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 15,
+      "portraitXref": 2154,
+      "listingsVerified": false,
+      "expertise": "PDF",
+      "instagram": "not in PDF"
+    }
+  },
+  {
+    "key": "diomari-ramirez",
+    "name": "Diomari Ramírez",
+    "role": "Administrative & Accounting Manager",
+    "zona": "",
+    "tel": "+1 (849) 517-3900",
+    "email": "gestionadministrativa@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local E-02, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/diomari-ramirez.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 16,
+      "portraitXref": 2165,
+      "listingsVerified": false,
+      "expertise": "PDF",
+      "instagram": "not in PDF"
+    }
+  },
+  {
+    "key": "maderlandys-sarmiento",
+    "name": "Maderlandys Sarmiento",
+    "role": "Assistant Accountant",
+    "zona": "",
+    "tel": "+1 (849) 570-3901",
+    "email": "contabilidad@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local E-02, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/maderlandys-sarmiento.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 18,
+      "portraitXref": 2221,
+      "listingsVerified": false,
+      "expertise": "PDF",
+      "instagram": "not in PDF"
+    }
+  },
+  {
+    "key": "jimena-montana",
+    "name": "Jimena Montaña",
+    "role": "Admin Support",
+    "zona": "",
+    "tel": "",
+    "email": "support@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local E-02, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/jimena-montana.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 19,
+      "portraitXref": 2249,
+      "listingsVerified": false,
+      "expertise": "PDF",
+      "instagram": "not in PDF"
+    }
+  },
+  {
+    "key": "nathaly-martinez",
+    "name": "Nathaly Martínez",
+    "role": "Property Management Assistant",
+    "zona": "",
+    "tel": "+1 (809) 660-5974",
+    "email": "propertymanager@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local E-02, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/nathaly-martinez.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": true,
+      "sr24": false,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 20,
+      "portraitXref": 2290,
+      "listingsVerified": false,
+      "expertise": "PDF",
+      "instagram": "not in PDF"
+    }
+  },
+  {
+    "key": "teresa-sullivan",
+    "name": "Teresa Sullivan",
+    "role": "Sales Manager | Sales & Rentals",
+    "zona": "Punta Cana Village · Cocotal · Downtown",
+    "tel": "+1 (829) 868-0526",
+    "email": "teresa@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "https://canablue.com/author/teresa/",
+    "communities": [
+      {
+        "label": "Punta Cana / Punta Cana Village",
+        "url": "https://canablue.com/community/punta-cana/",
+        "on": true
+      },
+      {
+        "label": "Palma Real Villas (Cocotal)",
+        "url": "https://canablue.com/community/cocotal/",
+        "on": true
+      },
+      {
+        "label": "Downtown Punta Cana",
+        "url": "https://canablue.com/community/downtown-punta-cana/",
+        "on": true
+      }
+    ],
+    "linkedin": "https://do.linkedin.com/in/teresa-sullivan-8739b072",
+    "instagram": "https://www.instagram.com/teresa_canablue.rd/",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/teresa-sullivan.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": true,
+      "social": true,
+      "listings": true,
+      "booking": false,
+      "community": true,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": true,
+      "sr23": false,
+      "sr24": true,
+      "lux": true
+    },
+    "source": {
+      "pdfPage": 21,
+      "portraitXref": 2299,
+      "listingsVerified": true,
+      "expertise": "PDF",
+      "instagram": "PDF handle"
+    }
+  },
+  {
+    "key": "luis-sangiovanni",
+    "name": "Luis Sangiovanni",
+    "role": "Sales | Rentals",
+    "zona": "Dominicus · Vista Cana",
+    "tel": "+1 (829) 421-3031",
+    "email": "luis@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "https://canablue.com/author/luis/",
+    "communities": [
+      {
+        "label": "Dominicus",
+        "url": "https://canablue.com/communities/",
+        "on": true
+      },
+      {
+        "label": "Vista Cana",
+        "url": "https://canablue.com/community/vista-cana/",
+        "on": true
+      }
+    ],
+    "linkedin": "",
+    "instagram": "https://www.instagram.com/luis_canablue.rd/",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/luis-sangiovanni.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": true,
+      "social": true,
+      "listings": true,
+      "booking": false,
+      "community": true,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": true
+    },
+    "source": {
+      "pdfPage": 23,
+      "portraitXref": 2390,
+      "listingsVerified": true,
+      "expertise": "PDF",
+      "instagram": "PDF handle"
+    }
+  },
+  {
+    "key": "constantino-cury",
+    "name": "Constantino Cury",
+    "role": "Sales | Rentals",
+    "zona": "Cocotal · Los Corales",
+    "tel": "+1 (809) 944-9485",
+    "email": "constantino@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "https://canablue.com/author/constantinocanablue-com/",
+    "communities": [
+      {
+        "label": "Palma Real Villas (Cocotal)",
+        "url": "https://canablue.com/community/cocotal/",
+        "on": true
+      },
+      {
+        "label": "Los Corales, El Cortecito",
+        "url": "https://canablue.com/community/el-cortecito/",
+        "on": true
+      }
+    ],
+    "linkedin": "",
+    "instagram": "https://www.instagram.com/constantino_canablue.rd/",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/constantino-cury.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": true,
+      "social": true,
+      "listings": true,
+      "booking": false,
+      "community": true,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": true
+    },
+    "source": {
+      "pdfPage": 25,
+      "portraitXref": 2458,
+      "listingsVerified": true,
+      "expertise": "PDF",
+      "instagram": "PDF handle"
+    }
+  },
+  {
+    "key": "fior-ubiera",
+    "name": "Fior Ubiera",
+    "role": "Sales | Rentals",
+    "zona": "Cocotal · Vista Cana",
+    "tel": "+1 (809) 841-0731",
+    "email": "fior@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "https://canablue.com/author/fiorcanablue-com/",
+    "communities": [
+      {
+        "label": "Palma Real Villas (Cocotal)",
+        "url": "https://canablue.com/community/cocotal/",
+        "on": true
+      },
+      {
+        "label": "Vista Cana",
+        "url": "https://canablue.com/community/vista-cana/",
+        "on": true
+      }
+    ],
+    "linkedin": "https://do.linkedin.com/in/fior-d-aliza-ubiera-523a8311",
+    "instagram": "https://www.instagram.com/fior_canablue.rd/",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/fior-ubiera.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": true,
+      "social": true,
+      "listings": true,
+      "booking": false,
+      "community": true,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": true
+    },
+    "source": {
+      "pdfPage": 27,
+      "portraitXref": 2526,
+      "listingsVerified": true,
+      "expertise": "PDF",
+      "instagram": "PDF handle"
+    }
+  },
+  {
+    "key": "pelusa-miau",
+    "name": "Pelusa Miau",
+    "role": "Sales Agent",
+    "zona": "",
+    "tel": "+1 (809) 975-3900",
+    "email": "pelusa@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/pelusa-miau.png",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 29,
+      "portraitXref": 2607,
+      "listingsVerified": false,
+      "expertise": "PDF",
+      "instagram": "not in PDF"
+    }
+  },
+  {
+    "key": "annie-fernandez",
+    "name": "Annie Fernández",
+    "role": "Marketing",
+    "zona": "",
+    "tel": "+1 (829) 938-3957",
+    "email": "marketing@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local E-02, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/annie-fernandez.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 30,
+      "portraitXref": 2628,
+      "listingsVerified": false,
+      "expertise": "PDF",
+      "instagram": "not in PDF"
+    }
+  },
+  {
+    "key": "leslie-ann-cedeno",
+    "name": "Leslie Ann Cedeño",
+    "role": "Marketing",
+    "zona": "",
+    "tel": "+1 (849) 205-6161",
+    "email": "marketing@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local E-02, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/leslie-ann-cedeno.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 31,
+      "portraitXref": 2647,
+      "listingsVerified": false,
+      "expertise": "PDF",
+      "instagram": "not in PDF"
+    }
+  },
+  {
+    "key": "joshua-manuel-rosenthal",
+    "name": "Joshua Manuel Rosenthal",
+    "role": "Sales Manager | Sales & Rentals",
+    "zona": "Cap Cana · Punta Cana Village · Cocotal",
+    "tel": "+1 (809) 519-0066",
+    "email": "joshua@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "https://canablue.com/author/joshuacanablue-com/",
+    "communities": [
+      {
+        "label": "Cap Cana",
+        "url": "https://canablue.com/community/cap-cana/",
+        "on": true
+      },
+      {
+        "label": "Punta Cana / Punta Cana Village",
+        "url": "https://canablue.com/community/punta-cana/",
+        "on": true
+      },
+      {
+        "label": "Palma Real Villas (Cocotal)",
+        "url": "https://canablue.com/community/cocotal/",
+        "on": true
+      }
+    ],
+    "linkedin": "",
+    "instagram": "https://www.instagram.com/joshua_canablue.rd/",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/joshua-manuel-rosenthal.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": true,
+      "social": true,
+      "listings": true,
+      "booking": false,
+      "community": true,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": true
+    },
+    "source": {
+      "pdfPage": 32,
+      "portraitXref": 2672,
+      "listingsVerified": true,
+      "expertise": "PDF",
+      "instagram": "PDF handle"
+    }
+  },
+  {
+    "key": "dayana-richiez",
+    "name": "Dayana Richiez",
+    "role": "Sales | Rentals",
+    "zona": "Cap Cana · Cocotal · Bayahibe · Los Corales",
+    "tel": "+1 (849) 206-8239",
+    "email": "dayana@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "https://canablue.com/author/dayanacanablue-com/",
+    "communities": [
+      {
+        "label": "Cap Cana",
+        "url": "https://canablue.com/community/cap-cana/",
+        "on": true
+      },
+      {
+        "label": "Palma Real Villas (Cocotal)",
+        "url": "https://canablue.com/community/cocotal/",
+        "on": true
+      },
+      {
+        "label": "Bayahibe",
+        "url": "https://canablue.com/community/bayahibe/",
+        "on": true
+      },
+      {
+        "label": "Los Corales, El Cortecito",
+        "url": "https://canablue.com/community/el-cortecito/",
+        "on": true
+      }
+    ],
+    "linkedin": "https://do.linkedin.com/in/dayana-richiez-b010504a",
+    "instagram": "https://www.instagram.com/dayana_canablue.rd/",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/dayana-richiez.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": true,
+      "social": true,
+      "listings": true,
+      "booking": false,
+      "community": true,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": true
+    },
+    "source": {
+      "pdfPage": 34,
+      "portraitXref": 2740,
+      "listingsVerified": true,
+      "expertise": "user update",
+      "instagram": "PDF handle"
+    }
+  },
+  {
+    "key": "barbara-boruch",
+    "name": "Barbara Boruch",
+    "role": "Sales | Rentals",
+    "zona": "Los Corales",
+    "tel": "+1 (647) 702-8401",
+    "email": "barbara@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "https://canablue.com/author/barbaracanablue-com/",
+    "communities": [
+      {
+        "label": "Los Corales, El Cortecito",
+        "url": "https://canablue.com/community/el-cortecito/",
+        "on": true
+      }
+    ],
+    "linkedin": "",
+    "instagram": "https://www.instagram.com/barbara_canablue.rd/",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/barbara-boruch.jpg",
+    "photoPosition": "center top",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": true,
+      "social": true,
+      "listings": true,
+      "booking": false,
+      "community": true,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": true
+    },
+    "source": {
+      "pdfPage": 36,
+      "portraitXref": 2820,
+      "listingsVerified": true,
+      "expertise": "PDF",
+      "instagram": "PDF handle"
+    }
+  },
+  {
+    "key": "wendy-duluc",
+    "name": "Wendy Duluc",
+    "role": "Sales | Rentals",
+    "zona": "Vista Cana · White Sands",
+    "tel": "+1 (809) 723-9028",
+    "email": "wendy@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "https://canablue.com/author/wendycanablue-com/",
+    "communities": [
+      {
+        "label": "Vista Cana",
+        "url": "https://canablue.com/community/vista-cana/",
+        "on": true
+      },
+      {
+        "label": "White Sands",
+        "url": "https://canablue.com/community/white-sands-3/",
+        "on": true
+      }
+    ],
+    "linkedin": "",
+    "instagram": "https://www.instagram.com/wendy_canablue.rd/",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/wendy-duluc.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": true,
+      "social": true,
+      "listings": true,
+      "booking": false,
+      "community": true,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": true
+    },
+    "source": {
+      "pdfPage": 38,
+      "portraitXref": 2888,
+      "listingsVerified": true,
+      "expertise": "PDF",
+      "instagram": "PDF handle"
+    }
+  },
+  {
+    "key": "leiny-poueriet",
+    "name": "Leiny Poueriet",
+    "role": "Sales | Rentals",
+    "zona": "Cap Cana · Cocotal · Los Corales",
+    "tel": "+1 (849) 501-3593",
+    "email": "leiny@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "https://canablue.com/author/leinycanablue-com/",
+    "communities": [
+      {
+        "label": "Cap Cana",
+        "url": "https://canablue.com/community/cap-cana/",
+        "on": true
+      },
+      {
+        "label": "Palma Real Villas (Cocotal)",
+        "url": "https://canablue.com/community/cocotal/",
+        "on": true
+      },
+      {
+        "label": "Los Corales, El Cortecito",
+        "url": "https://canablue.com/community/el-cortecito/",
+        "on": true
+      }
+    ],
+    "linkedin": "",
+    "instagram": "https://www.instagram.com/leiny_canablue.rd/",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/leiny-poueriet.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": true,
+      "social": true,
+      "listings": true,
+      "booking": false,
+      "community": true,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": true
+    },
+    "source": {
+      "pdfPage": 40,
+      "portraitXref": 2956,
+      "listingsVerified": true,
+      "expertise": "user update",
+      "instagram": "PDF handle"
+    }
+  },
+  {
+    "key": "mayelin-avila",
+    "name": "Mayelin Ávila",
+    "role": "Sales Administrative Assistant",
+    "zona": "",
+    "tel": "+1 (809) 975-3900",
+    "email": "info@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/mayelin-avila.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": true,
+      "sr24": false,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 42,
+      "portraitXref": 3031,
+      "listingsVerified": false,
+      "expertise": "PDF",
+      "instagram": "not in PDF"
+    }
+  },
+  {
+    "key": "magdalena-pietrusinska",
+    "name": "Magdalena Pietrusinska",
+    "role": "Sales | Rentals",
+    "zona": "Los Corales · Bávaro · Vista Cana",
+    "tel": "+1 (829) 546-7197",
+    "email": "magdalena@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "https://canablue.com/author/magdalena/",
+    "communities": [
+      {
+        "label": "Los Corales, El Cortecito",
+        "url": "https://canablue.com/community/el-cortecito/",
+        "on": true
+      },
+      {
+        "label": "Bávaro",
+        "url": "https://canablue.com/communities/",
+        "on": true
+      },
+      {
+        "label": "Vista Cana",
+        "url": "https://canablue.com/community/vista-cana/",
+        "on": true
+      }
+    ],
+    "linkedin": "",
+    "instagram": "https://www.instagram.com/magdalena_canablue.rd/",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/magdalena-pietrusinska.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": true,
+      "social": true,
+      "listings": true,
+      "booking": false,
+      "community": true,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": true
+    },
+    "source": {
+      "pdfPage": 43,
+      "portraitXref": 3052,
+      "listingsVerified": true,
+      "expertise": "user update",
+      "instagram": "PDF handle"
+    }
+  },
+  {
+    "key": "arslan-tahir",
+    "name": "Arslan Tahir",
+    "role": "CRM Assistant",
+    "zona": "",
+    "tel": "",
+    "email": "crmhelp@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local E-02, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/arslan-tahir.jpg",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 45,
+      "portraitXref": 3122,
+      "listingsVerified": false,
+      "expertise": "PDF",
+      "instagram": "not in PDF"
+    }
+  },
+  {
+    "key": "manuel-cabrera",
+    "name": "Manuel Cabrera",
+    "role": "Brand & Visual Content Specialist",
+    "zona": "",
+    "tel": "+1 (849) 564-5974",
+    "email": "media@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local E-02, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/manuel-cabrera.png",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 46,
+      "portraitXref": 678,
+      "listingsVerified": false,
+      "expertise": "PDF",
+      "instagram": "not in PDF"
+    }
+  },
+  {
+    "key": "karina-manzanillo",
+    "name": "Karina Manzanillo",
+    "role": "Sales | Rentals",
+    "zona": "Verón · Punta Cana Village · Downtown",
+    "tel": "+1 (809) 481-5680",
+    "email": "karina@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [
+      {
+        "label": "Verón",
+        "url": "https://canablue.com/community/veron/",
+        "on": true
+      },
+      {
+        "label": "Punta Cana / Punta Cana Village",
+        "url": "https://canablue.com/community/punta-cana/",
+        "on": true
+      },
+      {
+        "label": "Downtown Punta Cana",
+        "url": "https://canablue.com/community/downtown-punta-cana/",
+        "on": true
+      }
+    ],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/karina-manzanillo.png",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": true,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": true,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 47,
+      "portraitXref": 3182,
+      "listingsVerified": false,
+      "expertise": "user update",
+      "instagram": "unavailable"
+    }
+  },
+  {
+    "key": "luis-joel-lara-nova",
+    "name": "Luis Joel Lara Nova",
+    "role": "Sales | Rentals",
+    "zona": "",
+    "tel": "+1 (809) 355-0890",
+    "email": "joel@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/luis-joel-lara-nova.png",
+    "photoPosition": "center center",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": true,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": true,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": true,
+      "realtor": false,
+      "sr23": false,
+      "sr24": true,
+      "lux": false
+    },
+    "source": {
+      "pdfPage": 48,
+      "portraitXref": 3212,
+      "listingsVerified": false,
+      "expertise": "PDF",
+      "instagram": "unavailable"
+    }
+  },
+  {
+    "key": "carla-martinez",
+    "name": "Carla Martínez",
+    "role": "",
+    "zona": "",
+    "tel": "",
+    "email": "carla@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": false,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": false,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": false,
+      "realtor": false,
+      "sr23": false,
+      "sr24": false,
+      "lux": false
+    },
+    "source": {
+      "directoryRow": 13,
+      "portrait": "not in PDF",
+      "note": "Supplied Carla author URL currently returns 404"
+    }
+  },
+  {
+    "key": "ivan-ortega",
+    "name": "Iván Ortega",
+    "role": "Sales | Rentals",
+    "zona": "",
+    "tel": "+1 809-870-8473",
+    "email": "ivan@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": false,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": false,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": false,
+      "realtor": false,
+      "sr23": false,
+      "sr24": false,
+      "lux": false
+    },
+    "source": {
+      "directoryRow": 23,
+      "portrait": "not in PDF",
+      "note": ""
+    }
+  },
+  {
+    "key": "jose-rodriguez",
+    "name": "José Rodríguez",
+    "role": "Sales | Rentals",
+    "zona": "",
+    "tel": "+1 849-281-1000",
+    "email": "jose@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": false,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": false,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": false,
+      "realtor": false,
+      "sr23": false,
+      "sr24": false,
+      "lux": false
+    },
+    "source": {
+      "directoryRow": 28,
+      "portrait": "not in PDF",
+      "note": ""
+    }
+  },
+  {
+    "key": "juan-medina",
+    "name": "Juan Medina",
+    "role": "Sales | Rentals",
+    "zona": "",
+    "tel": "+1 829-603-2961",
+    "email": "juanm@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": false,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": false,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": false,
+      "realtor": false,
+      "sr23": false,
+      "sr24": false,
+      "lux": false
+    },
+    "source": {
+      "directoryRow": 30,
+      "portrait": "not in PDF",
+      "note": ""
+    }
+  },
+  {
+    "key": "julissa-canton",
+    "name": "Julissa Cantón",
+    "role": "Real Estate Agent",
+    "zona": "",
+    "tel": "+1 829-321-2217",
+    "email": "julissa@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": false,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": false,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": false,
+      "realtor": false,
+      "sr23": false,
+      "sr24": false,
+      "lux": false
+    },
+    "source": {
+      "directoryRow": 31,
+      "portrait": "not in PDF",
+      "note": ""
+    }
+  },
+  {
+    "key": "yiraine-miraglio",
+    "name": "Yiraine Miraglio",
+    "role": "Sales | Rentals",
+    "zona": "",
+    "tel": "+1 809-840-0643",
+    "email": "yiraine@canablue.com",
+    "web": "canablue.com",
+    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
+    "listings": "",
+    "communities": [],
+    "linkedin": "",
+    "instagram": "",
+    "whatsapp": "",
+    "foto": "",
+    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
+    "tpl": "principal",
+    "vis": {
+      "foto": false,
+      "zona": false,
+      "social": true,
+      "listings": false,
+      "booking": false,
+      "community": false,
+      "qr": true,
+      "certs": false,
+      "legal": false
+    },
+    "iconStyle": "solid",
+    "certsAlign": "center",
+    "certs": {
+      "crs": false,
+      "aei": false,
+      "realtor": false,
+      "sr23": false,
+      "sr24": false,
+      "lux": false
+    },
+    "source": {
+      "directoryRow": 49,
+      "portrait": "not in PDF",
+      "note": ""
+    }
   }
 ]

@@ -1,0 +1,40 @@
+{
+  "key": "pamela",
+  "name": "Pamela Núñez",
+  "role": "Broker Owner",
+  "zona": "Punta Cana · Cap Cana",
+  "tel": "+1 (809) 975-3900",
+  "email": "pamela@canablue.com",
+  "web": "canablue.com",
+  "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
+  "dirUrl": "https://www.google.com/maps/place/Canablue+Real+Estate/data=!4m2!3m1!1s0x0:0x14220523874e3b46?sa=X&ved=1t:2428&ictx=111",
+  "listings": "https://canablue.com/author/pamepam/",
+  "booking": "",
+  "community": "https://canablue.com/community/cocotal/",
+  "linkedin": "https://do.linkedin.com/in/pamela-nunez-0280814a",
+  "instagram": "https://www.instagram.com/pamela_canablue.rd",
+  "whatsapp": "https://wa.me/18096080943",
+  "foto": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792087360/Firmas_de_correo_Electronico_pamela.png",
+  "tpl": "principal",
+  "vis": {
+    "foto": true,
+    "zona": true,
+    "social": true,
+    "listings": true,
+    "booking": true,
+    "community": true,
+    "qr": false,
+    "certs": true,
+    "legal": true
+  },
+  "iconStyle": "solid",
+  "certsAlign": "center",
+  "certs": {
+    "crs": true,
+    "aei": true,
+    "realtor": true,
+    "sr23": true,
+    "sr24": true,
+    "lux": false
+  }
+}

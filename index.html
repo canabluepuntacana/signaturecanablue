@@ -16,7 +16,7 @@
 <meta property="og:url" content="https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/">
 <meta name="twitter:card" content="summary_large_image">
 <link href="https://fonts.cdnfonts.com/css/google-sans" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261021l">
+<link rel="stylesheet" href="styles.css?v=20261026c">
 <script src="assets/iconify-icon.min.js?v=20261021l"></script>
 <script src="assets/qrcode.min.js?v=20261021l"></script>
 </head>
@@ -39,7 +39,8 @@
 <main class="layout">
   <!-- ============ EDITOR ============ -->
   <nav class="rail">
-    <button data-sec="sec-design" class="on"><iconify-icon icon="mdi:file-document" width="22"></iconify-icon><span>Style</span></button>
+    <button data-sec="sec-directory" class="on"><iconify-icon icon="mdi:account-group" width="22"></iconify-icon><span>Firmas</span></button>
+    <button data-sec="sec-design"><iconify-icon icon="mdi:file-document" width="22"></iconify-icon><span>Style</span></button>
     <button data-sec="sec-agent"><iconify-icon icon="mdi:account" width="22"></iconify-icon><span>Contact</span></button>
     <button data-sec="sec-links"><iconify-icon icon="mdi:link-variant" width="22"></iconify-icon><span>Links</span></button>
     <button data-sec="sec-photo"><iconify-icon icon="mdi:image" width="22"></iconify-icon><span>Photo</span></button>
@@ -47,7 +48,16 @@
     <button data-sec="sec-display"><iconify-icon icon="mdi:eye" width="22"></iconify-icon><span>Display</span></button>
   </nav>
   <aside class="editor">
-    <section class="card show" id="sec-design">
+    <section class="card show directory-card" id="sec-directory">
+      <div class="directory-head">
+        <div><h3><iconify-icon icon="mdi:account-group"></iconify-icon> Firmas del equipo</h3><p>Busca tu nombre, revisa la firma y copia el resultado de la derecha.</p></div>
+        <span id="directoryCount" class="directory-count">Cargando…</span>
+      </div>
+      <label class="lbl" for="directorySearch">Buscar agente</label>
+      <input id="directorySearch" type="search" placeholder="Nombre, correo o zona" autocomplete="off">
+      <div id="directoryList" class="directory-list" aria-live="polite"></div>
+    </section>
+    <section class="card" id="sec-design">
       <h3><iconify-icon icon="mdi:file-document"></iconify-icon> Template &amp; color</h3>
       <label class="lbl">Template</label>
       <div class="tpl-grid" id="tplGrid">
@@ -68,12 +78,9 @@
 
     <section class="card" id="sec-agent">
       <h3><iconify-icon icon="mdi:account"></iconify-icon> Contact details</h3>
-      <label class="lbl">Agent</label>
-      <div class="agent-select">
-        <input id="agentSearch" value="Pamela Núñez" placeholder="Search agent..." autocomplete="off" role="combobox" aria-expanded="false" aria-controls="agentList" aria-autocomplete="list">
-        <div id="agentList" class="agent-list hidden" role="listbox"></div>
-      </div>
-      <p class="hint">Search and pick an agent to autofill every field.</p>
+      <label class="lbl" for="agentSelect">Agent</label>
+      <select id="agentSelect" aria-label="Select an agent"><option value="">Select an agent</option></select>
+      <p class="hint">Choose an agent to autofill every field. You can also search in Firmas.</p>
       <div class="row-btns">
         <button id="btnSaveAgent" class="btn small primary">Save agent</button>
         <button id="btnSaveNew" class="btn small">Save &amp; new</button>
@@ -147,7 +154,7 @@
       <input type="file" id="fFotoFile" accept="image/*">
       <label class="lbl">Logo URL</label>
       <input id="fLogo" value="https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png">
-      <p class="hint">Tip: upload the photo to Cloudinary / your website and paste the public https link so it loads in Gmail / Outlook.</p>
+      <p class="hint">Agent portraits are stored in assets/agents and use the public site URL in copied signatures. Publish the site before pasting a new signature into email.</p>
     </section>
 
     <section class="card" id="sec-certs">
@@ -196,7 +203,7 @@
         <label><input type="checkbox" id="vListings" checked> Show "View My Listings" button</label>
         <label><input type="checkbox" id="vBooking" checked> Show "Schedule" button (uses the booking URL)</label>
         <label><input type="checkbox" id="vCommunity" checked> Show the "Community Expert:" line</label>
-        <label><input type="checkbox" id="vQr"> Show contact QR code (vCard)</label>
+        <label><input type="checkbox" id="vQr" checked> Show contact QR code (vCard)</label>
         <label><input type="checkbox" id="vCerts" checked> Show certifications</label>
         <label><input type="checkbox" id="vLegal" checked> Show legal notice</label>
       </div>
@@ -245,6 +252,6 @@
   </section>
 </main>
 
-<script src="app.js?v=20261021l"></script>
+<script src="app.js?v=20261026g"></script>
 </body>
 </html>

@@ -71,7 +71,8 @@ const NETWORKS = {
   facebook: { label: 'Facebook', bg: '#1877F2', slug: 'facebook-f', img: IMG('material-outlined', 48, 'ffffff', 'facebook-f') },
   instagram: { label: 'Instagram', bg: '#000000', slug: 'instagram', img: IMG('material-outlined', 48, 'ffffff', 'instagram') },
   whatsapp: { label: 'WhatsApp', bg: '#25D366', slug: 'whatsapp', img: IMG('material-outlined', 48, 'ffffff', 'whatsapp') },
-  linkedin: { label: 'LinkedIn', bg: '#0A66C2', slug: 'linkedin', img: IMG('material-outlined', 48, 'ffffff', 'linkedin') },
+  phone: { label: 'Teléfono Cana Blue', bg: '#174176', slug: 'phone', img: IMG('ios-filled', 50, 'ffffff', 'phone') },
+  linkedin: { label: 'LinkedIn', bg: '#0A66C2', slug: 'linkedin', img: IMG('ios-filled', 50, 'ffffff', 'linkedin') },
   x: { label: 'X (Twitter)', bg: '#000000', slug: 'twitterx', img: IMG('material-outlined', 48, 'ffffff', 'twitterx') },
   tiktok: { label: 'TikTok', bg: '#000000', slug: 'tiktok', img: IMG('material-outlined', 48, 'ffffff', 'tiktok') },
   youtube: { label: 'YouTube', bg: '#FF0000', slug: 'youtube-play', img: IMG('material-outlined', 48, 'ffffff', 'youtube-play') },
@@ -85,17 +86,18 @@ const AGENCY_SOCIALS = [
   ['facebook', 'https://www.facebook.com/canablue/'],
   ['instagram', 'https://www.instagram.com/canablue.rd/'],
   ['whatsapp', 'https://wa.me/18099753900'],
+  ['phone', 'tel:+18099753900'],
   ['linkedin', 'https://www.linkedin.com/company/canablue'],
   ['youtube', 'https://www.youtube.com/channel/UCh15GIlCR4JOPznpFpBGong']
 ];
 function agentSocialLinksFor(person) {
   return [
-    ['instagram', person.instagram], ['whatsapp', person.whatsapp], ['linkedin', person.linkedin],
+    ['instagram', person.instagram], ['linkedin', person.linkedin],
     ...(person.extra || []).map(e => [e.icon, e.url])
   ].filter(([, url]) => String(url || '').trim());
 }
 function networkGlyph(n, hex) {
-  return IMG('material-outlined', 48, hex, n.slug);
+  return IMG(n.slug === 'linkedin' || n.slug === 'phone' ? 'ios-filled' : 'material-outlined', 48, hex, n.slug);
 }
 // Text coming from the editor goes into HTML: escape it so "&", "<" or a stray
 // quote can never break (or corrupt) the generated signature.
@@ -302,18 +304,19 @@ async function buildHTML() {
     customCerts: (raw.customCerts || []).map(x => ({ img: normUrl(x.img), link: normUrl(x.link) }))
   };
   const logoUrl = await toDataURL(s.logo);
-  const telHref = 'tel:' + String(raw.tel || '').replace(/[^+\d]/g, '');
+  const whatsappDigits = String(raw.tel || '').replace(/\D/g, '');
+  const whatsappHref = whatsappDigits ? `https://wa.me/${whatsappDigits}` : s.whatsapp;
   const webHref = normUrl(raw.web) || '#';
   const fotoCell = (size) => s.vis.foto && s.foto
     ? `<div style="text-align:center;"><img src="${s.foto}" width="${size}" height="${size}" style="width:${size}px;height:${size}px;border-radius:50%;object-fit:cover;object-position:${photoPosition};display:inline-block;border:3px solid ${c}22;" alt="${s.nombre}"></div>` : '';
 
-  // Contact rows: phone / email / web / address only (no listings row, no LinkedIn text row)
+  // The visible personal number opens WhatsApp; the address stays last.
   const contactRows = (sz) => [
-    s.tel && contactRow(lineIcon('phone', c), `<a href="${telHref}" style="color:#222;text-decoration:none;">${s.tel}</a>`, 'Phone', sz),
+    whatsappHref && contactRow(lineIcon('whatsapp', c), `<a href="${whatsappHref}" target="_blank" style="color:#222;text-decoration:none;">${s.tel || 'Escribir por WhatsApp'}</a>`, 'WhatsApp', sz),
     s.email && contactRow(lineIcon('new-post', c), `<a href="mailto:${s.email}" style="color:#222;text-decoration:none;">${s.email}</a>`, 'Email', sz),
-    s.web && contactRow(lineIcon('domain', c), `<a href="${webHref}" style="color:#222;text-decoration:none;">${s.web}</a>`, 'Website', sz),
-    s.dir && contactRow(lineIcon('marker', c), s.dirUrl ? `<a href="${s.dirUrl}" target="_blank" style="color:#222;text-decoration:none;">${s.dir}</a>` : `<span>${s.dir}</span>`, 'Address', sz)
+    s.web && contactRow(lineIcon('domain', c), `<a href="${webHref}" style="color:#222;text-decoration:none;">${s.web}</a>`, 'Website', sz)
   ].filter(Boolean).join('');
+  const addressRow = (sz) => s.dir ? contactRow(lineIcon('marker', c), s.dirUrl ? `<a href="${s.dirUrl}" target="_blank" style="color:#222;text-decoration:none;">${s.dir}</a>` : `<span>${s.dir}</span>`, 'Address', sz) : '';
 
   // Personal profiles live with contact details; company profiles stay by the logo.
   const ist = s.iconStyle || 'solid';
@@ -324,13 +327,13 @@ async function buildHTML() {
     let label = NETWORKS[network]?.label || 'Perfil';
     if (network === 'instagram') {
       try { label = '@' + decodeURIComponent(new URL(url).pathname.split('/').filter(Boolean).pop()); } catch {}
-    } else if (network === 'whatsapp') label = s.tel || 'Escribir por WhatsApp';
-    else if (network === 'linkedin') label = 'Perfil de LinkedIn';
+    } else if (network === 'linkedin') label = 'Perfil de LinkedIn';
     const href = normUrl(url);
-    return contactRow(lineIcon(NETWORKS[network]?.slug || 'link', c),
+    const icon = network === 'linkedin' ? IMG('ios-filled', 50, c.replace('#', ''), 'linkedin') : lineIcon(NETWORKS[network]?.slug || 'link', c);
+    return contactRow(icon,
       `<a href="${href}" target="_blank" style="color:#222;text-decoration:none;">${esc(label)}</a>`, label, sz);
   }).join('');
-  const contactTable = (sz) => `<table cellpadding="0" cellspacing="0" border="0">${contactRows(sz)}${agentSocialRows(sz)}</table>`;
+  const contactTable = (sz) => `<table cellpadding="0" cellspacing="0" border="0">${contactRows(sz)}${agentSocialRows(sz)}${addressRow(sz)}</table>`;
   const socials = agencySocials();
 
   const legalHtml = (sz, span) => s.vis.legal && s.legal
@@ -488,8 +491,8 @@ ${s.vis.foto && s.foto ? `<td width="${MAIN_SZ.photoCell}" valign="middle">${fot
 <tr><td style="padding:14px 0 0;"><div style="border-top:1px solid ${c};font-size:0;line-height:0;max-width:100%;">&nbsp;</div></td></tr>
 <tr class="cb-desk"><td><table cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:100%;table-layout:fixed;"><tbody><tr>
 <td width="25%" valign="middle"><img src="${logoUrl}" width="${MAIN_SZ.logo}" style="width:${MAIN_SZ.logo}px;max-width:${MAIN_SZ.logo}px;display:block;" alt="Canablue"></td>
-<td width="50%" align="center" valign="middle" style="min-width:96px;">${actionPills(MAIN_SZ.pill)}</td>
-<td width="25%" align="right" valign="middle" style="min-width:96px;">${agencySocials(MAIN_SZ.socialK)}</td></tr></tbody></table></td></tr>
+<td width="42%" align="center" valign="middle" style="min-width:96px;">${actionPills(MAIN_SZ.pill)}</td>
+<td width="33%" align="right" valign="middle" style="min-width:96px;">${agencySocials(MAIN_SZ.socialK)}</td></tr></tbody></table></td></tr>
 <tr class="cb-desk"><td align="center" style="padding-top:10px;">${communityExpertHtml(MAIN_SZ.community)}</td></tr>
 <tr class="cb-mob" style="display:none;"><td><table cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:100%;table-layout:fixed;"><tbody><tr>
 <td width="68%" valign="middle"><img src="${logoUrl}" width="${MAIN_SZ.logo}" style="width:${MAIN_SZ.logo}px;max-width:${MAIN_SZ.logo}px;display:block;" alt="Canablue"></td>

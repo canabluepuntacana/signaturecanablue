@@ -121,7 +121,8 @@ deletes them.
   the contacts column is the one that adapts). Below 480 px the media query turns the
   wrap back on so the name still breaks inside the narrow phone row.
 - **Contact QR (vCard)** — encodes the agent's vCard (name, title, phone, email, site,
-  address) so a scan saves the contact. It ships as an embedded PNG, no image host needed.
+  address) so a scan saves the contact. The email signature loads its PNG from
+  `api/contact-qr` on the Vercel site; this avoids broken data-URI attachments in Gmail.
   On by default; it can be changed in **Display**. **Download contact (.vcf)** exports the same
   data as a file.
 - **Certification alignment** and **icon style** are per agent.

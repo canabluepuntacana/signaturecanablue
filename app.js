@@ -168,8 +168,10 @@ const lineIcon = (name, colorHex) => IMG('ios', 50, colorHex.replace('#', ''), n
 const whiteGlyph = name => IMG('ios-filled', 50, 'ffffff', name);
 
 // ---- vCard + QR ------------------------------------------------------------
-// The QR encodes a vCard so a scan saves the agent to the phone's contacts. It is
-// embedded as a data URI, so it renders without any extra image host.
+// The QR encodes a vCard so a scan saves the agent to the phone's contacts.
+// Email clients may replace data-URI images with broken MIME attachments, so
+// the copied signature references a PNG served by this site's QR endpoint.
+const QR_IMAGE_BASE = 'https://signaturecanablue.vercel.app/api/contact-qr?data=';
 function vcardText(s) {
   const tel = String(s.tel || '').replace(/[^+\d]/g, '');
   return [
@@ -183,50 +185,8 @@ function vcardText(s) {
     'END:VCARD'
   ].filter(Boolean).join('\r\n');
 }
-// UTF-8 encode into a binary string (one char = one byte). The QR library reads
-// charCodeAt, so this keeps accented names like "Núñez" correct in the vCard.
-function utf8Bytes(str) {
-  let out = '';
-  for (const ch of String(str)) {
-    const c = ch.codePointAt(0);
-    if (c < 0x80) out += String.fromCharCode(c);
-    else if (c < 0x800) out += String.fromCharCode(0xc0 | (c >> 6), 0x80 | (c & 63));
-    else if (c < 0x10000) out += String.fromCharCode(0xe0 | (c >> 12), 0x80 | ((c >> 6) & 63), 0x80 | (c & 63));
-    else out += String.fromCharCode(0xf0 | (c >> 18), 0x80 | ((c >> 12) & 63), 0x80 | ((c >> 6) & 63), 0x80 | (c & 63));
-  }
-  return out;
-}
-const qrCache = {};
-function qrDataURL(text, size) {
-  const key = size + '|' + text;
-  if (qrCache[key]) return qrCache[key];
-  try {
-    if (typeof qrcode !== 'function') return '';
-    const qr = qrcode(0, 'M'); // 0 = pick the version automatically, M = error correction
-    qr.addData(utf8Bytes(text), 'Byte');
-    qr.make();
-    const count = qr.getModuleCount();
-    const quiet = 2;
-    const cell = Math.max(2, Math.floor(size / (count + quiet * 2)));
-    const px = cell * (count + quiet * 2);
-    const cv = document.createElement('canvas');
-    cv.width = px; cv.height = px;
-    const ctx = cv.getContext('2d');
-    ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, px, px);
-    ctx.fillStyle = '#0b1220';
-    for (let r = 0; r < count; r++) {
-      for (let c = 0; c < count; c++) {
-        if (qr.isDark(r, c)) ctx.fillRect((c + quiet) * cell, (r + quiet) * cell, cell, cell);
-      }
-    }
-    const d = cv.toDataURL('image/png');
-    if (d) qrCache[key] = d;
-    return d;
-  } catch { return ''; }
-}
 function qrRow(data, align, h) {
-  const src = qrDataURL(data, 280);
-  if (!src) return '';
+  const src = QR_IMAGE_BASE + encodeURIComponent(data);
   const size = h || 92;
   const fs = size > 92 ? 12 : 11;
   const lh = size > 92 ? 16 : 15;

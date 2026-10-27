@@ -83,10 +83,10 @@ const NETWORKS = {
 // Official profiles linked from canablue.com. They appear beside the logo in
 // every signature; personal profiles stay with the agent's contact details.
 const AGENCY_SOCIALS = [
+  ['phone', 'tel:+18099753900'],
+  ['whatsapp', 'https://wa.me/18099753900'],
   ['facebook', 'https://www.facebook.com/canablue/'],
   ['instagram', 'https://www.instagram.com/canablue.rd/'],
-  ['whatsapp', 'https://wa.me/18099753900'],
-  ['phone', 'tel:+18099753900'],
   ['linkedin', 'https://www.linkedin.com/company/canablue'],
   ['youtube', 'https://www.youtube.com/channel/UCh15GIlCR4JOPznpFpBGong']
 ];

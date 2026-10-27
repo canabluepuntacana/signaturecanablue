@@ -386,7 +386,7 @@ async function buildHTML() {
     ? `<div${pamelaPhotoCerts ? ' class="cb-cert-role"' : ''} style="padding-top:7px;line-height:0;max-width:150px;">${mainCertImgs.join('')}</div>`
     : '';
   const photoCertsHtml = pamelaPhotoCerts && mainCertImgs.length
-    ? `<div class="cb-cert-photo" style="display:none;padding-top:5px;text-align:center;white-space:nowrap;line-height:0;">${certImgs(s.certs, s.certLinks, s.customCerts, 23).join('')}</div>`
+    ? `<div class="cb-cert-photo" style="display:none;padding-top:5px;text-align:center;white-space:nowrap;line-height:0;">${certImgs(s.certs, s.certLinks, s.customCerts, 29).join('')}</div>`
     : '';
   // Compact templates: the same block one notch smaller so it fits their 600 px row.
   const COMM_SZ = { fs: 11.5, pfs: 9, pad: '4px 7px', rad: 12 };

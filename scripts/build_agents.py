@@ -108,12 +108,16 @@ LINKEDIN = {
 }
 UNAVAILABLE_INSTAGRAM = {"miguel-martinez", "karina-manzanillo", "luis-joel-lara-nova"}
 
-# Both PDF variants show AEI and Best of DR 2024 for most staff. The second
-# variant adds Luxury Homes Expert as part of its layout for many agents, even
-# when the primary signature does not show it. Only assign Luxury Homes Expert
-# when the primary signature also includes it.
+# The PDF's second layout repeats Luxury Homes Expert for many agents. Use
+# Manuel's confirmed list rather than inferring this certification from layout.
+LUXURY_CERTIFIED = {
+    "miguel-martinez", "alejandro-angulo", "luis-sangiovanni",
+    "constantino-cury", "fior-ubiera", "joshua-manuel-rosenthal",
+    "dayana-richiez", "wendy-duluc", "leiny-poueriet",
+    "magdalena-pietrusinska",
+}
+
 PDF_CERT_OVERRIDES = {
-    "candy-vander-horst": {"lux": True},
     "miguel-martinez": {"sr24": False, "sr23": True},
     "pamela-nunez": {"crs": True, "realtor": True, "sr23": True},
     "nathaly-martinez": {"sr24": False, "sr23": True},
@@ -182,7 +186,7 @@ def main():
                        for k in community_ids.split(",") if k]
         is_sales = "Sales" in role or "Broker" in role or role == "Resales Manager"
         certs = {"crs": False, "aei": True, "realtor": False,
-                 "sr23": False, "sr24": True, "lux": False}
+                 "sr23": False, "sr24": True, "lux": key in LUXURY_CERTIFIED}
         certs.update(PDF_CERT_OVERRIDES.get(key, {}))
         if key == "manuel-cabrera":
             # Manuel supplied current contact details, portrait and two Best of DR logos.

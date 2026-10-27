@@ -54,7 +54,7 @@
       "realtor": false,
       "sr23": false,
       "sr24": true,
-      "lux": true
+      "lux": false
     },
     "source": {
       "pdfPage": 1,
@@ -212,7 +212,7 @@
       "realtor": false,
       "sr23": true,
       "sr24": false,
-      "lux": false
+      "lux": true
     },
     "source": {
       "pdfPage": 5,
@@ -277,7 +277,7 @@
       "realtor": false,
       "sr23": false,
       "sr24": true,
-      "lux": false
+      "lux": true
     },
     "source": {
       "pdfPage": 7,
@@ -884,7 +884,7 @@
       "realtor": false,
       "sr23": false,
       "sr24": true,
-      "lux": false
+      "lux": true
     },
     "source": {
       "pdfPage": 23,
@@ -944,7 +944,7 @@
       "realtor": false,
       "sr23": false,
       "sr24": true,
-      "lux": false
+      "lux": true
     },
     "source": {
       "pdfPage": 25,
@@ -1004,7 +1004,7 @@
       "realtor": false,
       "sr23": false,
       "sr24": true,
-      "lux": false
+      "lux": true
     },
     "source": {
       "pdfPage": 27,
@@ -1168,7 +1168,7 @@
       "realtor": false,
       "sr23": false,
       "sr24": true,
-      "lux": false
+      "lux": true
     },
     "source": {
       "pdfPage": 32,
@@ -1238,7 +1238,7 @@
       "realtor": false,
       "sr23": false,
       "sr24": true,
-      "lux": false
+      "lux": true
     },
     "source": {
       "pdfPage": 34,
@@ -1353,7 +1353,7 @@
       "realtor": false,
       "sr23": false,
       "sr24": true,
-      "lux": false
+      "lux": true
     },
     "source": {
       "pdfPage": 38,
@@ -1418,7 +1418,7 @@
       "realtor": false,
       "sr23": false,
       "sr24": true,
-      "lux": false
+      "lux": true
     },
     "source": {
       "pdfPage": 40,
@@ -1533,7 +1533,7 @@
       "realtor": false,
       "sr23": false,
       "sr24": true,
-      "lux": false
+      "lux": true
     },
     "source": {
       "pdfPage": 43,

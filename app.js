@@ -79,8 +79,8 @@ const NETWORKS = {
   pinterest: { label: 'Pinterest', bg: '#E60023', slug: 'pinterest', img: IMG('material-outlined', 48, 'ffffff', 'pinterest') },
   website: { label: 'Website / custom link', bg: '#174176', slug: 'link', img: IMG('material-outlined', 48, 'ffffff', 'link') }
 };
-// Official profiles linked from canablue.com. Use these only when an agent has
-// no personal social links; individual profiles always take precedence.
+// Official profiles linked from canablue.com. They appear beside the logo in
+// every signature; personal profiles stay with the agent's contact details.
 const AGENCY_SOCIALS = [
   ['facebook', 'https://www.facebook.com/canablue/'],
   ['instagram', 'https://www.instagram.com/canablue.rd/'],
@@ -88,12 +88,11 @@ const AGENCY_SOCIALS = [
   ['linkedin', 'https://www.linkedin.com/company/canablue'],
   ['youtube', 'https://www.youtube.com/channel/UCh15GIlCR4JOPznpFpBGong']
 ];
-function socialLinksFor(person) {
-  const own = [
+function agentSocialLinksFor(person) {
+  return [
     ['instagram', person.instagram], ['whatsapp', person.whatsapp], ['linkedin', person.linkedin],
     ...(person.extra || []).map(e => [e.icon, e.url])
   ].filter(([, url]) => String(url || '').trim());
-  return own.length ? own : AGENCY_SOCIALS;
 }
 function networkGlyph(n, hex) {
   return IMG('material-outlined', 48, hex, n.slug);
@@ -315,20 +314,24 @@ async function buildHTML() {
     s.web && contactRow(lineIcon('domain', c), `<a href="${webHref}" style="color:#222;text-decoration:none;">${s.web}</a>`, 'Website', sz),
     s.dir && contactRow(lineIcon('marker', c), s.dirUrl ? `<a href="${s.dirUrl}" target="_blank" style="color:#222;text-decoration:none;">${s.dir}</a>` : `<span>${s.dir}</span>`, 'Address', sz)
   ].filter(Boolean).join('');
-  const rows = contactRows();
 
-  // Social circles only: Instagram (outline glyph) / WhatsApp (flat) / LinkedIn.
+  // Personal profiles live with contact details; company profiles stay by the logo.
   const ist = s.iconStyle || 'solid';
   const cal = ['left', 'center', 'right'].includes(s.certsAlign) ? s.certsAlign : 'center';
-  // Only networks that actually have a URL are rendered — an empty link must not
-  // leave a dangling icon in the signature.
-  const socialsHtml = (k) => {
-    if (!s.vis.social) return '';
-    const links = socialLinksFor(s);
-    const scale = links === AGENCY_SOCIALS ? Math.min(k || 1, 0.95) : k;
-    return links.map(([network, url]) => socialIcon(String(url).trim(), network, ist, c, scale)).join(' ');
-  };
-  const socials = socialsHtml();
+  const agencySocials = (k) => !s.vis.social ? '' : AGENCY_SOCIALS
+    .map(([network, url]) => socialIcon(url, network, ist, c, Math.min(k || 1, 0.95))).join(' ');
+  const agentSocialRows = (sz) => !s.vis.social ? '' : agentSocialLinksFor(s).map(([network, url]) => {
+    let label = NETWORKS[network]?.label || 'Perfil';
+    if (network === 'instagram') {
+      try { label = '@' + decodeURIComponent(new URL(url).pathname.split('/').filter(Boolean).pop()); } catch {}
+    } else if (network === 'whatsapp') label = s.tel || 'Escribir por WhatsApp';
+    else if (network === 'linkedin') label = 'Perfil de LinkedIn';
+    const href = normUrl(url);
+    return contactRow(lineIcon(NETWORKS[network]?.slug || 'link', c),
+      `<a href="${href}" target="_blank" style="color:#222;text-decoration:none;">${esc(label)}</a>`, label, sz);
+  }).join('');
+  const contactTable = (sz) => `<table cellpadding="0" cellspacing="0" border="0">${contactRows(sz)}${agentSocialRows(sz)}</table>`;
+  const socials = agencySocials();
 
   const legalHtml = (sz, span) => s.vis.legal && s.legal
     ? `<tr><td${span ? ` colspan="${span}"` : ''} align="center" style="padding:16px 14px 0;font-size:${(sz && sz.fs) || 10}px;line-height:${(sz && sz.lh) || 14}px;color:#8a94a8;text-align:center;font-family:Arial,Helvetica,sans-serif;">${s.legal}</td></tr>` : '';
@@ -383,7 +386,7 @@ async function buildHTML() {
 <div style="font-size:16px;font-weight:bold;color:#111;margin-top:10px;line-height:20px;">${s.nombre}</div>
 <div style="font-size:12px;color:#555;">${s.cargo}</div></td>
 <td width="1" style="background-color:${c};width:1px;font-size:0;">&nbsp;</td><td width="20"></td>
-<td valign="top"><table cellpadding="0" cellspacing="0" border="0">${rows}</table></td></tr>
+<td valign="top">${contactTable()}</td></tr>
 <tr><td colspan="4"><table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top:14px;border-top:1px solid ${c};"><tbody><tr>
 <td valign="middle" align="${cal}" style="padding-top:12px;">${s.vis.certs ? certImgs(s.certs, s.certLinks, s.customCerts, 26).join(' ') : ''}</td>
 <td align="right" valign="middle" style="padding-top:12px;"><img src="${logoUrl}" width="130" style="width:130px;max-width:130px;display:inline-block;" alt="Canablue"><div style="padding-top:8px;">${viewBtn}</div><div style="padding-top:8px;">${socials}</div></td>
@@ -396,7 +399,7 @@ async function buildHTML() {
 <td width="90" align="right" valign="middle">${s.vis.foto ? `<img src="${s.foto}" width="76" height="76" style="width:76px;height:76px;border-radius:50%;border:3px solid #ffffff;display:inline-block;" alt="">` : ''}</td>
 </tr></tbody></table></td></tr>
 <tr><td style="border:1px solid #e3e8f0;border-top:0;border-radius:0 0 10px 10px;padding:16px 22px;"><table cellpadding="0" cellspacing="0" border="0" width="100%"><tbody><tr>
-<td valign="top" width="55%"><table cellpadding="0" cellspacing="0" border="0">${rows}</table></td>
+<td valign="top" width="55%">${contactTable()}</td>
 <td valign="top" align="right"><img src="${logoUrl}" width="125" style="width:125px;display:inline-block;" alt="Canablue"><div style="margin-top:10px;">${viewBtn}</div><div style="margin-top:10px;">${socials}</div></td>
 </tr></tbody></table><table cellpadding="0" cellspacing="0" border="0" width="100%">${communityLine(COMM_SZ)}${certs}${qr}</table></td></tr>${legalHtml()}</tbody></table>`;
   }
@@ -408,8 +411,8 @@ async function buildHTML() {
 <td valign="middle" align="center" style="text-align:center;"><div style="color:#ffffff;font-size:21px;font-weight:bold;line-height:25px;">${s.nombre}</div><div style="color:#d7e1f2;font-size:12.5px;line-height:17px;margin-top:3px;">${s.cargo}</div></td>
 </tr></tbody></table></td></tr>
 <tr><td style="border:1px solid #e3e8f0;border-top:0;padding:18px 22px 6px;"><table cellpadding="0" cellspacing="0" border="0" width="100%"><tbody><tr>
-<td valign="top" width="56%"><table cellpadding="0" cellspacing="0" border="0">${rows}</table></td>
-<td valign="middle" align="center"><div>${viewBtn}</div><div style="margin-top:12px;">${socials}</div><div style="margin-top:12px;"><img src="${logoUrl}" width="115" style="width:115px;display:inline-block;" alt="Canablue"></div></td>
+<td valign="top" width="56%">${contactTable()}</td>
+<td valign="middle" align="center"><div>${viewBtn}</div><div style="margin-top:12px;"><img src="${logoUrl}" width="115" style="width:115px;display:inline-block;" alt="Canablue"></div><div style="margin-top:10px;">${socials}</div></td>
 </tr></tbody></table></td></tr>
 <tr><td style="border:1px solid #e3e8f0;border-top:0;border-radius:0 0 10px 10px;padding:0 22px 18px;"><div style="border-top:1px solid ${c};font-size:0;line-height:0;">&nbsp;</div><table cellpadding="0" cellspacing="0" border="0" width="100%">${communityLine(COMM_SZ)}${certs}${qr}</table></td></tr>
 ${legalHtml()}</tbody></table>`;
@@ -419,12 +422,12 @@ ${legalHtml()}</tbody></table>`;
     return `<table cellpadding="0" cellspacing="0" border="0" width="600" style="font-family:Arial,Helvetica,sans-serif;max-width:600px;"><tbody><tr>
 <td width="190" valign="top" align="center" style="background-color:${c};border-radius:10px 0 0 10px;padding:24px 16px;">${sidePhoto}
 <div style="color:#ffffff;font-size:16px;font-weight:bold;margin-top:12px;line-height:20px;">${s.nombre}</div>
-<div style="color:#d7e1f2;font-size:12px;margin-top:2px;">${s.cargo}</div>
-<div style="margin-top:14px;">${socials}</div></td>
+<div style="color:#d7e1f2;font-size:12px;margin-top:2px;">${s.cargo}</div></td>
 <td valign="top" style="border:1px solid #e3e8f0;border-left:0;border-radius:0 10px 10px 0;padding:20px 22px;">
-<table cellpadding="0" cellspacing="0" border="0">${rows}</table>
+${contactTable()}
 <div style="margin-top:12px;">${viewBtn}</div>
 <div style="margin-top:14px;"><img src="${logoUrl}" width="120" style="width:120px;display:inline-block;" alt="Canablue"></div>
+<div style="margin-top:10px;">${socials}</div>
 <table cellpadding="0" cellspacing="0" border="0" width="100%">${communityLine(COMM_SZ_STACK, true)}${certs}${qr}</table></td>
 </tr>${legalHtml(null, 2)}</tbody></table>`;
   }
@@ -436,7 +439,7 @@ ${legalHtml()}</tbody></table>`;
 <td width="24"></td>
 <td valign="top"><div style="text-align:center;"><div style="font-size:17px;font-weight:700;color:#111;line-height:22px;">${s.nombre}</div><div style="font-size:12px;color:#111;line-height:17px;">${s.cargo}</div></div>
 <div style="border-top:1px solid ${c};font-size:0;line-height:0;margin:10px 0;">&nbsp;</div>
-<table cellpadding="0" cellspacing="0" border="0">${rows}</table>
+${contactTable()}
 <div style="margin-top:10px;">${viewBtn}</div></td>
 </tr>
 <tr><td colspan="3"><table cellpadding="0" cellspacing="0" border="0" width="100%">${communityLine(COMM_SZ)}${certs}${qr}</table></td></tr>
@@ -448,7 +451,7 @@ ${legalHtml(null, 3)}</tbody></table>`;
 <tr><td align="center" style="padding-top:10px;"><div style="font-size:19px;font-weight:bold;color:#111;line-height:24px;">${s.nombre}</div><div style="font-size:12.5px;color:#555;margin-top:2px;">${s.cargo}</div></td></tr>
 <tr><td style="padding:12px 0;"><div style="border-top:1px solid ${c};font-size:0;line-height:0;">&nbsp;</div></td></tr>
 <tr><td><table cellpadding="0" cellspacing="0" border="0" width="100%"><tbody><tr>
-<td valign="top"><table cellpadding="0" cellspacing="0" border="0">${rows}</table><div style="margin-top:10px;">${viewBtn}</div></td>
+<td valign="top">${contactTable()}<div style="margin-top:10px;">${viewBtn}</div></td>
 <td valign="top" align="right"><img src="${logoUrl}" width="130" style="width:130px;display:inline-block;" alt="Canablue"><div style="margin-top:10px;">${socials}</div></td>
 </tr></tbody></table></td></tr>
 <tr><td><table cellpadding="0" cellspacing="0" border="0" width="100%">${communityLine(COMM_SZ)}${certs}${qr}</table></td></tr>
@@ -459,7 +462,7 @@ ${legalHtml()}</tbody></table>`;
     return `<table cellpadding="0" cellspacing="0" border="0" width="600" style="font-family:Arial,Helvetica,sans-serif;max-width:600px;"><tbody><tr>
 <td valign="top"><div style="text-align:center;"><div style="font-size:17px;font-weight:700;color:#111;line-height:22px;">${s.nombre}</div><div style="font-size:12px;color:#111;line-height:17px;">${s.cargo}</div></div>
 <div style="border-top:1px solid ${c};font-size:0;line-height:0;margin:10px 0;">&nbsp;</div>
-<table cellpadding="0" cellspacing="0" border="0">${rows}</table>
+${contactTable()}
 <div style="margin-top:10px;">${viewBtn}</div></td>
 <td width="24"></td>
 <td width="170" valign="top" align="center">${fotoCell(120)}
@@ -480,17 +483,17 @@ ${legalHtml(null, 3)}</tbody></table>`;
 ${s.vis.foto && s.foto ? `<td width="${MAIN_SZ.photoCell}" valign="middle">${fotoCell(MAIN_SZ.photo)}</td>` : ''}
 <td valign="middle" align="left" style="text-align:left;"><div class="cb-name" style="font-size:${MAIN_SZ.name}px;font-weight:700;color:#111;line-height:${MAIN_SZ.nameLh}px;white-space:nowrap;">${s.nombre}</div><div style="font-size:${MAIN_SZ.role}px;line-height:17px;color:#111;max-width:220px;white-space:normal;text-align:left;">${s.cargo}</div></td>
 <td width="20"></td><td width="1" style="border-left:1px solid ${c};font-size:0;">&nbsp;</td><td width="20"></td>
-<td valign="middle"><table cellpadding="0" cellspacing="0" border="0">${contactRows(MAIN_SZ.contact)}</table></td>
+<td valign="middle">${contactTable(MAIN_SZ.contact)}</td>
 </tr></tbody></table></td></tr>
 <tr><td style="padding:14px 0 0;"><div style="border-top:1px solid ${c};font-size:0;line-height:0;max-width:100%;">&nbsp;</div></td></tr>
 <tr class="cb-desk"><td><table cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:100%;table-layout:fixed;"><tbody><tr>
 <td width="25%" valign="middle"><img src="${logoUrl}" width="${MAIN_SZ.logo}" style="width:${MAIN_SZ.logo}px;max-width:${MAIN_SZ.logo}px;display:block;" alt="Canablue"></td>
 <td width="50%" align="center" valign="middle" style="min-width:96px;">${actionPills(MAIN_SZ.pill)}</td>
-<td width="25%" align="right" valign="middle" style="min-width:96px;">${socialsHtml(MAIN_SZ.socialK)}</td></tr></tbody></table></td></tr>
+<td width="25%" align="right" valign="middle" style="min-width:96px;">${agencySocials(MAIN_SZ.socialK)}</td></tr></tbody></table></td></tr>
 <tr class="cb-desk"><td align="center" style="padding-top:10px;">${communityExpertHtml(MAIN_SZ.community)}</td></tr>
 <tr class="cb-mob" style="display:none;"><td><table cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:100%;table-layout:fixed;"><tbody><tr>
 <td width="68%" valign="middle"><img src="${logoUrl}" width="${MAIN_SZ.logo}" style="width:${MAIN_SZ.logo}px;max-width:${MAIN_SZ.logo}px;display:block;" alt="Canablue"></td>
-<td width="32%" align="right" valign="middle" style="min-width:96px;">${socialsHtml(MAIN_SZ.socialK)}</td></tr></tbody></table></td></tr>
+<td width="32%" align="right" valign="middle" style="min-width:96px;">${agencySocials(MAIN_SZ.socialK)}</td></tr></tbody></table></td></tr>
 <tr class="cb-mob" style="display:none;"><td align="center" style="padding-top:14px;">${actionPills(MAIN_SZ.pill)}</td></tr>
 <tr class="cb-mob" style="display:none;"><td align="center" style="padding-top:10px;">${communityExpertHtml(MAIN_SZ.communityMob, true)}</td></tr>
 ${certsRow(s.certs, s.certLinks, s.customCerts, s.vis, s.certsAlign, MAIN_SZ.certH)}${(s.vis.qr && raw) ? qrRow(vcardText(raw), cal, MAIN_SZ.qrH) : ''}${legalHtml(MAIN_SZ.legal)}</tbody></table>`;
@@ -516,12 +519,13 @@ const skPill = (px, cls) => `<span class="pill${cls ? ' ' + cls : ''}" style="wi
 // the signature will not print (empty URL, toggle off, no photo...).
 function skFlags() {
   const v = state.vis || {};
-  const socials = socialLinksFor(state).length;
+  const agentSocials = agentSocialLinksFor(state).length;
   const certs = CERT_DEFS.filter(([k]) => state.certs && state.certs[k]).length
     + (state.customCerts || []).filter(x => x && x.img).length;
   return {
     photo: !!v.foto && !!String(state.foto || '').trim(),
-    socials: v.social ? Math.min(socials, 6) : 0,
+    socials: v.social ? AGENCY_SOCIALS.length : 0,
+    agentSocials: v.social ? Math.min(agentSocials, 6) : 0,
     certs: v.certs ? Math.min(certs, 8) : 0,
     legal: !!v.legal,
     qr: !!v.qr,
@@ -533,7 +537,8 @@ function skFlags() {
 }
 function skelFor(tpl, f) {
   const name = dark => skBar(58, dark && 'wh') + skBar(34, dark ? 'whs' : 'sm');
-  const contacts = () => [84, 62, 72, 55].map(w => `<span class="crow"><i class="cico"></i>${skBar(w)}</span>`).join('');
+  const contacts = () => [84, 62, 72, 55, ...Array(f.agentSocials).fill(62)]
+    .map(w => `<span class="crow"><i class="cico"></i>${skBar(w)}</span>`).join('');
   const photo = px => f.photo ? skPhoto(px) : '';
   // One ghost pill per active community, as wide as its label really is.
   const comm = () => {

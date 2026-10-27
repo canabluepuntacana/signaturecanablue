@@ -35,6 +35,12 @@ body{margin:0;font-family:"Google Sans","Product Sans","Segoe UI",Arial,Helvetic
 .directory-head h3{font-size:18px;margin:0 0 5px}
 .directory-head p{margin:0;color:var(--muted);font-size:12.5px;line-height:1.45}
 .directory-count{flex:none;font-size:11px;font-weight:700;color:var(--primary);background:#eef3fb;border-radius:999px;padding:5px 8px}
+.bulk-visibility{margin-top:14px;padding:12px;border:1px solid #d7e3f2;border-radius:12px;background:#f7faff}
+.bulk-visibility .lbl{margin-top:0}
+.bulk-visibility select{width:100%}
+.bulk-visibility-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}
+.bulk-visibility-actions .btn{justify-content:center;white-space:nowrap}
+.bulk-visibility-status{margin:9px 0 0;color:#42506a;font-size:11.5px;font-weight:600}
 .directory-list{display:flex;flex-direction:column;gap:9px;margin-top:14px}
 .directory-entry{border:1px solid var(--line);background:#fff;border-radius:13px;padding:11px;transition:border-color .15s,box-shadow .15s}
 .directory-entry.selected{border-color:#8ba9d3;box-shadow:0 0 0 2px #e6eef9}

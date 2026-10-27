@@ -884,7 +884,7 @@ function blankAgent() {
     listings: '', booking: '', community: COMMUNITY_DEFAULT, communities: defaultCommunities(), linkedin: '', instagram: '', whatsapp: '',
     foto: '', photoPosition: 'center center', logo: LOGO_DEFAULT,
     extra: [], tpl: 'principal',
-    vis: { foto: true, social: true, listings: true, booking: true, community: true, qr: true, certs: true, legal: true },
+    vis: { foto: true, social: true, listings: true, booking: true, community: true, qr: true, certs: true, legal: true, ...getBulkVis() },
     iconStyle: 'solid', certsAlign: 'center',
     certLinks: { crs: '', aei: '', realtor: '', sr23: '', sr24: '', lux: '' },
     customCerts: [],
@@ -897,6 +897,15 @@ const LS_FORM = 'canablue.form.v4', LS_CUSTOM = 'canablue.agents.custom.v1';
 const getCustoms = () => { try { return JSON.parse(localStorage.getItem(LS_CUSTOM) || '[]'); } catch { return []; } };
 const setCustoms = c => localStorage.setItem(LS_CUSTOM, JSON.stringify(c));
 const isCustom = key => getCustoms().some(x => x.key === key);
+const VIS_FIELDS = { foto: 'vFoto', social: 'vSocial', listings: 'vListings', booking: 'vBooking', community: 'vCommunity', qr: 'vQr', certs: 'vCerts', legal: 'vLegal' };
+const LS_BULK_VIS = 'canablue.visibility.all.v1';
+function getBulkVis() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(LS_BULK_VIS) || '{}');
+    return Object.fromEntries(Object.keys(VIS_FIELDS).filter(k => typeof stored[k] === 'boolean').map(k => [k, stored[k]]));
+  } catch { return {}; }
+}
+const withBulkVis = a => ({ ...a, vis: { ...(a.vis || {}), ...getBulkVis() } });
 const slug = s => (s || 'agent').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'agent';
 // Google Sheet column `communities`: "Label|https://…; Label|https://…" — every entry
 // shows up as one "Community Expert" pill.
@@ -996,6 +1005,7 @@ async function loadAgents() {
       localStorage.setItem('canablue.team-update.v1', '1');
     }
   } catch {}
+  AGENTS = AGENTS.map(withBulkVis);
   getCustoms().forEach(c => {
     const i = AGENTS.findIndex(a => a.key === c.key);
     if (i >= 0) {
@@ -1055,8 +1065,8 @@ function applyAgent(a) {
   setCertsAlign(a.certsAlign || 'center');
   if (a.tpl) state.tpl = a.tpl;
   if (a.vis) {
-    const v = a.vis, box = { foto: 'vFoto', social: 'vSocial', listings: 'vListings', booking: 'vBooking', community: 'vCommunity', qr: 'vQr', certs: 'vCerts', legal: 'vLegal' };
-    for (const k in box) { const el = $(box[k]); if (el && v[k] !== undefined) el.checked = !!v[k]; }
+    const v = a.vis;
+    for (const k in VIS_FIELDS) $(VIS_FIELDS[k]).checked = v[k] === undefined ? true : !!v[k];
   }
   if (!a.vis || a.vis.qr === undefined) $('vQr').checked = true;
   document.querySelectorAll('#customCerts .xlink').forEach(n => n.remove());
@@ -1101,17 +1111,13 @@ function deleteCustomAgent(key) {
   const base = JSON_AGENTS.length ? JSON_AGENTS : BUILTIN_AGENTS;
   AGENTS = AGENTS.filter(x => x.key !== key);
   const b = base.find(x => x.key === key);
-  if (b) AGENTS.push(b);
+  if (b) AGENTS.push(withBulkVis(b));
   const next = AGENTS.find(x => x.key === key) || AGENTS.find(x => x.key === 'pamela') || AGENTS[0];
   if (next) fillAgent(next); else { selectedAgentKey = ''; renderAgentList(); renderDirectory(); render(); }
   toast('Saved agent deleted.');
 }
 function exportAgentsJSON() {
-  const merged = (JSON_AGENTS.length ? JSON_AGENTS : BUILTIN_AGENTS).map(a => ({ ...a }));
-  getCustoms().forEach(c => {
-    const i = merged.findIndex(x => x.key === c.key);
-    if (i >= 0) merged[i] = c; else merged.push(c);
-  });
+  const merged = sortedAgents();
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([JSON.stringify(merged, null, 2)], { type: 'application/json' }));
   a.download = 'agents.json'; a.click();
@@ -1190,12 +1196,38 @@ function directoryPhoto(a) {
   const url = String(a.foto || '');
   return portraitPath(url) || url;
 }
+function updateBulkVisibilityStatus() {
+  const field = $('bulkVisibilityField').value;
+  const shown = AGENTS.filter(a => !a.vis || a.vis[field] !== false).length;
+  $('bulkVisibilityStatus').textContent = `${shown} de ${AGENTS.length} firmas con esta opción activada`;
+}
+function applyBulkVisibility(enabled) {
+  if (!AGENTS.length) return;
+  const field = $('bulkVisibilityField').value;
+  if (!Object.hasOwn(VIS_FIELDS, field)) return;
+  const update = a => ({ ...a, vis: { ...(a.vis || {}), [field]: enabled } });
+  try {
+    localStorage.setItem(LS_BULK_VIS, JSON.stringify({ ...getBulkVis(), [field]: enabled }));
+    setCustoms(getCustoms().map(update));
+  } catch {
+    toast('No se pudo guardar el cambio en este navegador.', 'err');
+    return;
+  }
+  AGENTS = AGENTS.map(update);
+  $(VIS_FIELDS[field]).checked = enabled;
+  try { localStorage.setItem(LS_FORM, JSON.stringify(collectAgent(selectedAgentKey || 'draft'))); } catch {}
+  renderDirectory();
+  render();
+  const label = $('bulkVisibilityField').selectedOptions[0].textContent;
+  toast(`${label}: ${enabled ? 'activado' : 'desactivado'} en ${AGENTS.length} firmas.`);
+}
 function renderDirectory() {
   const list = $('directoryList');
   if (!list) return;
   const q = foldAgent(($('directorySearch') && $('directorySearch').value || '').trim());
   const hits = sortedAgents().filter(a => [a.name, a.role, a.email, a.zona].some(v => foldAgent(v).includes(q)));
   $('directoryCount').textContent = `${hits.length} de ${AGENTS.length}`;
+  updateBulkVisibilityStatus();
   list.innerHTML = hits.length ? hits.map(a => {
     const initials = String(a.name || '?').split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
     const src = directoryPhoto(a);
@@ -1311,6 +1343,9 @@ $('btnVcf').onclick = downloadVcf;
 $('btnUndo').onclick = undoStep;
 $('agentSelect').addEventListener('change', e => fillAgent(AGENTS.find(x => x.key === e.target.value)));
 $('directorySearch').addEventListener('input', renderDirectory);
+$('bulkVisibilityField').addEventListener('change', updateBulkVisibilityStatus);
+$('bulkVisibilityOn').onclick = () => applyBulkVisibility(true);
+$('bulkVisibilityOff').onclick = () => applyBulkVisibility(false);
 $('directoryList').addEventListener('click', e => {
   const action = e.target.closest('button[data-action]');
   if (!action) return;

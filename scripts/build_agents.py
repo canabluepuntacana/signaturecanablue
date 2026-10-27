@@ -109,7 +109,9 @@ LINKEDIN = {
 UNAVAILABLE_INSTAGRAM = {"miguel-martinez", "karina-manzanillo", "luis-joel-lara-nova"}
 
 # Both PDF variants show AEI and Best of DR 2024 for most staff. The second
-# variant adds Luxury Homes Expert to the Location Expertise signatures.
+# variant adds Luxury Homes Expert as part of its layout for many agents, even
+# when the primary signature does not show it. Only assign Luxury Homes Expert
+# when the primary signature also includes it.
 PDF_CERT_OVERRIDES = {
     "candy-vander-horst": {"lux": True},
     "miguel-martinez": {"sr24": False, "sr23": True},
@@ -180,7 +182,7 @@ def main():
                        for k in community_ids.split(",") if k]
         is_sales = "Sales" in role or "Broker" in role or role == "Resales Manager"
         certs = {"crs": False, "aei": True, "realtor": False,
-                 "sr23": False, "sr24": True, "lux": page in SECOND_PAGES}
+                 "sr23": False, "sr24": True, "lux": False}
         certs.update(PDF_CERT_OVERRIDES.get(key, {}))
         if key == "manuel-cabrera":
             # Manuel supplied current contact details, portrait and two Best of DR logos.

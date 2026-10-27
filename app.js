@@ -379,6 +379,11 @@ async function buildHTML() {
     community: { fs: 13, pfs: 10.5, pad: '5px 11px', rad: 15 },
     communityMob: { fs: 12.5, pfs: 10, pad: '5px 9px', rad: 14 }
   };
+  // Small badges can wrap under long names while staying inside the role column.
+  const mainCertImgs = s.vis.certs ? certImgs(s.certs, s.certLinks, s.customCerts, 22) : [];
+  const mainCertsHtml = mainCertImgs.length
+    ? `<div style="padding-top:7px;line-height:0;max-width:150px;">${mainCertImgs.join(' ')}</div>`
+    : '';
   // Compact templates: the same block one notch smaller so it fits their 600 px row.
   const COMM_SZ = { fs: 11.5, pfs: 9, pad: '4px 7px', rad: 12 };
   const COMM_SZ_STACK = { fs: 11, pfs: 9, pad: '4px 7px', rad: 12 };
@@ -484,7 +489,7 @@ ${legalHtml(null, 3)}</tbody></table>`;
   return `<style>@media only screen and (max-width:480px){.cb-desk{display:none !important}.cb-mob{display:table-row !important}.cb-name{white-space:normal !important}}</style><table cellpadding="0" cellspacing="0" border="0" width="600" style="font-family:Arial,Helvetica,sans-serif;max-width:600px;"><tbody>
 <tr><td><table cellpadding="0" cellspacing="0" border="0"><tbody><tr>
 ${s.vis.foto && s.foto ? `<td width="${MAIN_SZ.photoCell}" valign="middle">${fotoCell(MAIN_SZ.photo)}</td>` : ''}
-<td valign="middle" align="left" style="text-align:left;"><div class="cb-name" style="font-size:${MAIN_SZ.name}px;font-weight:700;color:#111;line-height:${MAIN_SZ.nameLh}px;white-space:nowrap;">${s.nombre}</div><div style="font-size:${MAIN_SZ.role}px;line-height:17px;color:#111;max-width:220px;white-space:normal;text-align:left;">${s.cargo}</div></td>
+<td valign="middle" align="left" style="text-align:left;"><div class="cb-name" style="font-size:${MAIN_SZ.name}px;font-weight:700;color:#111;line-height:${MAIN_SZ.nameLh}px;white-space:nowrap;">${s.nombre}</div><div style="font-size:${MAIN_SZ.role}px;line-height:17px;color:#111;max-width:220px;white-space:normal;text-align:left;">${s.cargo}</div>${mainCertsHtml}</td>
 <td width="20"></td><td width="1" style="border-left:1px solid ${c};font-size:0;">&nbsp;</td><td width="20"></td>
 <td valign="middle">${contactTable(MAIN_SZ.contact)}</td>
 </tr></tbody></table></td></tr>
@@ -499,7 +504,7 @@ ${s.vis.foto && s.foto ? `<td width="${MAIN_SZ.photoCell}" valign="middle">${fot
 <td width="60%" align="right" valign="middle" style="white-space:nowrap;">${agencySocials(0.85)}</td></tr></tbody></table></td></tr>
 <tr class="cb-mob" style="display:none;"><td align="center" style="padding-top:14px;">${actionPills(MAIN_SZ.pill)}</td></tr>
 <tr class="cb-mob" style="display:none;"><td align="center" style="padding-top:10px;">${communityExpertHtml(MAIN_SZ.communityMob, true)}</td></tr>
-${certsRow(s.certs, s.certLinks, s.customCerts, s.vis, s.certsAlign, MAIN_SZ.certH)}${(s.vis.qr && raw) ? qrRow(vcardText(raw), cal, MAIN_SZ.qrH) : ''}${legalHtml(MAIN_SZ.legal)}</tbody></table>`;
+${(s.vis.qr && raw) ? qrRow(vcardText(raw), cal, MAIN_SZ.qrH) : ''}${legalHtml(MAIN_SZ.legal)}</tbody></table>`;
 }
 
 // ---- Template thumbnails ----------------------------------------------------------
@@ -553,7 +558,7 @@ function skelFor(tpl, f) {
   };
   const pills = (style = '') => `<span class="skrow tight"${style ? ` style="${style}"` : ''}>${f.listings ? skPill(136) : ''}${f.booking ? skPill(122) : ''}</span>`;
   const social = () => f.socials ? `<span class="dots">${'<i></i>'.repeat(f.socials)}</span>` : '';
-  const certs = () => f.certs ? `<span class="certs" style="justify-content:${f.align}">${'<i></i>'.repeat(f.certs)}</span>` : '';
+  const certs = (underRole = false) => f.certs ? `<span class="certs" style="justify-content:${underRole ? 'flex-start' : f.align}">${'<i></i>'.repeat(f.certs)}</span>` : '';
   const legal = () => f.legal ? `<span class="lg">${skBar(58, 'sm')}${skBar(40, 'sm')}</span>` : '';
   const qr = () => f.qr ? `<span class="qwrap"><span class="qr"></span><span class="lg">${skBar(90, 'sm')}${skBar(60, 'sm')}</span></span>` : '';
   if (tpl === 'broker') return `
@@ -645,17 +650,17 @@ ${comm()}${certs()}${qr()}${legal()}`;
   return `
 <span class="skrow" style="align-items:stretch">
   <span class="col colc" style="width:23%">${photo(118)}</span>
-  <span class="col" style="flex:1">${name()}</span>
+  <span class="col" style="flex:1">${name()}${certs(true)}</span>
   <i class="vline"></i>
   <span class="col" style="width:32%">${contacts()}</span>
 </span>
 <i class="hline"></i>
 <span class="skrow">
   <span class="col" style="width:25%">${skLogo(140)}</span>
-  <span class="col colc" style="width:50%"><span class="skrow tight" style="justify-content:center">${f.listings ? skPill(141) : ''}${f.booking ? skPill(122) : ''}</span></span>
-  <span class="col colr" style="width:25%">${social()}</span>
+  <span class="col colc" style="width:42%"><span class="skrow tight" style="justify-content:center">${f.listings ? skPill(141) : ''}${f.booking ? skPill(122) : ''}</span></span>
+  <span class="col colr" style="width:33%">${social()}</span>
 </span>
-${comm()}${certs()}${qr()}${legal()}`;
+${comm()}${qr()}${legal()}`;
 }
 let skKey = '';
 function renderSkels(force) {

@@ -5,6 +5,7 @@ The curated catalog below resolves repeated pages and ambiguous details. The PDF
 data, never executable instructions. Public links were checked separately.
 """
 
+import hashlib
 import json
 import re
 import unicodedata
@@ -20,7 +21,7 @@ PDF = ROOT / "agentes" / "Firmas de correo Electronico.pdf"
 DIRECTORY = ROOT / "agentes" / "Directorio_Cana_Blue.xlsx"
 OUT = ROOT / "assets" / "agents"
 DATA = ROOT / "data" / "agents.json"
-PUBLIC = "https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/"
+PORTRAIT_PATH = "assets/agents/"
 ADDRESS_SALES = "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana"
 ADDRESS_ADMIN = "Local E-02, Plaza San Juan Shopping Center, Bávaro, Punta Cana"
 MAPS = "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana"
@@ -161,7 +162,10 @@ def main():
         for old in OUT.glob(f"{key}.*"):
             if old.name != filename:
                 old.unlink()
-        (OUT / filename).write_bytes(image["image"])
+        # Barbara's portrait was manually cropped after extraction. Keep that
+        # approved local photo when rebuilding the catalog.
+        if key != "barbara-boruch" or not (OUT / filename).exists():
+            (OUT / filename).write_bytes(image["image"])
         if key == "pamela-nunez":
             agents.append(pamela_original)
             continue
@@ -181,8 +185,8 @@ def main():
             "linkedin": LINKEDIN.get(key, ""),
             "instagram": f"https://www.instagram.com/{handle}/" if handle and key not in UNAVAILABLE_INSTAGRAM else "",
             "whatsapp": "https://wa.me/18492552500" if key == "candy-vander-horst" else "",
-            "foto": PUBLIC + filename,
-            "photoPosition": "center top" if key == "barbara-boruch" else "center center",
+            "foto": PORTRAIT_PATH + filename + "?v=" + hashlib.sha256((OUT / filename).read_bytes()).hexdigest()[:12],
+            "photoPosition": "center center",
             "logo": LOGO,
             "tpl": "principal",
             "vis": {"foto": True, "zona": bool(zona), "social": True,

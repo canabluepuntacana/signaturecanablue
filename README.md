@@ -5,19 +5,19 @@ Signature creator for Canablue agents. Table-based, email-safe HTML output.
 ## Directorio preparado el 26/10/2026
 
 - `data/agents.json` contiene 39 firmas buscables: 33 personas de las 48 páginas del PDF y seis personas adicionales del directorio Excel (incluida Carla).
-- `assets/agents/` contiene 33 retratos originales extraídos del PDF, uno por persona. No se capturaron imágenes de pantalla ni se inventaron fotos para los seis registros solo presentes en Excel.
+- `assets/agents/` contiene 33 retratos del PDF, uno por persona. Bárbara usa la foto recortada manualmente que está en el proyecto; el generador la conserva al reconstruir los datos. No se inventaron fotos para los seis registros solo presentes en Excel.
 - `scripts/build_agents.py` reconstruye el JSON y las fotos desde `agentes/Firmas de correo Electronico.pdf` y `agentes/Directorio_Cana_Blue.xlsx`: `python scripts/build_agents.py`. Requiere PyMuPDF (`pymupdf`). La tabla `CATALOG` identifica página y objeto de imagen; evita seleccionar fondos, logos y retratos repetidos.
 - Dieciséis botones **View My Listings** apuntan a páginas de autor comprobadas en Canablue. El enlace facilitado para Carla (`/author/carlacanablue-com/`) devuelve una página inexistente; por eso su botón queda oculto hasta que haya uno válido.
 - El módulo **Firmas** es el primero en la barra lateral: busca por nombre, correo, cargo o zona y muestra las 39 firmas en una lista con **Ver firma** y **Editar**. En **Contact** hay un selector nativo de agentes. Los cambios manuales se guardan en este navegador o se exportan a JSON.
 - **Community Expert** usa las zonas indicadas en el PDF, más las actualizaciones concretas facilitadas para Alejandro, Dayana, Leiny, Magdalena y Karina. Cada comunidad con página propia tiene su enlace; Ciudad La Palma, Dominicus y Bávaro enlazan al catálogo general de comunidades porque Canablue no publica una página específica para esas zonas. Pamela conserva su configuración anterior de dos comunidades.
 - Los logos AEI, Best of DR 2023/2024, REALTOR, CRS y Luxury Homes Expert se asignan por persona según las páginas del PDF. Se verificaron 16 cuentas personales de Instagram y se omitieron tres perfiles del PDF que hoy aparecen como no disponibles (Miguel, Karina y Joel). LinkedIn aparece cuando se pudo vincular el perfil público con Canablue.
 - El QR de contacto está activado por defecto para las 39 firmas y para perfiles nuevos. `data/pamela_original.json` conserva el registro anterior de Pamela; al generar el catálogo solo se activa su QR, como pidió el usuario.
-- Antes de usar las firmas en correo, publique `assets/agents/` junto con la web. El HTML copiado usa URLs públicas de GitHub Pages; la vista local carga automáticamente las mismas fotos desde la carpeta del proyecto.
+- Antes de usar las firmas en correo, publique `assets/agents/` junto con la web. Las rutas de retratos en el JSON son relativas y el HTML copiado usa el dominio donde se abre la aplicación (GitHub Pages o Vercel). En localhost usa la URL pública de GitHub Pages para que la firma copiada no apunte al equipo local.
 - Pendientes de validación interna: la página 35 del PDF muestra otro teléfono para Dayana; se tomó el de la página 34, que coincide con el directorio. El directorio llama “Karina Santana” a `karina@canablue.com` y el PDF “Karina Manzanillo”; se conservó la identidad de la firma del PDF. Carla tiene nombre y correo, pero aún no hay cargo, teléfono, foto ni página de listings confirmados.
 
 ## Run
 
-Live site (GitHub Pages): https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/
+Live site (GitHub Pages): https://canabluepuntacana.github.io/signaturecanablue/
 
 Locally, open `index.html` in a browser, or serve the folder:
 
@@ -27,20 +27,24 @@ npx serve .
 
 > `data/agents.json` loads via `fetch()`, so use http(s) — not `file://` — for the shared agents list.
 
-## Push to GitHub (repo: creador-de-firmas-cana-blue)
+## Deploy on Vercel
+
+Import `canabluepuntacana/signaturecanablue` from GitHub. Use the repository root as the Root Directory. `vercel.json` selects the **Other** framework preset; this is a static HTML/CSS/JS site with no build command or environment variables. Leave the output directory at the default root (`.`). After deployment, open the app from the Vercel domain before copying signatures so their portrait URLs use that domain.
+
+## Push to GitHub (repo: signaturecanablue)
 
 ```bash
 cd CreadorFirmas
 git init
 git add .
 git commit -m "Creador de firmas Canablue"
-gh repo create creador-de-firmas-cana-blue --public --source=. --push
+gh repo create signaturecanablue --public --source=. --push
 ```
 
 Without `gh`:
 
 ```bash
-git remote add origin https://github.com/TU-USUARIO/creador-de-firmas-cana-blue.git
+git remote add origin https://github.com/TU-USUARIO/signaturecanablue.git
 git branch -M main
 git push -u origin main
 ```
@@ -140,7 +144,7 @@ browser.
 
 - Everything is table-based and uses inline styles, so Gmail, Outlook, Apple Mail and
   mobile clients render it as-is.
-- **Images are hosted remotely** (icons8 for icons, Cloudinary for photos/logos/certs).
+- **Images are hosted remotely** (icons8 for icons, the deployed site for agent portraits, Cloudinary for the logo and certifications).
   Most clients block remote images until the recipient allows them — that is normal for
   signatures. To drop the icons8 dependency, set `ICON_BASE` at the top of `app.js` to
   your own folder and upload the same PNGs there.

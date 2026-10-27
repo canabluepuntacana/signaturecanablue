@@ -1,5 +1,27 @@
 /* Canablue Signature Creator — table-based HTML, 100% email-client compatible */
 const $ = id => document.getElementById(id);
+const PORTRAIT_PATH = 'assets/agents/';
+const FALLBACK_SITE = 'https://canabluepuntacana.github.io/signaturecanablue/';
+const PORTRAIT_BASES = [
+  'https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/',
+  'https://canabluepuntacana.github.io/signaturecanablue/assets/agents/'
+];
+function portraitPath(value) {
+  const url = String(value || '').trim();
+  if (url.startsWith(PORTRAIT_PATH)) return url;
+  const base = PORTRAIT_BASES.find(prefix => url.startsWith(prefix));
+  return base ? PORTRAIT_PATH + url.slice(base.length) : '';
+}
+const samePortrait = (left, right) => {
+  const a = portraitPath(left).split('?')[0];
+  return !!a && a === portraitPath(right).split('?')[0];
+};
+function signaturePhotoUrl(value) {
+  const path = portraitPath(value);
+  if (!path) return normUrl(value);
+  const site = ['localhost', '127.0.0.1'].includes(location.hostname) ? FALLBACK_SITE : location.href;
+  return new URL(path, site).href;
+}
 // Canablue community page (editable per agent, like listings or booking).
 const COMMUNITY_DEFAULT = 'https://canablue.com/community/cocotal/';
 // Community Expert block: one pill per community page. The editor can rename,
@@ -274,7 +296,7 @@ async function buildHTML() {
     dirUrl: normUrl(raw.dirUrl), listings: normUrl(raw.listings), booking: normUrl(raw.booking),
     community: normUrl(raw.community),
     instagram: normUrl(raw.instagram), whatsapp: normUrl(raw.whatsapp), linkedin: normUrl(raw.linkedin),
-    foto: normUrl(raw.foto), logo: normUrl(raw.logo),
+    foto: signaturePhotoUrl(raw.foto), logo: normUrl(raw.logo),
     extra: (raw.extra || []).map(e => ({ ...e, url: normUrl(e.url) })),
     certLinks: Object.fromEntries(Object.entries(raw.certLinks || {}).map(([k, v]) => [k, normUrl(v)])),
     customCerts: (raw.customCerts || []).map(x => ({ img: normUrl(x.img), link: normUrl(x.link) }))
@@ -668,9 +690,9 @@ async function render() {
   // The copied signature uses public image URLs. Before publication, preview the
   // extracted portraits from this checkout so every agent can be checked locally.
   if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-    const photoBase = 'https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/';
     $('sigPreview').querySelectorAll('img').forEach(img => {
-      if (img.src.startsWith(photoBase)) img.src = 'assets/agents/' + img.src.slice(photoBase.length);
+      const path = portraitPath(img.src);
+      if (path) img.src = path;
     });
   }
   fitPreview();
@@ -999,7 +1021,12 @@ async function loadAgents() {
   } catch {}
   getCustoms().forEach(c => {
     const i = AGENTS.findIndex(a => a.key === c.key);
-    if (i >= 0) AGENTS[i] = { ...AGENTS[i], ...c, photoPosition: c.photoPosition || AGENTS[i].photoPosition };
+    if (i >= 0) {
+      const base = AGENTS[i];
+      AGENTS[i] = { ...base, ...c,
+        foto: samePortrait(c.foto, base.foto) ? base.foto : c.foto,
+        photoPosition: samePortrait(c.foto, base.foto) ? base.photoPosition : (c.photoPosition || base.photoPosition) };
+    }
     else AGENTS.push(c);
   });
   renderAgentList();
@@ -1157,7 +1184,13 @@ function restoreAutosave() {
       || AGENTS.find(a => a.email && a.email.toLowerCase() === String(d.email || '').toLowerCase());
     if (match) {
       selectedAgentKey = match.key;
-      state.photoPosition = d.photoPosition || match.photoPosition || 'center center';
+      if (samePortrait(d.foto, match.foto)) {
+        state.foto = match.foto;
+        $('fFoto').value = match.foto;
+        state.photoPosition = match.photoPosition || 'center center';
+      } else {
+        state.photoPosition = d.photoPosition || match.photoPosition || 'center center';
+      }
       $('agentSelect').value = match.key;
       renderDirectory();
     }
@@ -1180,8 +1213,7 @@ function renderAgentList() {
 }
 function directoryPhoto(a) {
   const url = String(a.foto || '');
-  const base = 'https://canabluepuntacana.github.io/creador-de-firmas-cana-blue/assets/agents/';
-  return url.startsWith(base) ? 'assets/agents/' + url.slice(base.length) : url;
+  return portraitPath(url) || url;
 }
 function renderDirectory() {
   const list = $('directoryList');

@@ -90,6 +90,10 @@ DIRECTORY_ONLY = [
     ("julissa@canablue.com", "Julissa Cantón", "Real Estate Agent"),
     ("yiraine@canablue.com", "Yiraine Miraglio", "Sales | Rentals"),
 ]
+INACTIVE_KEYS = {
+    "annie-fernandez", "arslan-tahir", "carla-martinez", "dahiana-senclaire",
+    "ivan-ortega", "juan-medina", "mayelin-avila", "yiraine-miraglio",
+}
 
 # LinkedIn URLs are included only when a public profile identifies the person and
 # their Canablue affiliation. Instagram handles are printed in the PDF.
@@ -178,6 +182,7 @@ def main():
         certs.update(PDF_CERT_OVERRIDES.get(key, {}))
         agents.append({
             "key": key, "name": name, "role": role, "zona": zona,
+            **({"inactive": True} if key in INACTIVE_KEYS else {}),
             "tel": phone, "email": email, "web": "canablue.com",
             "dir": ADDRESS_SALES if is_sales or key in {"pelusa-miau", "mayelin-avila"} else ADDRESS_ADMIN,
             "dirUrl": MAPS,
@@ -207,6 +212,7 @@ def main():
         phone = contact["phone"] if contact["phone"] != "No localizado" else ""
         agents.append({
             "key": slug(name), "name": name, "role": role, "zona": "",
+            **({"inactive": True} if slug(name) in INACTIVE_KEYS else {}),
             "tel": phone, "email": email, "web": "canablue.com",
             "dir": ADDRESS_SALES, "dirUrl": MAPS,
             "listings": "", "communities": [], "linkedin": "", "instagram": "",

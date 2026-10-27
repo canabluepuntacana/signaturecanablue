@@ -899,6 +899,12 @@ const setCustoms = c => localStorage.setItem(LS_CUSTOM, JSON.stringify(c));
 const isCustom = key => getCustoms().some(x => x.key === key);
 const VIS_FIELDS = { foto: 'vFoto', social: 'vSocial', listings: 'vListings', booking: 'vBooking', community: 'vCommunity', qr: 'vQr', certs: 'vCerts', legal: 'vLegal' };
 const LS_BULK_VIS = 'canablue.visibility.all.v1';
+const INACTIVE_AGENT_KEYS = new Set([
+  'annie-fernandez', 'arslan-tahir', 'carla-martinez', 'dahiana-senclaire',
+  'ivan-ortega', 'juan-medina', 'mayelin-avila', 'yiraine-miraglio'
+]);
+const isVisibleAgent = a => !!a && !a.inactive && !INACTIVE_AGENT_KEYS.has(a.key);
+const activeAgents = () => AGENTS.filter(isVisibleAgent);
 function getBulkVis() {
   try {
     const stored = JSON.parse(localStorage.getItem(LS_BULK_VIS) || '{}');
@@ -964,7 +970,7 @@ async function loadAgents() {
       if (sheet.length) {
         AGENTS = sheet;
         try { localStorage.setItem(LS_SHEET, sid); } catch {}
-        setDbStatus(`Google Sheets — ${sheet.length} agent(s) loaded`, 'ok');
+        setDbStatus(`Google Sheets — ${sheet.filter(isVisibleAgent).length} agentes activos`, 'ok');
       } else {
         setDbStatus('Google Sheets — empty sheet, using local data', 'err');
       }
@@ -977,7 +983,7 @@ async function loadAgents() {
       if (!r.ok) throw 0;
       const j = await r.json();
       if (Array.isArray(j) && j.length) { JSON_AGENTS = j; AGENTS = j.slice(); }
-      setDbStatus(`Local file — ${AGENTS.length} agent(s). Paste a Sheet ID for live data.`, '');
+      setDbStatus(`Archivo local — ${AGENTS.filter(isVisibleAgent).length} firmas activas.`, '');
     } catch { setDbStatus('Built-in data (offline or file://).', ''); }
   }
   // Existing browser-saved records inherited QR=false from the earlier default.
@@ -1016,6 +1022,7 @@ async function loadAgents() {
     }
     else AGENTS.push(c);
   });
+  AGENTS = AGENTS.map(a => INACTIVE_AGENT_KEYS.has(a.key) ? { ...a, inactive: true } : a);
   renderAgentList();
   renderDirectory();
 }
@@ -1080,6 +1087,7 @@ function saveCurrentAgent() {
   const key = current && foldAgent(current.name) === foldAgent($('fNombre').value)
     ? current.key : slug($('fNombre').value);
   const a = collectAgent(key);
+  if (INACTIVE_AGENT_KEYS.has(a.key)) a.inactive = true;
   if (!a.name) { toast('Enter the agent name first.'); return false; }
   const cs = getCustoms(); const i = cs.findIndex(x => x.key === a.key);
   if (i >= 0) cs[i] = a; else cs.push(a);
@@ -1112,12 +1120,12 @@ function deleteCustomAgent(key) {
   AGENTS = AGENTS.filter(x => x.key !== key);
   const b = base.find(x => x.key === key);
   if (b) AGENTS.push(withBulkVis(b));
-  const next = AGENTS.find(x => x.key === key) || AGENTS.find(x => x.key === 'pamela') || AGENTS[0];
+  const next = AGENTS.find(x => x.key === key && isVisibleAgent(x)) || AGENTS.find(x => x.key === 'pamela') || activeAgents()[0];
   if (next) fillAgent(next); else { selectedAgentKey = ''; renderAgentList(); renderDirectory(); render(); }
   toast('Saved agent deleted.');
 }
 function exportAgentsJSON() {
-  const merged = sortedAgents();
+  const merged = AGENTS.slice().sort((a, b) => String(a.name || '').localeCompare(String(b.name || ''), 'es'));
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([JSON.stringify(merged, null, 2)], { type: 'application/json' }));
   a.download = 'agents.json'; a.click();
@@ -1159,10 +1167,11 @@ function autosave() {
 function restoreAutosave() {
   try {
     const d = JSON.parse(localStorage.getItem(LS_FORM) || 'null');
-    if (!d) return;
-    applyAgent(d);
+    if (!d) return false;
     const match = AGENTS.find(a => a.key === d.key)
       || AGENTS.find(a => a.email && a.email.toLowerCase() === String(d.email || '').toLowerCase());
+    if (!isVisibleAgent(match || d)) return false;
+    applyAgent(d);
     if (match) {
       selectedAgentKey = match.key;
       if (samePortrait(d.foto, match.foto)) {
@@ -1175,7 +1184,8 @@ function restoreAutosave() {
       $('agentSelect').value = match.key;
       renderDirectory();
     }
-  } catch {}
+    return true;
+  } catch { return false; }
 }
 function fillAgent(a) {
   if (!a) return;
@@ -1184,7 +1194,7 @@ function fillAgent(a) {
   render();
 }
 const foldAgent = v => String(v || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-const sortedAgents = () => AGENTS.slice().sort((a, b) => String(a.name || '').localeCompare(String(b.name || ''), 'es'));
+const sortedAgents = () => activeAgents().sort((a, b) => String(a.name || '').localeCompare(String(b.name || ''), 'es'));
 function renderAgentList() {
   const select = $('agentSelect');
   if (!select) return;
@@ -1198,35 +1208,37 @@ function directoryPhoto(a) {
 }
 function updateBulkVisibilityStatus() {
   const field = $('bulkVisibilityField').value;
-  const shown = AGENTS.filter(a => !a.vis || a.vis[field] !== false).length;
-  $('bulkVisibilityStatus').textContent = `${shown} de ${AGENTS.length} firmas con esta opción activada`;
+  const visible = activeAgents();
+  const shown = visible.filter(a => !a.vis || a.vis[field] !== false).length;
+  $('bulkVisibilityStatus').textContent = `${shown} de ${visible.length} firmas con esta opción activada`;
 }
 function applyBulkVisibility(enabled) {
-  if (!AGENTS.length) return;
+  const visible = activeAgents();
+  if (!visible.length) return;
   const field = $('bulkVisibilityField').value;
   if (!Object.hasOwn(VIS_FIELDS, field)) return;
   const update = a => ({ ...a, vis: { ...(a.vis || {}), [field]: enabled } });
   try {
     localStorage.setItem(LS_BULK_VIS, JSON.stringify({ ...getBulkVis(), [field]: enabled }));
-    setCustoms(getCustoms().map(update));
+    setCustoms(getCustoms().map(a => isVisibleAgent(a) ? update(a) : a));
   } catch {
     toast('No se pudo guardar el cambio en este navegador.', 'err');
     return;
   }
-  AGENTS = AGENTS.map(update);
+  AGENTS = AGENTS.map(a => isVisibleAgent(a) ? update(a) : a);
   $(VIS_FIELDS[field]).checked = enabled;
   try { localStorage.setItem(LS_FORM, JSON.stringify(collectAgent(selectedAgentKey || 'draft'))); } catch {}
   renderDirectory();
   render();
   const label = $('bulkVisibilityField').selectedOptions[0].textContent;
-  toast(`${label}: ${enabled ? 'activado' : 'desactivado'} en ${AGENTS.length} firmas.`);
+  toast(`${label}: ${enabled ? 'activado' : 'desactivado'} en ${visible.length} firmas.`);
 }
 function renderDirectory() {
   const list = $('directoryList');
   if (!list) return;
   const q = foldAgent(($('directorySearch') && $('directorySearch').value || '').trim());
   const hits = sortedAgents().filter(a => [a.name, a.role, a.email, a.zona].some(v => foldAgent(v).includes(q)));
-  $('directoryCount').textContent = `${hits.length} de ${AGENTS.length}`;
+  $('directoryCount').textContent = `${hits.length} de ${activeAgents().length}`;
   updateBulkVisibilityStatus();
   list.innerHTML = hits.length ? hits.map(a => {
     const initials = String(a.name || '?').split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
@@ -1371,8 +1383,10 @@ try { const sid = localStorage.getItem(LS_SHEET); if (sid) $('fSheetId').value =
 loadAgents().then(() => {
   let hasDraft = false;
   try { hasDraft = !!localStorage.getItem(LS_FORM); } catch {}
-  if (hasDraft) restoreAutosave();
-  else if (AGENTS.length) applyAgent(AGENTS.find(a => a.email === 'pamela@canablue.com') || AGENTS[0]);
+  if (!hasDraft || !restoreAutosave()) {
+    const initial = AGENTS.find(a => a.email === 'pamela@canablue.com') || activeAgents()[0];
+    if (initial) applyAgent(initial);
+  }
   // A brand-new session has no autosave: paint the default community rows once.
   if (!document.querySelector('#communityList .xlink-comm')) renderCommunityRows();
   render();

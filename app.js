@@ -79,6 +79,22 @@ const NETWORKS = {
   pinterest: { label: 'Pinterest', bg: '#E60023', slug: 'pinterest', img: IMG('material-outlined', 48, 'ffffff', 'pinterest') },
   website: { label: 'Website / custom link', bg: '#174176', slug: 'link', img: IMG('material-outlined', 48, 'ffffff', 'link') }
 };
+// Official profiles linked from canablue.com. Use these only when an agent has
+// no personal social links; individual profiles always take precedence.
+const AGENCY_SOCIALS = [
+  ['facebook', 'https://www.facebook.com/canablue/'],
+  ['instagram', 'https://www.instagram.com/canablue.rd/'],
+  ['whatsapp', 'https://wa.me/18099753900'],
+  ['linkedin', 'https://www.linkedin.com/company/canablue'],
+  ['youtube', 'https://www.youtube.com/channel/UCh15GIlCR4JOPznpFpBGong']
+];
+function socialLinksFor(person) {
+  const own = [
+    ['instagram', person.instagram], ['whatsapp', person.whatsapp], ['linkedin', person.linkedin],
+    ...(person.extra || []).map(e => [e.icon, e.url])
+  ].filter(([, url]) => String(url || '').trim());
+  return own.length ? own : AGENCY_SOCIALS;
+}
 function networkGlyph(n, hex) {
   return IMG('material-outlined', 48, hex, n.slug);
 }
@@ -307,14 +323,10 @@ async function buildHTML() {
   // Only networks that actually have a URL are rendered — an empty link must not
   // leave a dangling icon in the signature.
   const socialsHtml = (k) => {
-    let parts = [
-      ['instagram', s.instagram], ['whatsapp', s.whatsapp], ['linkedin', s.linkedin]
-    ].filter(([, u]) => String(u || '').trim())
-      .map(([k2, u]) => socialIcon(String(u).trim(), k2, ist, c, k));
-    if (s.extra.length) {
-      parts = parts.concat(s.extra.filter(e => String(e.url || '').trim()).map(e => extraBtn(e, c, ist, k)));
-    }
-    return (!s.vis.social || !parts.length) ? '' : parts.join(' ');
+    if (!s.vis.social) return '';
+    const links = socialLinksFor(s);
+    const scale = links === AGENCY_SOCIALS ? Math.min(k || 1, 0.95) : k;
+    return links.map(([network, url]) => socialIcon(String(url).trim(), network, ist, c, scale)).join(' ');
   };
   const socials = socialsHtml();
 
@@ -466,7 +478,7 @@ ${legalHtml(null, 3)}</tbody></table>`;
   return `<style>@media only screen and (max-width:480px){.cb-desk{display:none !important}.cb-mob{display:table-row !important}.cb-name{white-space:normal !important}}</style><table cellpadding="0" cellspacing="0" border="0" width="600" style="font-family:Arial,Helvetica,sans-serif;max-width:600px;"><tbody>
 <tr><td><table cellpadding="0" cellspacing="0" border="0"><tbody><tr>
 ${s.vis.foto && s.foto ? `<td width="${MAIN_SZ.photoCell}" valign="middle">${fotoCell(MAIN_SZ.photo)}</td>` : ''}
-<td valign="middle" align="center" style="text-align:center;"><div class="cb-name" style="font-size:${MAIN_SZ.name}px;font-weight:700;color:#111;line-height:${MAIN_SZ.nameLh}px;white-space:nowrap;">${s.nombre}</div><div style="font-size:${MAIN_SZ.role}px;line-height:17px;color:#111;max-width:220px;margin:0 auto;white-space:normal;text-align:center;">${s.cargo}</div></td>
+<td valign="middle" align="left" style="text-align:left;"><div class="cb-name" style="font-size:${MAIN_SZ.name}px;font-weight:700;color:#111;line-height:${MAIN_SZ.nameLh}px;white-space:nowrap;">${s.nombre}</div><div style="font-size:${MAIN_SZ.role}px;line-height:17px;color:#111;max-width:220px;white-space:normal;text-align:left;">${s.cargo}</div></td>
 <td width="20"></td><td width="1" style="border-left:1px solid ${c};font-size:0;">&nbsp;</td><td width="20"></td>
 <td valign="middle"><table cellpadding="0" cellspacing="0" border="0">${contactRows(MAIN_SZ.contact)}</table></td>
 </tr></tbody></table></td></tr>
@@ -504,8 +516,7 @@ const skPill = (px, cls) => `<span class="pill${cls ? ' ' + cls : ''}" style="wi
 // the signature will not print (empty URL, toggle off, no photo...).
 function skFlags() {
   const v = state.vis || {};
-  const socials = ['instagram', 'whatsapp', 'linkedin'].filter(k => String(state[k] || '').trim()).length
-    + (state.extra || []).filter(e => e && String(e.url || '').trim()).length;
+  const socials = socialLinksFor(state).length;
   const certs = CERT_DEFS.filter(([k]) => state.certs && state.certs[k]).length
     + (state.customCerts || []).filter(x => x && x.img).length;
   return {

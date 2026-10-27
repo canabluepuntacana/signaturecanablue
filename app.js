@@ -495,8 +495,8 @@ ${s.vis.foto && s.foto ? `<td width="${MAIN_SZ.photoCell}" valign="middle">${fot
 <td width="33%" align="right" valign="middle" style="min-width:96px;">${agencySocials(MAIN_SZ.socialK)}</td></tr></tbody></table></td></tr>
 <tr class="cb-desk"><td align="center" style="padding-top:10px;">${communityExpertHtml(MAIN_SZ.community)}</td></tr>
 <tr class="cb-mob" style="display:none;"><td><table cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:100%;table-layout:fixed;"><tbody><tr>
-<td width="68%" valign="middle"><img src="${logoUrl}" width="${MAIN_SZ.logo}" style="width:${MAIN_SZ.logo}px;max-width:${MAIN_SZ.logo}px;display:block;" alt="Canablue"></td>
-<td width="32%" align="right" valign="middle" style="min-width:96px;">${agencySocials(MAIN_SZ.socialK)}</td></tr></tbody></table></td></tr>
+<td width="40%" valign="middle"><img src="${logoUrl}" width="110" style="width:110px;max-width:100%;display:block;" alt="Canablue"></td>
+<td width="60%" align="right" valign="middle" style="white-space:nowrap;">${agencySocials(0.85)}</td></tr></tbody></table></td></tr>
 <tr class="cb-mob" style="display:none;"><td align="center" style="padding-top:14px;">${actionPills(MAIN_SZ.pill)}</td></tr>
 <tr class="cb-mob" style="display:none;"><td align="center" style="padding-top:10px;">${communityExpertHtml(MAIN_SZ.communityMob, true)}</td></tr>
 ${certsRow(s.certs, s.certLinks, s.customCerts, s.vis, s.certsAlign, MAIN_SZ.certH)}${(s.vis.qr && raw) ? qrRow(vcardText(raw), cal, MAIN_SZ.qrH) : ''}${legalHtml(MAIN_SZ.legal)}</tbody></table>`;

@@ -387,13 +387,13 @@ async function buildHTML() {
     community: { fs: 13, pfs: 10.5, pad: '5px 11px', rad: 15 },
     communityMob: { fs: 12.5, pfs: 10, pad: '5px 9px', rad: 14 }
   };
-  // Pamela's badges move under her portrait on phones; the desktop set can fill her name width.
-  const pamelaPhotoCerts = selectedAgentKey === 'pamela' && s.vis.foto && !!s.foto;
   const mainCertImgs = s.vis.certs ? certImgs(s.certs, s.certLinks, s.customCerts, 25) : [];
+  // Three or more badges need the portrait width on phones, as in Pamela's signature.
+  const photoCertsOnMobile = s.vis.foto && !!s.foto && mainCertImgs.length > 2;
   const mainCertsHtml = mainCertImgs.length
-    ? `<div${pamelaPhotoCerts ? ' class="cb-cert-role"' : ''} style="padding-top:7px;line-height:0;max-width:150px;">${mainCertImgs.join('')}</div>`
+    ? `<div${photoCertsOnMobile ? ' class="cb-cert-role"' : ''} style="padding-top:7px;line-height:0;max-width:150px;">${mainCertImgs.join('')}</div>`
     : '';
-  const photoCertsHtml = pamelaPhotoCerts && mainCertImgs.length
+  const photoCertsHtml = photoCertsOnMobile
     ? `<div class="cb-cert-photo" style="display:none;padding-top:5px;text-align:center;white-space:nowrap;line-height:0;">${certImgs(s.certs, s.certLinks, s.customCerts, 29).join('')}</div>`
     : '';
   // Compact templates: the same block one notch smaller so it fits their 600 px row.

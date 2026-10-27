@@ -1015,55 +1015,6 @@
     }
   },
   {
-    "key": "pelusa-miau",
-    "name": "Pelusa Miau",
-    "role": "Sales Agent",
-    "zona": "",
-    "tel": "+1 (809) 975-3900",
-    "email": "pelusa@canablue.com",
-    "web": "canablue.com",
-    "dir": "Local P104, Plaza San Juan Shopping Center, Bávaro, Punta Cana",
-    "dirUrl": "https://www.google.com/maps/search/?api=1&query=Canablue+Real+Estate+Plaza+San+Juan+Punta+Cana",
-    "listings": "",
-    "communities": [],
-    "linkedin": "",
-    "instagram": "",
-    "whatsapp": "",
-    "foto": "assets/agents/pelusa-miau.png?v=4274a34ac885",
-    "photoPosition": "center center",
-    "logo": "https://res.cloudinary.com/ybkuwivn/image/upload/v1792071937/10._logo-blue-google.png",
-    "legal": "The information in this email is confidential and intended solely for its recipient.",
-    "tpl": "principal",
-    "vis": {
-      "foto": true,
-      "zona": false,
-      "social": true,
-      "listings": false,
-      "booking": false,
-      "community": false,
-      "qr": true,
-      "certs": true,
-      "legal": true
-    },
-    "iconStyle": "solid",
-    "certsAlign": "center",
-    "certs": {
-      "crs": false,
-      "aei": true,
-      "realtor": false,
-      "sr23": false,
-      "sr24": true,
-      "lux": false
-    },
-    "source": {
-      "pdfPage": 29,
-      "portraitXref": 2607,
-      "listingsVerified": false,
-      "expertise": "PDF",
-      "instagram": "not in PDF"
-    }
-  },
-  {
     "key": "annie-fernandez",
     "name": "Annie Fernández",
     "role": "Marketing",

@@ -327,7 +327,7 @@ async function buildHTML() {
     let label = NETWORKS[network]?.label || 'Perfil';
     if (network === 'instagram') {
       try { label = '@' + decodeURIComponent(new URL(url).pathname.split('/').filter(Boolean).pop()); } catch {}
-    } else if (network === 'linkedin') label = 'Perfil de LinkedIn';
+    } else if (network === 'linkedin') label = 'LinkedIn';
     const href = normUrl(url);
     const icon = network === 'linkedin' ? IMG('ios-filled', 50, c.replace('#', ''), 'linkedin') : lineIcon(NETWORKS[network]?.slug || 'link', c);
     return contactRow(icon,
@@ -379,10 +379,14 @@ async function buildHTML() {
     community: { fs: 13, pfs: 10.5, pad: '5px 11px', rad: 15 },
     communityMob: { fs: 12.5, pfs: 10, pad: '5px 9px', rad: 14 }
   };
-  // Small badges can wrap under long names while staying inside the role column.
-  const mainCertImgs = s.vis.certs ? certImgs(s.certs, s.certLinks, s.customCerts, 22) : [];
+  // Pamela's badges move under her portrait on phones; the desktop set can fill her name width.
+  const pamelaPhotoCerts = selectedAgentKey === 'pamela' && s.vis.foto && !!s.foto;
+  const mainCertImgs = s.vis.certs ? certImgs(s.certs, s.certLinks, s.customCerts, 25) : [];
   const mainCertsHtml = mainCertImgs.length
-    ? `<div style="padding-top:7px;line-height:0;max-width:150px;">${mainCertImgs.join(' ')}</div>`
+    ? `<div${pamelaPhotoCerts ? ' class="cb-cert-role"' : ''} style="padding-top:7px;line-height:0;max-width:150px;">${mainCertImgs.join('')}</div>`
+    : '';
+  const photoCertsHtml = pamelaPhotoCerts && mainCertImgs.length
+    ? `<div class="cb-cert-photo" style="display:none;padding-top:5px;text-align:center;white-space:nowrap;line-height:0;">${certImgs(s.certs, s.certLinks, s.customCerts, 23).join('')}</div>`
     : '';
   // Compact templates: the same block one notch smaller so it fits their 600 px row.
   const COMM_SZ = { fs: 11.5, pfs: 9, pad: '4px 7px', rad: 12 };
@@ -486,9 +490,9 @@ ${legalHtml(null, 3)}</tbody></table>`;
   // their own centred line under the logo. The <style> block swaps them below
   // 480 px. Outlook desktop ignores media queries and keeps the desktop row —
   // the mobile rows are hidden inline, so they never show up twice.
-  return `<style>@media only screen and (max-width:480px){.cb-desk{display:none !important}.cb-mob{display:table-row !important}.cb-name{white-space:normal !important}}</style><table cellpadding="0" cellspacing="0" border="0" width="600" style="font-family:Arial,Helvetica,sans-serif;max-width:600px;"><tbody>
+  return `<style>@media only screen and (max-width:480px){.cb-desk{display:none !important}.cb-mob{display:table-row !important}.cb-name{white-space:normal !important}.cb-cert-role{display:none !important}.cb-cert-photo{display:block !important}}</style><table cellpadding="0" cellspacing="0" border="0" width="600" style="font-family:Arial,Helvetica,sans-serif;max-width:600px;"><tbody>
 <tr><td><table cellpadding="0" cellspacing="0" border="0"><tbody><tr>
-${s.vis.foto && s.foto ? `<td width="${MAIN_SZ.photoCell}" valign="middle">${fotoCell(MAIN_SZ.photo)}</td>` : ''}
+${s.vis.foto && s.foto ? `<td width="${MAIN_SZ.photoCell}" valign="middle">${fotoCell(MAIN_SZ.photo)}${photoCertsHtml}</td>` : ''}
 <td valign="middle" align="left" style="text-align:left;"><div class="cb-name" style="font-size:${MAIN_SZ.name}px;font-weight:700;color:#111;line-height:${MAIN_SZ.nameLh}px;white-space:nowrap;">${s.nombre}</div><div style="font-size:${MAIN_SZ.role}px;line-height:17px;color:#111;max-width:220px;white-space:normal;text-align:left;">${s.cargo}</div>${mainCertsHtml}</td>
 <td width="20"></td><td width="1" style="border-left:1px solid ${c};font-size:0;">&nbsp;</td><td width="20"></td>
 <td valign="middle">${contactTable(MAIN_SZ.contact)}</td>

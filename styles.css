@@ -187,6 +187,8 @@ textarea{resize:vertical}
 .preview-box.mobile .cb-desk{display:none !important}
 .preview-box.mobile .cb-mob{display:table-row !important}
 .preview-box.mobile .cb-name{white-space:normal !important}
+.preview-box.mobile .cb-cert-role{display:none !important}
+.preview-box.mobile .cb-cert-photo{display:block !important}
 .switch{font-size:13px;display:flex;gap:6px;align-items:center;cursor:pointer}
 .switch input{width:auto}
 .tool-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}

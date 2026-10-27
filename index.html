@@ -54,25 +54,6 @@
         <div><h3><iconify-icon icon="mdi:account-group"></iconify-icon> Firmas del equipo</h3><p>Busca tu nombre, revisa la firma y copia el resultado de la derecha.</p></div>
         <span id="directoryCount" class="directory-count">Cargando…</span>
       </div>
-      <div class="bulk-visibility">
-        <label class="lbl" for="bulkVisibilityField">Mostrar u ocultar en todas las firmas</label>
-        <select id="bulkVisibilityField">
-          <option value="qr">Código QR de contacto</option>
-          <option value="foto">Foto</option>
-          <option value="social">Redes sociales</option>
-          <option value="listings">Botón View My Listings</option>
-          <option value="booking">Botón de agenda</option>
-          <option value="community">Community Expert</option>
-          <option value="certs">Certificaciones</option>
-          <option value="legal">Aviso de confidencialidad</option>
-        </select>
-        <div class="bulk-visibility-actions">
-          <button id="bulkVisibilityOn" class="btn small primary" type="button">Activar en todas</button>
-          <button id="bulkVisibilityOff" class="btn small" type="button">Desactivar en todas</button>
-        </div>
-        <p id="bulkVisibilityStatus" class="bulk-visibility-status" aria-live="polite"></p>
-        <p class="hint">Se guarda en este navegador. Para publicar el cambio para todos los usuarios, exporta el JSON desde Contact.</p>
-      </div>
       <label class="lbl" for="directorySearch">Buscar agente</label>
       <input id="directorySearch" type="search" placeholder="Nombre, correo o zona" autocomplete="off">
       <div id="directoryList" class="directory-list" aria-live="polite"></div>
@@ -212,9 +193,28 @@
 
     <section class="card" id="sec-display">
       <h3><iconify-icon icon="mdi:eye"></iconify-icon> Visibility</h3>
+      <div class="bulk-visibility">
+        <label class="lbl" for="bulkVisibilityField">Mostrar u ocultar en todas las firmas</label>
+        <select id="bulkVisibilityField">
+          <option value="qr">Código QR de contacto</option>
+          <option value="foto">Foto</option>
+          <option value="social">Redes sociales</option>
+          <option value="listings">Botón View My Listings</option>
+          <option value="booking">Botón de agenda</option>
+          <option value="community">Community Expert</option>
+          <option value="certs">Certificaciones</option>
+          <option value="legal">Aviso de confidencialidad</option>
+        </select>
+        <div class="bulk-visibility-actions">
+          <button id="bulkVisibilityOn" class="btn small primary" type="button">Activar en todas</button>
+          <button id="bulkVisibilityOff" class="btn small" type="button">Desactivar en todas</button>
+        </div>
+        <p id="bulkVisibilityStatus" class="bulk-visibility-status" aria-live="polite"></p>
+        <p class="hint">Se guarda en este navegador. Para publicar el cambio para todos los usuarios, exporta el JSON desde Contact.</p>
+      </div>
       <div class="checks col">
         <label><input type="checkbox" id="vFoto" checked> Show photo</label>
-        <label><input type="checkbox" id="vSocial" checked> Show social icons (IG / WhatsApp / LinkedIn)</label>
+        <label><input type="checkbox" id="vSocial" checked> Show social icons</label>
         <label><input type="checkbox" id="vListings" checked> Show "View My Listings" button</label>
         <label><input type="checkbox" id="vBooking" checked> Show "Schedule" button (uses the booking URL)</label>
         <label><input type="checkbox" id="vCommunity" checked> Show the "Community Expert:" line</label>

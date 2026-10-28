@@ -171,13 +171,13 @@ def main():
         if not image or image["ext"] not in ("jpeg", "jpg", "png"):
             raise ValueError(f"Missing supported portrait for {name}, page {page}")
         ext = "jpg" if image["ext"] == "jpeg" else image["ext"]
-        filename = f"{key}.{ext}"
+        # Christophe's approved replacement is a local JPEG, not the PDF image.
+        filename = f"{key}.jpeg" if key == "christophe-poteloin" else f"{key}.{ext}"
         for old in OUT.glob(f"{key}.*"):
             if old.name != filename:
                 old.unlink()
-        # Barbara's portrait was manually cropped after extraction. Keep that
-        # approved local photo when rebuilding the catalog.
-        if key != "barbara-boruch" or not (OUT / filename).exists():
+        # Preserve approved local replacements when rebuilding the catalog.
+        if key not in {"barbara-boruch", "christophe-poteloin"} or not (OUT / filename).exists():
             (OUT / filename).write_bytes(image["image"])
         if key == "pamela-nunez":
             agents.append(pamela_original)

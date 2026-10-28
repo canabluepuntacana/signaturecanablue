@@ -15,8 +15,9 @@ function portraitPath(value) {
   return base ? PORTRAIT_PATH + url.slice(base.length) : '';
 }
 const samePortrait = (left, right) => {
-  const a = portraitPath(left).split('?')[0];
-  return !!a && a === portraitPath(right).split('?')[0];
+  const canonical = value => portraitPath(value).split('?')[0].replace(/\.jpeg$/i, '.jpg');
+  const a = canonical(left);
+  return !!a && a === canonical(right);
 };
 function signaturePhotoUrl(value) {
   const path = portraitPath(value);

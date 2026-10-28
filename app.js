@@ -893,6 +893,13 @@ const LS_FORM = 'canablue.form.v4', LS_CUSTOM = 'canablue.agents.custom.v1';
 const getCustoms = () => { try { return JSON.parse(localStorage.getItem(LS_CUSTOM) || '[]'); } catch { return []; } };
 const setCustoms = c => localStorage.setItem(LS_CUSTOM, JSON.stringify(c));
 const isCustom = key => getCustoms().some(x => x.key === key);
+// Keep the reviewed Luxury Homes list from the published catalog when an older
+// browser copy or optional Google Sheet still carries the PDF template's logo.
+function withReviewedLuxury(a) {
+  const official = JSON_AGENTS.find(x => x.key === a.key);
+  if (!official || !official.certs) return a;
+  return { ...a, certs: { ...(a.certs || {}), lux: !!official.certs.lux } };
+}
 const VIS_FIELDS = { foto: 'vFoto', social: 'vSocial', listings: 'vListings', booking: 'vBooking', community: 'vCommunity', qr: 'vQr', certs: 'vCerts', legal: 'vLegal' };
 const LS_BULK_VIS = 'canablue.visibility.all.v1';
 const INACTIVE_AGENT_KEYS = new Set([
@@ -959,12 +966,18 @@ async function loadSheetAgents(id) {
 async function loadAgents() {
   AGENTS = BUILTIN_AGENTS.slice();
   JSON_AGENTS = [];
+  try {
+    const r = await fetch('data/agents.json', { cache: 'no-store' });
+    if (!r.ok) throw 0;
+    const j = await r.json();
+    if (Array.isArray(j) && j.length) { JSON_AGENTS = j; AGENTS = j.slice(); }
+  } catch {}
   const sid = (($('fSheetId') && $('fSheetId').value) || '').trim();
   if (sid) {
     try {
       const sheet = await loadSheetAgents(sid);
       if (sheet.length) {
-        AGENTS = sheet;
+        AGENTS = sheet.map(withReviewedLuxury);
         try { localStorage.setItem(LS_SHEET, sid); } catch {}
         setDbStatus(`Google Sheets — ${sheet.filter(isVisibleAgent).length} agentes activos`, 'ok');
       } else {
@@ -974,14 +987,21 @@ async function loadAgents() {
       setDbStatus('Google Sheets — check ID / sharing, using local data', 'err');
     }
   } else {
-    try {
-      const r = await fetch('data/agents.json', { cache: 'no-store' });
-      if (!r.ok) throw 0;
-      const j = await r.json();
-      if (Array.isArray(j) && j.length) { JSON_AGENTS = j; AGENTS = j.slice(); }
+    if (JSON_AGENTS.length) {
       setDbStatus(`Archivo local — ${AGENTS.filter(isVisibleAgent).length} firmas activas.`, '');
-    } catch { setDbStatus('Built-in data (offline or file://).', ''); }
+    } else setDbStatus('Built-in data (offline or file://).', '');
   }
+  // A one-time migration corrects previously saved signatures and the last
+  // autosaved preview. Future manual edits can still be saved by the user.
+  try {
+    const reviewKey = 'canablue.luxury-reviewed.20261028';
+    if (JSON_AGENTS.length && !localStorage.getItem(reviewKey)) {
+      setCustoms(getCustoms().map(withReviewedLuxury));
+      const draft = JSON.parse(localStorage.getItem(LS_FORM) || 'null');
+      if (draft) localStorage.setItem(LS_FORM, JSON.stringify(withReviewedLuxury(draft)));
+      localStorage.setItem(reviewKey, '1');
+    }
+  } catch {}
   // Existing browser-saved records inherited QR=false from the earlier default.
   // Enable it once, then leave later manual choices alone.
   try {
